@@ -23,18 +23,35 @@ body::before {
 
 /* ===== Header ===== */
 header {
-  background: rgba(24, 24, 27, 0.42);
+  width: 100%;
+  background: rgba(24, 24, 27, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: sticky;
+  position: fixed; /* Змінив з sticky на fixed */
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 105, 180, 0.3);
   box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Клас для ховання хедера */
+header.hidden {
+  transform: translateY(-100%);
+}
+
+/* Додаємо відступ для контенту, щоб він не ховався під хедер */
+main {
+  padding: 30px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 80px; /* Відступ рівний висоті хедера */
+  position: relative;
+  z-index: 1;
 }
 
 .header-left {

@@ -32,16 +32,23 @@ header {
   background: rgba(24, 24, 27, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
-  justify-content: space-between; /* Лого зліва, навігація справа */
+  justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: sticky;
+  position: fixed; /* Змінив з sticky на fixed */
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 105, 180, 0.3);
   box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
 }
+
+/* Клас для ховання хедера */
+header.hidden {
+  transform: translateY(-100%);
+}
+
 
 .header-nav {
   display: flex;
@@ -92,7 +99,7 @@ header {
   width: 90%;
   margin-top: 30px;
   background: #1d1d20;
-  padding: 20px;
+  padding: 80px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   overflow: hidden; /* щоб фон не виходив за рамки */
