@@ -67,12 +67,12 @@
         async function loadAnime() {
             const grid = document.getElementById('anime-grid');
             try {
-                const listResp = await fetch('anime/anime-list.json');
+                const listResp = await fetch('/Astro-Neko/anime/anime-list.json');
                 if (!listResp.ok) throw new Error('Не вдалося завантажити anime-list.json');
                 const animeList = await listResp.json();
 
                 for (const animeId of animeList) {
-                    const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+                    const resp = await fetch(`/Astro-Neko/anime/${encodeURIComponent(animeId)}.json`);
                     if (!resp.ok) continue;
                     const anime = await resp.json();
                     grid.appendChild(createAnimeCard(anime));
