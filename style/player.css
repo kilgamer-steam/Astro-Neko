@@ -113,7 +113,7 @@ header.hidden {
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  overflow: hidden;
+  overflow: visible;
   backdrop-filter: blur(2px);
   border: 1px solid rgba(255, 105, 180, 0.2); /* Додаємо обводку */
 }
