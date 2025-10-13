@@ -56,18 +56,7 @@
       window.location.href = `anime-info.html?id=${encodeURIComponent(animeId)}`;
     };
 
-   // Функції для роботи з переглядами
-function getViewingData(animeId, seasonNumber, episodeNumber) {
-    const key = `viewing_${animeId}_s${seasonNumber}_e${episodeNumber}`;
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
-}
-
-function setViewingData(animeId, seasonNumber, episodeNumber, data) {
-    const key = `viewing_${animeId}_s${seasonNumber}_e${episodeNumber}`;
-    localStorage.setItem(key, JSON.stringify(data));
-}
-
+// Функції для роботи з налаштуваннями аніме
 function getAnimePreferences(animeId) {
     const key = `preferences_${animeId}`;
     const data = localStorage.getItem(key);
@@ -117,8 +106,7 @@ async function loadPlayer() {
         }
         titleSpan.textContent = episode.name;
 
-        // Завантажуємо дані перегляду
-        const viewingData = getViewingData(animeId, seasonNumber || 0, episodeNumber || movieNumber);
+        // Завантажуємо налаштування аніме
         const animePreferences = getAnimePreferences(animeId);
 
         // Заповнюємо select для озвучки
@@ -134,17 +122,9 @@ async function loadPlayer() {
         // Визначаємо початкові налаштування
         let initialDubbingIndex = 0;
         let initialVolume = 1.0;
-        let initialTime = 0;
 
-        // Пріоритет: конкретний епізод > налаштування аніме > стандартні
-        if (viewingData) {
-            // Використовуємо дані з конкретного епізоду
-            const preferredIndex = episode.dubbing.findIndex(d => d.studio === viewingData.dubbing);
-            if (preferredIndex !== -1) initialDubbingIndex = preferredIndex;
-            if (viewingData.volume !== undefined) initialVolume = viewingData.volume;
-            if (viewingData.currentTime !== undefined) initialTime = viewingData.currentTime;
-        } else if (animePreferences) {
-            // Використовуємо загальні налаштування аніме
+        // Використовуємо налаштування аніме, якщо вони є
+        if (animePreferences) {
             const preferredIndex = episode.dubbing.findIndex(d => d.studio === animePreferences.dubbing);
             if (preferredIndex !== -1) initialDubbingIndex = preferredIndex;
             if (animePreferences.volume !== undefined) initialVolume = animePreferences.volume;
@@ -154,27 +134,6 @@ async function loadPlayer() {
         audioSelect.selectedIndex = initialDubbingIndex;
         player.src = episode.dubbing[initialDubbingIndex].videoUrl;
         player.volume = initialVolume;
-        
-        // Автопродовження (тільки якщо не початок)
-        if (initialTime > 30) { // Якщо більше 30 секунд - пропонуємо продовжити
-            player.currentTime = initialTime;
-            
-            // Можна додати підтвердження для користувача
-            setTimeout(() => {
-                if (confirm("Продовжити перегляд з " + formatTime(initialTime) + "?")) {
-                    player.currentTime = initialTime;
-                } else {
-                    player.currentTime = 0;
-                }
-            }, 500);
-        }
-
-        // Функція для форматування часу
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
 
         // Обробник зміни озвучки
         audioSelect.onchange = () => {
@@ -184,52 +143,29 @@ async function loadPlayer() {
             player.currentTime = currentTime;
             player.play();
             
-            // Оновлюємо дані
-            saveViewingData(selectedStudio);
+            // Оновлюємо налаштування аніме
+            saveAnimePreferences(selectedStudio);
         };
 
-        // Збереження прогресу при паузі/закритті
-        player.addEventListener('pause', () => {
-            saveViewingData();
-        });
-
+        // Збереження гучності при зміні
         player.addEventListener('volumechange', () => {
-            saveViewingData();
+            saveAnimePreferences();
         });
 
-        // Зберігаємо дані кожні 10 секунд
-        let saveInterval = setInterval(() => {
-            if (!player.paused) {
-                saveViewingData();
-            }
-        }, 10000);
-
-        // Функція збереження даних
-        function saveViewingData(dubbingStudio = null) {
+        // Функція збереження налаштувань аніме
+        function saveAnimePreferences(dubbingStudio = null) {
             const currentDubbing = dubbingStudio || audioSelect.options[audioSelect.selectedIndex].dataset.studio;
-            const viewingData = {
-                dubbing: currentDubbing,
-                volume: player.volume,
-                currentTime: player.currentTime,
-                duration: player.duration,
-                lastWatched: new Date().toISOString()
-            };
-
-            // Зберігаємо для конкретного епізоду
-            setViewingData(animeId, seasonNumber || 0, episodeNumber || movieNumber, viewingData);
-
-            // Оновлюємо загальні налаштування аніме (без часу)
             const preferences = {
                 dubbing: currentDubbing,
-                volume: player.volume
+                volume: player.volume,
+                lastUpdated: new Date().toISOString()
             };
             setAnimePreferences(animeId, preferences);
         }
 
-        // Очищаємо інтервал при закритті
+        // Зберігаємо налаштування при закритті
         window.addEventListener('beforeunload', () => {
-            clearInterval(saveInterval);
-            saveViewingData();
+            saveAnimePreferences();
         });
 
         // Кнопки серії (залишаємо без змін)
