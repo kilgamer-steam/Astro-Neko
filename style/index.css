@@ -53,9 +53,7 @@ header {
   font-size: 2em;
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
 }
-.h3 {
-  color: #cc6096ff;
-}
+
 /* ===== Search Container ===== */
 .search-container {
   display: flex;
@@ -111,6 +109,7 @@ header {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 25px;
   padding: 30px;
+  color: #cc6096ff;
   justify-items: center;
 }
 
