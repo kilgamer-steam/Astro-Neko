@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroNeko — Інформація про аніме</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style/anime-info.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <img src="images/favicon1.png" alt="Logo">
+      <h1>AstroNeko</h1>
+    </a>
+  </header>
+
+  <main id="anime-info">
+    <div class="anime-header">
+      <div class="anime-bg" id="anime-bg"></div>
+      <div class="anime-title-section">
+        <img id="anime-image" src="" alt="Anime poster">
+        <div class="anime-meta">
+          <h2 id="anime-title">Назва аніме</h2>
+          <p id="anime-description">Опис аніме...</p>
+          <p><strong>Жанри:</strong> <span id="anime-tags"></span></p>
+          <p><strong>Статус:</strong> <span id="anime-status"></span></p>
+          <p><strong>Вік:</strong> <span id="anime-age"></span></p>
+          <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <section class="anime-seasons">
+      <h3>Сезони та серії</h3>
+      <div id="season-list"></div>
+    </section>
+  </main>
+
+  <script>
+    // Отримуємо ID аніме з URL
+    const params = new URLSearchParams(window.location.search);
+    const animeId = params.get("id");
+
+    if (!animeId) {
+      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Аніме не знайдено 😿</h2>";
+    } else {
+      loadAnime(animeId);
+    }
+
+    async function loadAnime(id) {
+      try {
+        const response = await fetch(`anime/${encodeURIComponent(id)}.json`);
+        if (!response.ok) throw new Error("Не вдалося знайти JSON для цього аніме");
+
+        const anime = await response.json();
+        displayAnimeInfo(anime);
+      } catch (error) {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка при завантаженні аніме 😿</h2>";
+        console.error(error);
+      }
+    }
+
+    function displayAnimeInfo(anime) {
+      document.title = `AstroNeko — ${anime.title}`;
+      document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
+      document.getElementById("anime-image").src = anime.img;
+      document.getElementById("anime-title").textContent = anime.title;
+      document.getElementById("anime-description").textContent = anime.description;
+      document.getElementById("anime-tags").textContent = anime.tags.join(", ");
+      document.getElementById("anime-status").textContent = anime.status;
+      document.getElementById("anime-age").textContent = anime.age;
+      document.getElementById("anime-rating").textContent = anime.rating || "N/A";
+
+      const seasonList = document.getElementById("season-list");
+      seasonList.innerHTML = "";
+
+      // Генеруємо кнопки для сезонів та серій
+      anime.seasons.forEach(season => {
+        const seasonDiv = document.createElement("div");
+        seasonDiv.classList.add("season");
+
+        const seasonTitle = document.createElement("h4");
+        seasonTitle.textContent = `Сезон ${season.seasonNumber}`;
+        seasonDiv.appendChild(seasonTitle);
+
+        const episodeContainer = document.createElement("div");
+        episodeContainer.classList.add("episode-container");
+
+        season.episodes.forEach((ep, idx) => {
+          const btn = document.createElement("button");
+          btn.classList.add("episode-btn"); // <-- додали клас
+          btn.textContent = ep.title;
+          btn.onclick = () => {
+            const url = `player.html?anime=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
+            window.location.href = url;
+          };
+          episodeContainer.appendChild(btn);
+        });
+
+        seasonDiv.appendChild(episodeContainer);
+        seasonList.appendChild(seasonDiv);
+      });
+
+      // Фільми, якщо є
+      if (anime.movies && anime.movies.length > 0) {
+        const moviesDiv = document.createElement("div");
+        moviesDiv.classList.add("movies");
+
+        const moviesTitle = document.createElement("h4");
+        moviesTitle.textContent = "Фільми";
+        moviesDiv.appendChild(moviesTitle);
+
+        anime.movies.forEach((mov, idx) => {
+          const btn = document.createElement("button");
+          btn.classList.add("movie-btn"); // <-- додали клас
+          btn.textContent = mov.title;
+          btn.onclick = () => {
+            const url = `player.html?anime=${encodeURIComponent(anime.id)}&movie=${idx+1}`;
+            window.location.href = url;
+          };
+          moviesDiv.appendChild(btn);
+        });
+
+        seasonList.appendChild(moviesDiv);
+      }
+    }
+  </script>
+</body>
+</html>

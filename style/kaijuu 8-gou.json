@@ -1,0 +1,136 @@
+{
+  "id": "kaijuu 8-gou",
+  "title": "Кайджю №8",
+  "description": "Гротескні, схожі на Ґодзіллу монстри, які називаються 'кайджю', з'являються по всій Японії вже багато років поспіль. Для боротьби з цими чудовиськами елітний військовий підрозділ, відомий як Корпус оборони, щодня ризикує своїм життям, щоб захистити мирних жителів. Після того, як істота вбита, 'прибиральники', що працюють під егідою Корпорації професійних прибиральників кайджю, залишаються, щоб позбутися його останків.",
+  "tags": [
+    "Бойовик",
+    "Фантастика",
+    "Екшн"
+  ],
+  "rating": "",
+  "status": "Завершено",
+  "age": "16+",
+  "img": "/anime/image/kaijuu 8-gou.jpg",
+  "background": "/anime/background/kaijuu 8-gou_bg.jpg",
+  "preview": "/anime/preview/kaijuu 8-gou_preview.jpg",
+  "seasons": [
+    {
+      "seasonNumber": 1,
+      "episodes": [
+        {
+          "title": "Епізод 1",
+          "name": "Людина, що стала кайджю",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "videoUrl": "/anime/videos/kaijuu 8-gou/seson1/Didko studio/ep1.mp4"
+            }
+          ],
+          "opening": [
+            0,
+            0
+          ],
+          "ending": [
+            1282,
+            1372
+          ]
+        },
+        {
+          "title": "Епізод 2",
+          "name": "Кайджю, який знищує кайджю",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "videoUrl": "/anime/videos/kaijuu 8-gou/seson1/Didko studio/ep2.mp4"
+            }
+          ],
+          "opening": [
+            63,
+            150
+          ],
+          "ending": [
+            1350,
+            1456
+          ]
+        },
+        {
+          "title": "Епізод 3",
+          "name": "Реванш",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "videoUrl": "/anime/videos/kaijuu 8-gou/seson1/Didko studio/ep3.mp4"
+            }
+          ],
+          "opening": [
+            147,
+            235
+          ],
+          "ending": [
+            1329,
+            1418
+          ]
+        }
+      ]
+    },
+    {
+      "seasonNumber": 2,
+      "episodes": [
+        {
+          "title": "Епізод 1",
+          "name": "Зброя із кайджю",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "videoUrl": "/anime/videos/kaijuu 8-gou/seson2/Didko studio/ep1.mp4"
+            }
+          ],
+          "opening": [
+            0,
+            0
+          ],
+          "ending": [
+            0,
+            0
+          ]
+        },
+        {
+          "title": "Епізод 2",
+          "name": "Випробування для молодих",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "videoUrl": "/anime/videos/kaijuu 8-gou/seson2/Didko studio/ep2.mp4"
+            }
+          ],
+          "opening": [
+            123,
+            210
+          ],
+          "ending": [
+            1246,
+            1452
+          ]
+        },
+        {
+          "title": "Епізод 3",
+          "name": "Початок",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "videoUrl": "/anime/videos/kaijuu 8-gou/seson2/Didko studio/ep3.mp4"
+            }
+          ],
+          "opening": [
+            57,
+            144
+          ],
+          "ending": [
+            1301,
+            1452
+          ]
+        }
+      ]
+    }
+  ]
+}

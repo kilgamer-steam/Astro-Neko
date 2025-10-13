@@ -1,0 +1,61 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #0d0d0f;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+header {
+  width: 100%;
+  background: rgba(20, 20, 30, 0.9);
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.logo img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+#player-container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+}
+
+#video-section {
+  position: relative;
+  background: black;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#anime-video {
+  width: 100%;
+  border-radius: 10px;
+}
+
+#video-info {
+  margin-top: 15px;
+  background: rgba(30, 30, 40, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+#video-info h2 {
+  margin: 0 0 10px 0;
+  color: #ffb347;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroNeko — Плеєр</title>
+  <link rel="stylesheet" href="style/player.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <img src="images/favicon1.png" alt="Logo">
+      <h1>AstroNeko</h1>
+    </a>
+  </header>
+
+  <main id="player-container">
+    <div id="video-section">
+      <video id="anime-video" controls></video>
+    </div>
+
+    <div id="video-info">
+      <h2 id="episode-title"></h2>
+      <p id="episode-description"></p>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const animeId = params.get("anime");
+    const seasonNumber = parseInt(params.get("season"));
+    const episodeNumber = parseInt(params.get("episode"));
+
+    if (!animeId || !seasonNumber || !episodeNumber) {
+      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка параметрів 😿</h2>";
+    } else {
+      loadEpisode(animeId, seasonNumber, episodeNumber);
+    }
+
+    async function loadEpisode(animeId, seasonNumber, episodeNumber) {
+      try {
+        const res = await fetch(`anime/${animeId}.json`);
+        if (!res.ok) throw new Error("Не знайдено файл аніме");
+        const anime = await res.json();
+
+        const season = anime.seasons.find(s => s.seasonNumber === seasonNumber);
+        const episode = season.episodes.find(e => e.episodeNumber === episodeNumber);
+
+        if (!episode) throw new Error("Епізод не знайдено");
+
+        document.title = `${anime.title} — ${episode.name}`;
+        document.getElementById("episode-title").textContent = `${anime.title} — ${episode.title}: ${episode.name}`;
+        document.getElementById("episode-description").textContent = episode.description || "Опис відсутній";
+        document.getElementById("anime-video").src = episode.dubbing[0].videoUrl;
+      } catch (err) {
+        console.error(err);
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Не вдалося завантажити епізод 😿</h2>";
+      }
+    }
+  </script>
+</body>
+</html>
