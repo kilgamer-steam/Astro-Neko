@@ -10,23 +10,25 @@
 }
 
 header {
+  width: 100%;
   background: #18181b;
   display: flex;
   align-items: center;
+  justify-content: flex-start; /* логотип і назва ліворуч */
   padding: 10px 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
 header .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px; /* відстань між логотипом та назвою */
   text-decoration: none;
 }
 
 header .logo img {
-  height: 45px;
-  width: 45px;
+  height: 40px;
+  width: 40px;
 }
 
 header .logo h1 {
@@ -34,6 +36,7 @@ header .logo h1 {
   margin: 0;
   font-size: 1.8em;
 }
+
 
 .player-wrapper {
   display: flex;
