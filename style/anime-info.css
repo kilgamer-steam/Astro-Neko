@@ -6,6 +6,20 @@ body {
   min-height: 100vh;
 }
 
+/* ===== Anime background ===== */
+.anime-bg {
+  position: fixed; /* Змінюємо на fixed для покриття всієї сторінки */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Фіксована висота 100% */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(2px) brightness(0.98); /* Блюр 2px і затемнення на 2% */
+  z-index: -1; /* Поміщаємо фон за всіма елементами */
+}
+
 /* ===== Header ===== */
 header {
   background: #18181b;
@@ -13,6 +27,8 @@ header {
   align-items: center;
   padding: 10px 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  position: relative; /* Забезпечуємо коректне відображення поверх фону */
+  z-index: 1;
 }
 
 header .logo {
@@ -38,18 +54,6 @@ header .logo h1 {
   position: relative;
   width: 100%;
   overflow: hidden;
-}
-
-.anime-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  background-size: cover;
-  background-position: center;
-  filter: blur(10px) brightness(0.5);
-  z-index: 0;
 }
 
 .anime-title-section {
@@ -88,6 +92,8 @@ header .logo h1 {
 /* ===== Seasons and episodes ===== */
 .anime-seasons {
   padding: 30px 40px;
+  position: relative; /* Забезпечуємо коректне відображення поверх фону */
+  z-index: 1;
 }
 
 .anime-seasons h3 {
@@ -134,7 +140,6 @@ header .logo h1 {
     background: #ff82c1;
     transform: scale(1.05);
 }
-
 
 /* ===== Responsive ===== */
 @media (max-width: 800px) {
