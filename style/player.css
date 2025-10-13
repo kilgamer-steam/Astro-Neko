@@ -36,6 +36,20 @@ header .logo h1 {
   margin: 0;
   font-size: 1.8em;
 }
+header {
+  background: rgba(24, 24, 27, 0.85);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between; /* Лого зліва, навігація справа */
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+}
+
 .header-nav {
   display: flex;
   gap: 15px;
@@ -52,13 +66,7 @@ header .logo h1 {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-}
-
-#backToInfo:hover {
-  background: #ff69b4;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
+  order: 2; /* Кнопка повернення останньою */
 }
 
 .header-nav a {
@@ -71,8 +79,10 @@ header .logo h1 {
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
+  order: 1; /* Головна першою */
 }
 
+#backToInfo:hover,
 .header-nav a:hover {
   background: #ff69b4;
   color: #fff;

@@ -60,6 +60,18 @@ header .logo h1 {
   font-size: 1.8em;
 }
 
+.header-nav a {
+  padding: 10px 20px;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #ff69b4;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  order: 1; /* Головна першою */
+}
 /* ===== Main content container ===== */
 .main-container {
   display: flex;
