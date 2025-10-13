@@ -8,116 +8,119 @@
   <link rel="stylesheet" href="style/player.css">
   <style>
     body {
-    margin: 0;
-    font-family: "Poppins", "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
+      margin: 0;
+      font-family: "Poppins", "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-  header {
-    width: 100%;
-    background: #18181b;
-    display: flex;
-    align-items: center;
-    padding: 10px 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  }
+    header {
+      width: 100%;
+      background: #18181b;
+      display: flex;
+      align-items: center;
+      padding: 10px 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
 
-  header img {
-    height: 40px;
-    margin-right: 10px;
-  }
+    header img {
+      height: 40px;
+      margin-right: 10px;
+    }
 
-  header h1 {
-    color: #ff69b4;
-    margin: 0;
-    font-size: 1.8em;
-  }
+    header h1 {
+      color: #ff69b4;
+      margin: 0;
+      font-size: 1.8em;
+    }
 
-  .player-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 900px;
-    width: 90%;
-    margin-top: 30px;
-    background: #1d1d20;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  }
+    .player-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 900px;
+      width: 90%;
+      margin-top: 30px;
+      background: #1d1d20;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
 
-  video {
-    width: 100%;
-    max-height: 500px;
-    border-radius: 10px;
-    background: #000;
-    margin-bottom: 15px;
-  }
+    video {
+      width: 100%;
+      max-height: 500px;
+      border-radius: 10px;
+      background: #000;
+      margin-bottom: 15px;
+      border: 2px solid #ff69b4;
+    }
 
-  .controls, .audio-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
+    .controls, .audio-select-wrapper {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
 
-  .controls button, .audio-buttons button {
-    padding: 10px 15px;
-    font-size: 1em;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #ff69b4;
-    color: #fff;
-    transition: all 0.3s;
-  }
+    .controls button, select {
+      padding: 10px 15px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #ff69b4;
+      color: #fff;
+      transition: all 0.3s;
+    }
 
-  .controls button:hover, .audio-buttons button:hover {
-    background: #ff82c1;
-  }
+    .controls button:hover, select:hover {
+      background: #ff82c1;
+    }
 
-  .episode-info {
-    text-align: center;
-    margin-bottom: 10px;
-  }
+    .episode-info {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-  .episode-info span {
-    font-weight: bold;
-    color: #ff69b4;
-  }
+    .episode-info label span {
+      font-weight: bold;
+      color: #ff69b4;
+    }
 
-  @media(max-width:600px){
-    video { max-height: 300px; }
-    .controls button, .audio-buttons button { font-size:0.9em; padding:8px 12px; }
-  }
+    @media(max-width:600px){
+      video { max-height: 300px; }
+      .controls button, select { font-size:0.9em; padding:8px 12px; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">
-      <img src="images/favicon1.png" alt="Logo">
-      <h1>AstroNeko</h1>
-    </a>
+    <img src="images/favicon1.png" alt="Logo">
+    <h1>AstroNeko</h1>
   </header>
 
-  <div id="player-container">
+  <div class="player-wrapper">
     <video id="anime-player" controls autoplay></video>
 
-    <div id="controls">
-      <label id="label-season">Сезон: <span id="season-number">?</span></label>
-      <label id="label-episode">Серія: <span id="episode-number">?</span></label>
-      <label id="label-title">Назва: <span id="episode-title">?</span></label>
+    <div class="episode-info">
+      <label>Сезон / Фільм: <span id="season-number">?</span></label>
+      <label>Серія / Номер: <span id="episode-number">?</span></label>
+      <label>Назва: <span id="episode-title">?</span></label>
+    </div>
 
+    <div class="audio-select-wrapper">
       <label>Озвучка:
         <select id="audio-select"></select>
       </label>
+    </div>
 
+    <div class="controls">
       <button id="prev-episode">Попередня серія</button>
       <button id="next-episode">Наступна серія</button>
     </div>
@@ -131,16 +134,14 @@
 
     const player = document.getElementById("anime-player");
     const audioSelect = document.getElementById("audio-select");
-    const labelSeason = document.getElementById("label-season");
     const seasonNumSpan = document.getElementById("season-number");
-    const labelEpisode = document.getElementById("label-episode");
     const episodeNumSpan = document.getElementById("episode-number");
-    const labelTitle = document.getElementById("label-title");
+    const titleSpan = document.getElementById("episode-title");
     const prevBtn = document.getElementById("prev-episode");
     const nextBtn = document.getElementById("next-episode");
 
     async function loadPlayer() {
-      if (!animeId || (!seasonNumber && !episodeNumber)) {
+      if (!animeId) {
         alert("Не вказано всі параметри для плеєра!");
         return;
       }
@@ -165,38 +166,33 @@
           if (!episode) throw new Error("Фільм не знайдено");
         }
 
-        // Встановлюємо динамічний текст
+        // Динамічний текст
         if (isMovie) {
-          labelSeason.textContent = "Фільм: ";
           seasonNumSpan.textContent = episode.number;
-          labelEpisode.style.display = "none";
+          episodeNumSpan.textContent = "-";
         } else {
-          labelSeason.textContent = "Сезон: ";
           seasonNumSpan.textContent = seasonNumber;
-          labelEpisode.style.display = "inline";
           episodeNumSpan.textContent = episodeNumber;
         }
-        labelTitle.textContent = episode.name;
+        titleSpan.textContent = episode.name;
 
-        // Автовибір першої озвучки
-        let currentDubbing = episode.dubbing[0];
-        player.src = currentDubbing.videoUrl;
+        // Встановлюємо відео
+        player.src = episode.dubbing[0].videoUrl;
 
         // Заповнюємо select для озвучки
         audioSelect.innerHTML = "";
-        episode.dubbing.forEach((d, i) => {
+        episode.dubbing.forEach(d => {
           const option = document.createElement("option");
           option.value = d.videoUrl;
           option.textContent = d.studio;
           audioSelect.appendChild(option);
         });
-
         audioSelect.onchange = () => {
           player.src = audioSelect.value;
           player.play();
         };
 
-        // Кнопки попередня/наступна серія
+        // Кнопки серії
         if (isMovie) {
           prevBtn.style.display = "none";
           nextBtn.style.display = "none";
