@@ -7,7 +7,9 @@
     "Фантастика",
     "Драма"
   ],
-  "rating": "PG-16",
+  "rating": "",
+  "status": "Завершено",
+  "age": "PG-166",
   "img": "anime/image/Frieren%20Beyond%20Journeys%20End.jpg",
   "background": "anime/background/Frieren%20Beyond%20Journeys%20End_bg.jpg",
   "preview": "anime/preview/Frieren%20Beyond%20Journeys%20End_preview.jpg",
