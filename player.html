@@ -13,37 +13,48 @@
       <img src="images/favicon1.png" alt="Logo">
       <h1>AstroNeko</h1>
     </a>
+    <nav class="header-nav">
+      <button id="backToInfo">Повернутися до аніме</button>
+      <a href="index.html">Головна</a>
+    </nav>
   </header>
 
   <div class="player-wrapper">
-  <video id="anime-player" controls autoplay></video>
+    <video id="anime-player" controls autoplay></video>
 
-  <div class="controls-row">
-    <span id="season-or-movie">?</span>
-    <span id="episode-number">?</span>
-    <span id="episode-title">?</span>
-    
-    <label for="audio-select">Зміна озвучки:</label>
-    <select id="audio-select"></select>
+    <div class="controls-row">
+      <span id="season-or-movie">?</span>
+      <span id="episode-number">?</span>
+      <span id="episode-title">?</span>
+      
+      <label for="audio-select">Зміна озвучки:</label>
+      <select id="audio-select"></select>
 
-    <button id="prev-episode">Попередня серія</button>
-    <button id="next-episode">Наступна серія</button>
+      <button id="prev-episode">Попередня серія</button>
+      <button id="next-episode">Наступна серія</button>
+    </div>
   </div>
-</div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
     const seasonNumber = parseInt(params.get("season"));
     const episodeNumber = parseInt(params.get("episode"));
+    const movieNumber = parseInt(params.get("movie"));
 
     const player = document.getElementById("anime-player");
     const audioSelect = document.getElementById("audio-select");
-    const seasonNumSpan = document.getElementById("season-number");
+    const seasonOrMovieSpan = document.getElementById("season-or-movie");
     const episodeNumSpan = document.getElementById("episode-number");
     const titleSpan = document.getElementById("episode-title");
     const prevBtn = document.getElementById("prev-episode");
     const nextBtn = document.getElementById("next-episode");
+    const backToInfoBtn = document.getElementById("backToInfo");
+
+    // Кнопка повернення до сторінки аніме
+    backToInfoBtn.onclick = () => {
+      window.location.href = `anime-info.html?id=${encodeURIComponent(animeId)}`;
+    };
 
     async function loadPlayer() {
       if (!animeId) {
@@ -65,22 +76,23 @@
           if (!season) throw new Error("Сезон не знайдено");
           episode = season.episodes[episodeNumber - 1];
           if (!episode) throw new Error("Епізод не знайдено");
-        } else {
+        } else if (movieNumber) {
           isMovie = true;
-          episode = anime.movies.find(m => m.number === episodeNumber);
+          episode = anime.movies[movieNumber - 1];
           if (!episode) throw new Error("Фільм не знайдено");
+        } else {
+          throw new Error("Не вказано сезон або фільм");
         }
 
         // Динамічний текст
         if (isMovie) {
-          document.getElementById("season-or-movie").textContent = `Фільм ${episode.number}`;
-          document.getElementById("episode-number").textContent = "";
+          seasonOrMovieSpan.textContent = `Фільм ${movieNumber}`;
+          episodeNumSpan.textContent = "";
         } else {
-          document.getElementById("season-or-movie").textContent = `Сезон ${seasonNumber}`;
-          document.getElementById("episode-number").textContent = `Серія ${episodeNumber}`;
+          seasonOrMovieSpan.textContent = `Сезон ${seasonNumber}`;
+          episodeNumSpan.textContent = `Серія ${episodeNumber}`;
         }
-        document.getElementById("episode-title").textContent = episode.name;
-
+        titleSpan.textContent = episode.title || episode.name;
 
         // Встановлюємо відео
         player.src = episode.dubbing[0].videoUrl;

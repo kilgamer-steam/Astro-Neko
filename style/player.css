@@ -36,7 +36,49 @@ header .logo h1 {
   margin: 0;
   font-size: 1.8em;
 }
+.header-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
 
+#backToInfo {
+  padding: 10px 20px;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #ff69b4;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+#backToInfo:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
+}
+
+.header-nav a {
+  padding: 10px 20px;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #ff69b4;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.header-nav a:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
+}
 
 .player-wrapper {
   position: relative; /* щоб фон і плеєр були в одному блоці */
