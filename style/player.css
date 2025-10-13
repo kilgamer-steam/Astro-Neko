@@ -150,50 +150,21 @@ video {
   position: relative;
 }
 
-/* Підказка знизу */
+/* Підказка знизу, яка може виходити за межі батьківського контейнера */
 #episode-title[title]:hover::after {
   content: attr(title);
-  position: absolute;
-  top: 100%;
+  position: fixed; /* Змінюємо на fixed для вільного позиціонування */
+  top: auto;
+  bottom: -10px; /* Позиціонуємо знизу вікна */
   left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  background: rgba(29, 29, 32, 0.95);
-  color: #cc6096ff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #943a67ff;
-  white-space: nowrap;
-  z-index: 1000;
-  font-size: 0.9em;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-/* Стрілочка зверху для підказки знизу */
-#episode-title[title]:hover::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-bottom-color: #943a67ff;
-}
-
-/* Альтернативний стиль з градієнтом */
-#episode-title[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
+  transform: translateX(-50%) translateY(100%);
   background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
   color: #ff82c1;
   padding: 10px 14px;
   border-radius: 8px;
   border: 2px solid #943a67ff;
   white-space: nowrap;
-  z-index: 1000;
+  z-index: 10000; /* Дуже високий z-index */
   font-size: 0.9em;
   font-weight: 500;
   box-shadow: 0 6px 20px rgba(148, 58, 103, 0.3);
@@ -201,28 +172,29 @@ video {
   animation: tooltipFadeBottom 0.2s ease-out;
 }
 
-/* Анімація появи знизу */
+/* Анімація появи */
 @keyframes tooltipFadeBottom {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(4px);
+    transform: translateX(-50%) translateY(80%);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(100%);
   }
 }
 
-/* Стрілочка для градієнтної підказки */
+/* Стрілочка зверху для підказки знизу */
 #episode-title[title]:hover::before {
   content: '';
-  position: absolute;
-  top: calc(100% - 8px);
+  position: fixed;
+  top: auto;
+  bottom: -4px;
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-bottom-color: #943a67ff;
-  z-index: 1001;
+  z-index: 10001;
 }
 .controls-row {
   display: flex;
