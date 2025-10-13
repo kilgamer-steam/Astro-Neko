@@ -134,6 +134,37 @@
         document.querySelector(".main-container").appendChild(moviesBlock);
       }
     }
+    // Auto-hide header functionality
+let lastScrollY = window.scrollY;
+const header = document.querySelector('header');
+const headerHeight = header.offsetHeight;
+
+// Встановлюємо правильний відступ для контенту
+document.querySelector('.content-wrapper').style.paddingTop = headerHeight + 'px';
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
+        // Скролимо вниз - ховаємо хедер
+        header.classList.add('hidden');
+    } else {
+        // Скролимо вгору - показуємо хедер
+        header.classList.remove('hidden');
+    }
+    
+    lastScrollY = currentScrollY;
+});
+
+// Додатково: показуємо хедер при ховері
+header.addEventListener('mouseenter', () => {
+    header.classList.remove('hidden');
+});
+
+// Запобігаємо миттєвому хованню при виході курсора
+header.addEventListener('mouseleave', () => {
+    lastScrollY = window.scrollY; // Скидаємо позицію скролу
+});
   </script>
 </body>
 </html>
