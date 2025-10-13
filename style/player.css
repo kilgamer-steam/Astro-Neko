@@ -150,30 +150,30 @@ video {
   position: relative;
 }
 .custom-tooltip {
-  position: fixed;
-  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-  color: #ff82c1;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 2px solid #943a67ff;
-  white-space: nowrap;
-  z-index: 10000;
-  font-size: 0.9em;
-  font-weight: 500;
-  box-shadow: 0 6px 20px rgba(148, 58, 103, 0.3);
-  backdrop-filter: blur(15px);
-  display: none;
-  pointer-events: none;
+    position: fixed;
+    background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
+    color: #ff82c1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 2px solid #943a67ff;
+    white-space: nowrap;
+    z-index: 10000;
+    font-size: 0.9em;
+    font-weight: 500;
+    box-shadow: 0 8px 25px rgba(148, 58, 103, 0.4);
+    backdrop-filter: blur(15px);
+    pointer-events: none;
+    display: none;
 }
 
 .custom-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-bottom-color: #943a67ff;
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: #943a67ff;
 }
 
 
