@@ -110,12 +110,12 @@ header.hidden {
   width: 90%;
   margin-top: 30px;
   background: rgba(29, 29, 32, 0.2); /* 40% непрозорості */
-  padding: 20px;
+  padding: 200px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   overflow: hidden;
   backdrop-filter: blur(2px);
-  border: 1px solid rgba(16, 9, 26, 0.2); /* Додаємо обводку */
+  border: 1px solid rgba(255, 105, 180, 0.2); /* Додаємо обводку */
 }
 
 .player-bg {
