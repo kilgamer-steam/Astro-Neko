@@ -20,7 +20,7 @@
 </header>
 
   <div class="player-wrapper">
-    <video id="anime-player" controls autoplay></video>
+    <video id="anime-player" controls></video>
 
     <div class="controls-row">
       <span id="season-or-movie">?</span>
@@ -130,18 +130,20 @@ async function loadPlayer() {
             if (animePreferences.volume !== undefined) initialVolume = animePreferences.volume;
         }
 
-        // Встановлюємо початкові значення
+        // Встановлюємо початкові значення (без автопрогравання)
         audioSelect.selectedIndex = initialDubbingIndex;
         player.src = episode.dubbing[initialDubbingIndex].videoUrl;
         player.volume = initialVolume;
+        // Автопрогравання вимкнено - користувач сам натисне play
 
-        // Обробник зміни озвучки
+        // Обробник зміни озвучки (також без автопрогравання)
         audioSelect.onchange = () => {
             const selectedStudio = audioSelect.options[audioSelect.selectedIndex].dataset.studio;
             const currentTime = player.currentTime;
             player.src = audioSelect.value;
             player.currentTime = currentTime;
-            player.play();
+            // Не запускаємо програвання автоматично
+            // player.play(); - видалено
             
             // Оновлюємо налаштування аніме
             saveAnimePreferences(selectedStudio);
