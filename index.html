@@ -9,30 +9,33 @@
 </head>
 <body>
     <header>
-    <div class="header-left">
-        <img src="images/favicon1.png" alt="logo">
-        <h1>AstroNeko</h1>
-    </div>
+        <div class="header-left">
+            <img src="images/favicon1.png" alt="logo">
+            <h1>AstroNeko</h1>
+        </div>
 
-    <div class="search-container">
-        <input type="text" id="search" placeholder="Пошук аніме...">
-        <button id="surprise">Здивуй мене</button>
-    </div>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Пошук аніме...">
+            <button id="surprise">Здивуй мене</button>
+        </div>
     </header>
-
 
     <main>
         <div class="anime-grid" id="anime-grid">
             <!-- Картки аніме будуть згенеровані тут -->
         </div>
+        <p id="loading" style="text-align:center; color:#ff69b4; display:none;">Завантаження...</p>
     </main>
 
     <script>
+        let animeList = [];
+        let loadedCount = 0;
+        const batchSize = 20;
+
         // Створюємо картку аніме
         function createAnimeCard(anime) {
             const card = document.createElement('div');
             card.classList.add('anime-card');
-            card.onclick = () => card.classList.toggle('flipped');
 
             const front = document.createElement('div');
             front.classList.add('front');
@@ -44,53 +47,74 @@
                 <h3>${anime.title}</h3>
               </div>`;
 
-
             const back = document.createElement('div');
             back.classList.add('back');
             back.innerHTML = `
                 <p>Жанри: ${anime.tags.join(', ')}</p>
                 <p>Оцінка: ${anime.rating || 'N/A'}</p>
                 <p>Статус: ${anime.status}</p>
-                <button>Детальніше</button>
+                <button class="details-btn">Детальніше</button>
             `;
             back.querySelector('button').onclick = (e) => {
-              e.stopPropagation();
-              window.location.href = `anime-info.html?id=${encodeURIComponent(anime.id)}`;
+                e.stopPropagation();
+                window.location.href = `anime-info.html?id=${encodeURIComponent(anime.id)}`;
             };
 
             card.appendChild(front);
             card.appendChild(back);
+            card.onclick = () => card.classList.toggle('flipped');
+
             return card;
         }
 
-        // Завантаження списку аніме
-        async function loadAnime() {
-            const grid = document.getElementById('anime-grid');
+        // Завантажуємо список аніме (тільки id)
+        async function loadAnimeList() {
             try {
-                const listResp = await fetch('/Astro-Neko/anime/anime-list.json');
-                if (!listResp.ok) throw new Error('Не вдалося завантажити anime-list.json');
-                const animeList = await listResp.json();
-
-                for (const animeId of animeList) {
-                    const resp = await fetch(`/Astro-Neko/anime/${encodeURIComponent(animeId)}.json`);
-                    if (!resp.ok) continue;
-                    const anime = await resp.json();
-                    grid.appendChild(createAnimeCard(anime));
-                }
+                const resp = await fetch('anime/anime-list.json');
+                if (!resp.ok) throw new Error('Не вдалося завантажити anime-list.json');
+                animeList = await resp.json();
+                loadNextBatch(); // завантажуємо першу партію
             } catch (err) {
-                console.error('Помилка при завантаженні аніме:', err);
+                console.error('Помилка при завантаженні списку аніме:', err);
             }
         }
 
-        loadAnime();
+        // Завантажуємо наступну партію карток
+        async function loadNextBatch() {
+            const grid = document.getElementById('anime-grid');
+            const loadingText = document.getElementById('loading');
+            if (loadedCount >= animeList.length) return;
+
+            loadingText.style.display = 'block';
+            const nextBatch = animeList.slice(loadedCount, loadedCount + batchSize);
+
+            for (const animeId of nextBatch) {
+                try {
+                    const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+                    if (!resp.ok) continue;
+                    const anime = await resp.json();
+                    grid.appendChild(createAnimeCard(anime));
+                } catch (err) {
+                    console.error(`Не вдалося завантажити ${animeId}.json`, err);
+                }
+            }
+
+            loadedCount += nextBatch.length;
+            loadingText.style.display = 'none';
+        }
+
+        // Інфініт-скролл
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+                loadNextBatch();
+            }
+        });
 
         // Кнопка "Здивуй мене"
         document.getElementById('surprise').addEventListener('click', () => {
-            const cards = document.querySelectorAll('.anime-card');
-            if (cards.length === 0) return;
-            const randomCard = cards[Math.floor(Math.random() * cards.length)];
-            const animeId = encodeURIComponent(randomCard.dataset.id || randomCard.querySelector('button').onclick.toString().match(/id=([^\']+)/)[1]);
-            window.location.href = `anime-info.html?id=${animeId}`;
+            if (animeList.length === 0) return;
+            const randomId = animeList[Math.floor(Math.random() * animeList.length)];
+            window.location.href = `anime-info.html?id=${encodeURIComponent(randomId)}`;
         });
 
         // Пошук аніме
@@ -101,6 +125,9 @@
                 card.style.display = title.includes(query) ? '' : 'none';
             });
         });
+
+        // Ініціалізація
+        loadAnimeList();
     </script>
 </body>
 </html>
