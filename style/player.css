@@ -1,117 +1,110 @@
-/* ===== Загальні стилі ===== */
 body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  background: #0f0f10;
+  background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
 }
 
-/* ===== Header ===== */
 header {
+  width: 100%;
   background: #18181b;
   display: flex;
   align-items: center;
   padding: 10px 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
-header .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
+header img {
+  height: 40px;
+  margin-right: 10px;
 }
 
-header .logo img {
-  height: 45px;
-  width: 45px;
-}
-
-header .logo h1 {
+header h1 {
   color: #ff69b4;
   margin: 0;
   font-size: 1.8em;
 }
 
-/* ===== Player container ===== */
-.player-container {
+.player-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 20px;
-}
-
-/* ===== Video player ===== */
-#anime-player {
-  width: 100%;
   max-width: 900px;
-  border-radius: 10px;
-  box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
-  background: #000;
-  margin-bottom: 20px;
+  width: 90%;
+  margin-top: 30px;
+  background: #1d1d20;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
-/* ===== Controls ===== */
-.player-controls {
+video {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 10px;
+  background: #000;
+  margin-bottom: 15px;
+  border: 2px solid #ff69b4;
+}
+
+.controls-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  background: #18181b;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  max-width: 900px;
-  width: 100%;
+  gap: 12px;
 }
 
-.player-controls label {
-  font-size: 0.95em;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: #fff;
-}
-
-.player-controls span {
+.controls-row span {
   font-weight: bold;
-  margin-left: 5px;
   color: #ff69b4;
+  font-size: 1em;
 }
 
-.player-controls select {
-  background: #232327;
+.controls-row label {
+  font-size: 0.95em;
   color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin-top: 5px;
 }
 
-.player-controls button {
+.controls-row select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ff69b4;
+  background: #1d1d20;
+  color: #fff;
+  cursor: pointer;
+}
+
+.controls-row button {
+  padding: 8px 12px;
+  font-size: 0.95em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   background: #ff69b4;
   color: #fff;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
+  transition: all 0.3s;
 }
 
-.player-controls button:hover {
+.controls-row button:hover {
   background: #ff82c1;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 800px) {
-  .player-controls {
+@media(max-width: 700px){
+  video { max-height: 300px; }
+  .controls-row {
     flex-direction: column;
-    align-items: stretch;
+    gap: 8px;
   }
-  .player-controls label {
-    align-items: flex-start;
+  .controls-row button, .controls-row select {
+    font-size: 0.9em;
+    padding: 6px 10px;
+  }
+  .controls-row span {
+    font-size: 0.95em;
   }
 }
