@@ -9,33 +9,36 @@
 </head>
 <body>
   <div class="anime-bg" id="anime-bg"></div>
-  <header>
-    <a href="index.html" class="logo">
-      <img src="images/favicon1.png" alt="Logo">
-      <h1>AstroNeko</h1>
-    </a>
-  </header>
+  
+  <div class="content-wrapper">
+    <header>
+      <a href="index.html" class="logo">
+        <img src="images/favicon1.png" alt="Logo">
+        <h1>AstroNeko</h1>
+      </a>
+    </header>
 
-  <main id="anime-info">
-    <div class="anime-header">
-      <div class="anime-title-section">
-        <img id="anime-image" src="" alt="Anime poster">
-        <div class="anime-meta">
-          <h2 id="anime-title">Назва аніме</h2>
-          <p id="anime-description">Опис аніме...</p>
-          <p><strong>Жанри:</strong> <span id="anime-tags"></span></p>
-          <p><strong>Статус:</strong> <span id="anime-status"></span></p>
-          <p><strong>Вік:</strong> <span id="anime-age"></span></p>
-          <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
+    <main id="anime-info">
+      <div class="anime-header">
+        <div class="anime-title-section">
+          <img id="anime-image" src="" alt="Anime poster">
+          <div class="anime-meta">
+            <h2 id="anime-title">Назва аніме</h2>
+            <p id="anime-description">Опис аніме...</p>
+            <p><strong>Жанри:</strong> <span id="anime-tags"></span></p>
+            <p><strong>Статус:</strong> <span id="anime-status"></span></p>
+            <p><strong>Вік:</strong> <span id="anime-age"></span></p>
+            <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <section class="anime-seasons">
-      <h3>Сезони та серії</h3>
-      <div id="season-list"></div>
-    </section>
-  </main>
+      <section class="anime-seasons">
+        <h3>Сезони та серії</h3>
+        <div id="season-list"></div>
+      </section>
+    </main>
+  </div>
 
   <script>
     // Отримуємо ID аніме з URL
@@ -89,7 +92,7 @@
 
         season.episodes.forEach((ep, idx) => {
           const btn = document.createElement("button");
-          btn.classList.add("episode-btn"); // <-- додали клас
+          btn.classList.add("episode-btn");
           btn.textContent = ep.title;
           btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
@@ -113,7 +116,7 @@
 
         anime.movies.forEach((mov, idx) => {
           const btn = document.createElement("button");
-          btn.classList.add("movie-btn"); // <-- додали клас
+          btn.classList.add("movie-btn");
           btn.textContent = mov.title;
           btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx+1}`;

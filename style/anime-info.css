@@ -1,34 +1,40 @@
 body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  background: #0f0f10;
   color: #fff;
   min-height: 100vh;
+  position: relative;
 }
 
 /* ===== Anime background ===== */
 .anime-bg {
-  position: fixed; /* Змінюємо на fixed для покриття всієї сторінки */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* Фіксована висота 100% */
+  height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px) brightness(0.98); /* Блюр 2px і затемнення на 2% */
-  z-index: -1; /* Поміщаємо фон за всіма елементами */
+  filter: blur(2px) brightness(0.98);
+  z-index: -1;
+}
+
+/* ===== Content wrapper ===== */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
 }
 
 /* ===== Header ===== */
 header {
-  background: #18181b;
+  background: rgba(24, 24, 27, 0.85); /* Напівпрозорий фон */
   display: flex;
   align-items: center;
   padding: 10px 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  position: relative; /* Забезпечуємо коректне відображення поверх фону */
-  z-index: 1;
+  backdrop-filter: blur(5px); /* Додатковий блюр для хедера */
 }
 
 header .logo {
@@ -62,7 +68,6 @@ header .logo h1 {
   padding: 40px;
   gap: 30px;
   position: relative;
-  z-index: 1;
 }
 
 .anime-title-section img {
@@ -92,8 +97,6 @@ header .logo h1 {
 /* ===== Seasons and episodes ===== */
 .anime-seasons {
   padding: 30px 40px;
-  position: relative; /* Забезпечуємо коректне відображення поверх фону */
-  z-index: 1;
 }
 
 .anime-seasons h3 {
@@ -103,11 +106,12 @@ header .logo h1 {
 }
 
 .season {
-  background: #1d1d20;
+  background: rgba(29, 29, 32, 0.85); /* Напівпрозорий фон */
   padding: 15px 20px;
   border-radius: 10px;
   margin-bottom: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px); /* Додатковий блюр */
 }
 
 .season h4 {
