@@ -121,13 +121,27 @@ titleSpan.addEventListener('mouseenter', (e) => {
     customTooltip.textContent = episode.name;
     customTooltip.style.left = (rect.left + rect.width / 2) + 'px';
     customTooltip.style.top = (rect.bottom + 10) + 'px';
-    customTooltip.style.transform = 'translateX(-50%)';
+    customTooltip.style.transform = 'translateX(-50%) scale(0.8)';
+    customTooltip.style.opacity = '0';
     customTooltip.style.display = 'block';
+    
+    // Анімація появи
+    setTimeout(() => {
+        customTooltip.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        customTooltip.style.transform = 'translateX(-50%) scale(1)';
+        customTooltip.style.opacity = '1';
+    }, 10);
 });
 
 titleSpan.addEventListener('mouseleave', () => {
     if (customTooltip) {
-        customTooltip.style.display = 'none';
+        customTooltip.style.transition = 'all 0.2s ease-out';
+        customTooltip.style.transform = 'translateX(-50%) scale(0.8)';
+        customTooltip.style.opacity = '0';
+        
+        setTimeout(() => {
+            customTooltip.style.display = 'none';
+        }, 200);
     }
 });
 
