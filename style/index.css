@@ -4,6 +4,7 @@ body {
   color: #fff;
   min-height: 100vh;
   position: relative;
+  background: rgba(0, 0, 0, 0.29);
 }
 
 /* Додаємо псевдоелемент для фону */
