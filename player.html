@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style/player.css">
 </head>
 <body>
+  <div class="anime-bg" id="anime-bg"></div>
   <header>
   <a href="index.html" class="logo">
     <img src="images/favicon1.png" alt="Logo">
@@ -41,7 +42,7 @@
     const seasonNumber = parseInt(params.get("season"));
     const episodeNumber = parseInt(params.get("episode"));
     const movieNumber = parseInt(params.get("movie"));
-
+    
     const player = document.getElementById("anime-player");
     const audioSelect = document.getElementById("audio-select");
     const seasonOrMovieSpan = document.getElementById("season-or-movie");
@@ -69,6 +70,7 @@ function setAnimePreferences(animeId, preferences) {
 }
 
 async function loadPlayer() {
+  document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
     if (!animeId) {
         alert("Не вказано всі параметри для плеєра!");
         return;

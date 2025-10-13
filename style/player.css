@@ -9,7 +9,18 @@
   min-height: 100vh;
   overflow-x: hidden;
 }
-
+.anime-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.3); /* Хороше затемнення */
+  z-index: -1;
+}
 header .logo {
   display: flex;
   align-items: center;
