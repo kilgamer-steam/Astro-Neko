@@ -9,110 +9,81 @@
 </head>
 <body>
   <header>
-    <a href="index.html" class="logo">
-      <img src="images/favicon1.png" alt="Logo">
-      <h1>AstroNeko</h1>
-    </a>
+    <img src="images/favicon1.png" alt="Logo">
+    <h1>AstroNeko Плеєр</h1>
   </header>
 
   <main>
-    <div class="player-wrapper">
-      <div class="player-container">
-        <video id="anime-video" class="anime-video" controls>
-          <source src="" type="video/mp4">
-          Ваш браузер не підтримує відео.
-        </video>
+    <div class="player-container">
+      <video id="anime-video" controls>
+        Ваш браузер не підтримує відео.
+      </video>
 
-        <div class="player-info">
-          <div class="episode-meta">
-            <span>Сезон: <strong id="season-number"></strong></span>
-            <span>Епізод: <strong id="episode-number"></strong></span>
-          </div>
+      <div class="controls">
+        <label for="voice-selection">Озвучка:</label>
+        <select id="voice-selection"></select>
+      </div>
 
-          <div class="controls">
-            <select id="voice-selection" class="voice-select">
-              <!-- Опції озвучок будуть динамічно -->
-            </select>
-
-            <button class="button" id="prev-episode">Попередній епізод</button>
-            <button class="button" id="next-episode">Наступний епізод</button>
-          </div>
-        </div>
+      <div class="info">
+        <p>Сезон: <span id="season-number">?</span></p>
+        <p>Епізод: <span id="episode-number">?</span></p>
       </div>
     </div>
   </main>
 
   <script>
-    // Отримуємо параметри з URL
-    // Отримуємо параметри з URL
-const params = new URLSearchParams(window.location.search);
-const animeId = params.get("anime");
-const seasonNum = parseInt(params.get("season"));
-const episodeNum = parseInt(params.get("episode"));
+    const params = new URLSearchParams(window.location.search);
+    const animeId = params.get("anime");
+    const seasonNum = parseInt(params.get("season"));
+    const episodeNum = parseInt(params.get("episode"));
 
-const video = document.getElementById("anime-video");
-const seasonEl = document.getElementById("season-number");
-const episodeEl = document.getElementById("episode-number");
-const voiceSelect = document.getElementById("voice-selection");
+    const video = document.getElementById("anime-video");
+    const seasonEl = document.getElementById("season-number");
+    const episodeEl = document.getElementById("episode-number");
+    const voiceSelect = document.getElementById("voice-selection");
 
-seasonEl.textContent = seasonNum || "?";
-episodeEl.textContent = episodeNum || "?";
+    seasonEl.textContent = seasonNum || "?";
+    episodeEl.textContent = episodeNum || "?";
 
-async function loadEpisode() {
-  try {
-    const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
-    if (!resp.ok) throw new Error("Не вдалося знайти JSON аніме");
+    async function loadEpisode() {
+      try {
+        if (!animeId || !seasonNum || !episodeNum) throw new Error("Не вказано всі параметри");
 
-    const anime = await resp.json();
-    const season = anime.seasons.find(s => s.seasonNumber === seasonNum);
-    if (!season) throw new Error("Сезон не знайдено");
+        const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+        if (!resp.ok) throw new Error("Не вдалося знайти JSON аніме");
 
-    const episode = season.episodes.find(e => e.number === episodeNum);
-    if (!episode) throw new Error("Епізод не знайдено");
+        const anime = await resp.json();
+        const season = anime.seasons.find(s => s.seasonNumber === seasonNum);
+        if (!season) throw new Error("Сезон не знайдено");
 
-    // Очищуємо попередні опції
-    voiceSelect.innerHTML = "";
+        const episode = season.episodes[episodeNum - 1];
+        if (!episode) throw new Error("Епізод не знайдено");
 
-    // Додаємо озвучки
-    episode.dubbing.forEach((dub, i) => {
-      const option = document.createElement("option");
-      option.value = dub.videoUrl;
-      option.textContent = dub.name;
-      voiceSelect.appendChild(option);
-    });
+        voiceSelect.innerHTML = "";
 
-    // Встановлюємо першу озвучку
-    if (episode.dubbing.length > 0) {
-      video.src = episode.dubbing[0].videoUrl;
-      video.play();
+        episode.dubbing.forEach(dub => {
+          const option = document.createElement("option");
+          option.value = dub.videoUrl;
+          option.textContent = dub.studio;
+          voiceSelect.appendChild(option);
+        });
+
+        if (episode.dubbing.length > 0) {
+          video.src = episode.dubbing[0].videoUrl;
+          video.play();
+        }
+      } catch(err) {
+        alert(err.message);
+        console.error(err);
+      }
     }
 
-  } catch (err) {
-    console.error(err);
-    alert("Не вдалося завантажити епізод. Перевірте параметри URL.");
-  }
-}
-
-// Зміна озвучки
-voiceSelect.addEventListener("change", e => {
-  video.src = e.target.value;
-  video.play();
-});
-
-loadEpisode();
-
-
-    // Кнопки наступний/попередній епізод (тестові, змінюють тільки номер)
-    document.getElementById("prev-episode").addEventListener("click", () => {
-      let ep = parseInt(episodeNum) - 1;
-      if (ep < 1) ep = 1;
-      window.location.href = `player.html?anime=${animeId}&season=${seasonNum}&episode=${ep}`;
+    voiceSelect.addEventListener("change", e => {
+      video.src = e.target.value;
+      video.play();
     });
 
-    document.getElementById("next-episode").addEventListener("click", () => {
-      let ep = parseInt(episodeNum) + 1;
-      window.location.href = `player.html?anime=${animeId}&season=${seasonNum}&episode=${ep}`;
-    });
+    loadEpisode();
   </script>
 </body>
 </html>
