@@ -1,104 +1,63 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Neko</title>
-    <link rel="icon" href="/Astro-Neko/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="/Astro-Neko/style/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroNeko — Плеєр</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style/player.css">
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <img src="/Astro-Neko/images/favicon1.png" alt="logo">
-            <h1>AstroNeko</h1>
-        </div>
+  <header>
+    <a href="index.html" class="logo">
+      <img src="images/favicon1.png" alt="Logo">
+      <h1>AstroNeko</h1>
+    </a>
+  </header>
 
-        <div class="search-container">
-            <input type="text" id="search" placeholder="Пошук аніме...">
-            <button id="surprise">Здивуй мене</button>
-        </div>
-    </header>
+  <main id="player-container">
+    <div id="video-section">
+      <video id="anime-video" controls></video>
+    </div>
 
-    <main>
-        <div class="anime-grid" id="anime-grid">
-            <!-- Картки аніме будуть згенеровані тут -->
-        </div>
-    </main>
+    <div id="video-info">
+      <h2 id="episode-title"></h2>
+      <p id="episode-description"></p>
+    </div>
+  </main>
 
-    <script>
-        function createAnimeCard(anime) {
-            const card = document.createElement('div');
-            card.classList.add('anime-card');
-            card.dataset.id = anime.id;
-            card.onclick = () => card.classList.toggle('flipped');
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const animeId = params.get("anime");
+    const seasonNumber = parseInt(params.get("season"));
+    const episodeNumber = parseInt(params.get("episode"));
 
-            const front = document.createElement('div');
-            front.classList.add('front');
-            front.innerHTML = `
-              <div class="image-container">
-                <img src="${anime.img}" alt="${anime.title}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-              </div>
-              <div class="title-container">
-                <h3>${anime.title}</h3>
-              </div>`;
+    if (!animeId || !seasonNumber || !episodeNumber) {
+      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка параметрів 😿</h2>";
+    } else {
+      loadEpisode(animeId, seasonNumber, episodeNumber);
+    }
 
-            const back = document.createElement('div');
-            back.classList.add('back');
-            back.innerHTML = `
-                <p>Жанри: ${anime.tags.join(', ')}</p>
-                <p>Оцінка: ${anime.rating || 'N/A'}</p>
-                <p>Статус: ${anime.status}</p>
-                <button>Детальніше</button>
-            `;
-            back.querySelector('button').onclick = (e) => {
-                e.stopPropagation();
-                window.location.href = `/Astro-Neko/anime-info.html?id=${encodeURIComponent(anime.id)}`;
-            };
+    async function loadEpisode(animeId, seasonNumber, episodeNumber) {
+      try {
+        const res = await fetch(`anime/${animeId}.json`);
+        if (!res.ok) throw new Error("Не знайдено файл аніме");
+        const anime = await res.json();
 
-            card.appendChild(front);
-            card.appendChild(back);
-            return card;
-        }
+        const season = anime.seasons.find(s => s.seasonNumber === seasonNumber);
+        const episode = season.episodes.find(e => e.episodeNumber === episodeNumber);
 
-        async function loadAnime() {
-            const grid = document.getElementById('anime-grid');
-            try {
-                // Шлях від кореня репозиторію
-                const listResp = await fetch('/Astro-Neko/anime/anime-list.json');
-                if (!listResp.ok) throw new Error('Не вдалося завантажити anime-list.json');
-                const animeList = await listResp.json();
+        if (!episode) throw new Error("Епізод не знайдено");
 
-                for (const animeId of animeList) {
-                    const resp = await fetch(`/Astro-Neko/anime/${encodeURIComponent(animeId)}.json`);
-                    if (!resp.ok) continue;
-                    const anime = await resp.json();
-                    grid.appendChild(createAnimeCard(anime));
-                }
-            } catch (err) {
-                console.error('Помилка при завантаженні аніме:', err);
-            }
-        }
-
-        loadAnime();
-
-        // Кнопка "Здивуй мене"
-        document.getElementById('surprise').addEventListener('click', () => {
-            const cards = document.querySelectorAll('.anime-card');
-            if (cards.length === 0) return;
-            const randomCard = cards[Math.floor(Math.random() * cards.length)];
-            const animeId = encodeURIComponent(randomCard.dataset.id);
-            window.location.href = `/Astro-Neko/anime-info.html?id=${animeId}`;
-        });
-
-        // Пошук
-        document.getElementById('search').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            document.querySelectorAll('.anime-card').forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                card.style.display = title.includes(query) ? '' : 'none';
-            });
-        });
-    </script>
+        document.title = `${anime.title} — ${episode.name}`;
+        document.getElementById("episode-title").textContent = `${anime.title} — ${episode.title}: ${episode.name}`;
+        document.getElementById("episode-description").textContent = episode.description || "Опис відсутній";
+        document.getElementById("anime-video").src = episode.dubbing[0].videoUrl;
+      } catch (err) {
+        console.error(err);
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Не вдалося завантажити епізод 😿</h2>";
+      }
+    }
+  </script>
 </body>
 </html>
