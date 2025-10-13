@@ -132,5 +132,45 @@
         }
       ]
     }
+  ],
+  "movies": [
+    {
+      "movieNumber": 1,
+      "title": "Фільм 1",
+      "name": "",
+      "dubbing": [
+        {
+          "studio": "Didko studio",
+          "videoUrl": "/anime/videos/kaijuu 8-gou/movie/Didko studio/movie1.mp4"
+        }
+      ],
+      "opening": [
+        0,
+        0
+      ],
+      "ending": [
+        0,
+        0
+      ]
+    },
+    {
+      "movieNumber": 2,
+      "title": "Фільм 2",
+      "name": "",
+      "dubbing": [
+        {
+          "studio": "Didko studio",
+          "videoUrl": "/anime/videos/kaijuu 8-gou/movie/Didko studio/movie2.mp4"
+        }
+      ],
+      "opening": [
+        0,
+        0
+      ],
+      "ending": [
+        0,
+        0
+      ]
+    }
   ]
 }
