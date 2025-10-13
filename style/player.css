@@ -149,15 +149,12 @@ video {
   cursor: help;
   position: relative;
 }
-#episode-title[title] {
-  pointer-events: none;
-}
 /* Підказка знизу, яка може виходити за межі батьківського контейнера */
-#episode-title[title]:hover::after {
-  content: attr(title);
-  position: fixed; /* Змінюємо на fixed для вільного позиціонування */
+#episode-title[data-title]:hover::after {
+  content: attr(data-title); /* Змінюємо на data-title */
+  position: fixed;
   top: auto;
-  bottom: -10px; /* Позиціонуємо знизу вікна */
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%) translateY(100%);
   background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
@@ -166,12 +163,25 @@ video {
   border-radius: 8px;
   border: 2px solid #943a67ff;
   white-space: nowrap;
-  z-index: 10000; /* Дуже високий z-index */
+  z-index: 10000;
   font-size: 0.9em;
   font-weight: 500;
   box-shadow: 0 6px 20px rgba(148, 58, 103, 0.3);
   backdrop-filter: blur(15px);
   animation: tooltipFadeBottom 0.2s ease-out;
+}
+
+/* Аналогічно для стрілочки */
+#episode-title[data-title]:hover::before {
+  content: '';
+  position: fixed;
+  top: auto;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: #943a67ff;
+  z-index: 10001;
 }
 
 /* Анімація появи */
@@ -186,18 +196,7 @@ video {
   }
 }
 
-/* Стрілочка зверху для підказки знизу */
-#episode-title[title]:hover::before {
-  content: '';
-  position: fixed;
-  top: auto;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-bottom-color: #943a67ff;
-  z-index: 10001;
-}
+
 .controls-row {
   display: flex;
   flex-wrap: nowrap; /* Забороняємо перенесення на новий рядок */
