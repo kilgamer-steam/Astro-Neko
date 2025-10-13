@@ -56,86 +56,86 @@
       window.location.href = `anime-info.html?id=${encodeURIComponent(animeId)}`;
     };
 
-    async function loadPlayer() {
-      if (!animeId) {
-        alert("Не вказано всі параметри для плеєра!");
-        return;
-      }
+   async function loadPlayer() {
+  if (!animeId) {
+    alert("Не вказано всі параметри для плеєра!");
+    return;
+  }
 
-      try {
-        const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
-        if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
-        const anime = await resp.json();
+  try {
+    const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+    if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
+    const anime = await resp.json();
 
-        let isMovie = false;
-        let season = null;
-        let episode = null;
+    let isMovie = false;
+    let season = null;
+    let episode = null;
 
-        if (seasonNumber) {
-          season = anime.seasons.find(s => s.seasonNumber === seasonNumber);
-          if (!season) throw new Error("Сезон не знайдено");
-          episode = season.episodes[episodeNumber - 1];
-          if (!episode) throw new Error("Епізод не знайдено");
-        } else if (movieNumber) {
-          isMovie = true;
-          episode = anime.movies[movieNumber - 1];
-          if (!episode) throw new Error("Фільм не знайдено");
-        } else {
-          throw new Error("Не вказано сезон або фільм");
-        }
-
-        // Динамічний текст
-        if (isMovie) {
-          seasonOrMovieSpan.textContent = `Фільм ${movieNumber}`;
-          episodeNumSpan.textContent = "";
-        } else {
-          seasonOrMovieSpan.textContent = `Сезон ${seasonNumber}`;
-          episodeNumSpan.textContent = `Серія ${episodeNumber}`;
-        }
-        titleSpan.textContent = episode.title || episode.name;
-
-        // Встановлюємо відео
-        player.src = episode.dubbing[0].videoUrl;
-
-        // Заповнюємо select для озвучки
-        audioSelect.innerHTML = "";
-        episode.dubbing.forEach(d => {
-          const option = document.createElement("option");
-          option.value = d.videoUrl;
-          option.textContent = d.studio;
-          audioSelect.appendChild(option);
-        });
-        audioSelect.onchange = () => {
-          player.src = audioSelect.value;
-          player.play();
-        };
-
-        // Кнопки серії
-        if (isMovie) {
-          prevBtn.style.display = "none";
-          nextBtn.style.display = "none";
-        } else {
-          prevBtn.style.display = "inline";
-          nextBtn.style.display = "inline";
-
-          prevBtn.onclick = () => {
-            if (episodeNumber > 1) {
-              window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber-1}`;
-            }
-          };
-
-          nextBtn.onclick = () => {
-            if (episodeNumber < season.episodes.length) {
-              window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber+1}`;
-            }
-          };
-        }
-
-      } catch (err) {
-        console.error(err);
-        alert("Помилка при завантаженні плеєра");
-      }
+    if (seasonNumber) {
+      season = anime.seasons.find(s => s.seasonNumber === seasonNumber);
+      if (!season) throw new Error("Сезон не знайдено");
+      episode = season.episodes[episodeNumber - 1];
+      if (!episode) throw new Error("Епізод не знайдено");
+    } else if (movieNumber) {
+      isMovie = true;
+      episode = anime.movies[movieNumber - 1];
+      if (!episode) throw new Error("Фільм не знайдено");
+    } else {
+      throw new Error("Не вказано сезон або фільм");
     }
+
+    // Динамічний текст - використовуємо episode.name
+    if (isMovie) {
+      seasonOrMovieSpan.textContent = `Фільм ${movieNumber}`;
+      episodeNumSpan.textContent = "";
+    } else {
+      seasonOrMovieSpan.textContent = `Сезон ${seasonNumber}`;
+      episodeNumSpan.textContent = `Серія ${episodeNumber}`;
+    }
+    titleSpan.textContent = episode.name; // Змінено з title на name
+
+    // Встановлюємо відео
+    player.src = episode.dubbing[0].videoUrl;
+
+    // Заповнюємо select для озвучки
+    audioSelect.innerHTML = "";
+    episode.dubbing.forEach(d => {
+      const option = document.createElement("option");
+      option.value = d.videoUrl;
+      option.textContent = d.studio;
+      audioSelect.appendChild(option);
+    });
+    audioSelect.onchange = () => {
+      player.src = audioSelect.value;
+      player.play();
+    };
+
+    // Кнопки серії
+    if (isMovie) {
+      prevBtn.style.display = "none";
+      nextBtn.style.display = "none";
+    } else {
+      prevBtn.style.display = "inline";
+      nextBtn.style.display = "inline";
+
+      prevBtn.onclick = () => {
+        if (episodeNumber > 1) {
+          window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber-1}`;
+        }
+      };
+
+      nextBtn.onclick = () => {
+        if (episodeNumber < season.episodes.length) {
+          window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber+1}`;
+        }
+      };
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Помилка при завантаженні плеєра");
+  }
+}
 
     loadPlayer();
   </script>
