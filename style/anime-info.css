@@ -4,7 +4,6 @@ body {
   color: #fff;
   min-height: 100vh;
   position: relative;
-  background: rgba(0, 0, 0, 0.29);
 }
 
 /* ===== Anime background ===== */
@@ -17,7 +16,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px) brightness(0.98);
+  filter: blur(2px) brightness(0.7); /* brightness(0.7) - затемнення на 30% */
   z-index: -1;
 }
 
