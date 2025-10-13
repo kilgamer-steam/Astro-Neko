@@ -50,10 +50,7 @@
     const titleSpan = document.getElementById("episode-title");
     const prevBtn = document.getElementById("prev-episode");
     const nextBtn = document.getElementById("next-episode");
-    const playerBg = document.getElementById("player-bg");
 
-// після того, як ми отримали об’єкт anime та епізод:
-  playerBg.style.backgroundImage = `url('${anime.background || anime.img}')`;
 
     async function loadPlayer() {
       if (!animeId) {
@@ -80,6 +77,11 @@
           episode = anime.movies.find(m => m.number === episodeNumber);
           if (!episode) throw new Error("Фільм не знайдено");
         }
+        // після того, як ви завантажили anime JSON і вибрали епізод
+const playerBg = document.getElementById("player-bg");
+
+// підставляємо фон з JSON (якщо є, інакше беремо постер)
+playerBg.style.backgroundImage = `url('${anime.background || anime.img}')`;
 
         // Динамічний текст
         if (isMovie) {
