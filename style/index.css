@@ -25,7 +25,7 @@ body::before {
 header {
   width: 100%;
   background: rgba(24, 24, 27, 0.56);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(2px);
   display: flex;
   justify-content: space-between;
   align-items: center;
