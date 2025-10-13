@@ -21,7 +21,7 @@ body::before {
 
 /* ===== Header ===== */
 header {
-  background: rgba(24, 24, 27, 0.85);
+  background: rgba(24, 24, 27, 0.42);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
