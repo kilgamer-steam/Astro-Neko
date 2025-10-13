@@ -102,18 +102,20 @@ header.hidden {
 }
 
 .player-wrapper {
-  position: relative; /* щоб фон і плеєр були в одному блоці */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 900px;
   width: 90%;
   margin-top: 30px;
-  background: #1d1d2048;
-  padding: 80px;
+  background: rgba(29, 29, 32, 0.2); /* 40% непрозорості */
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  overflow: hidden; /* щоб фон не виходив за рамки */
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 105, 180, 0.2); /* Додаємо обводку */
 }
 
 .player-bg {
