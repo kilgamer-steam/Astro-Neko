@@ -140,15 +140,24 @@ video {
   position: relative;
   z-index: 1;
 }
-
+#episode-title {
+  max-width: 200px; /* Обмежуємо максимальну ширину назви */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Додаємо "..." якщо назва задовга */
+  white-space: nowrap;
+  flex-shrink: 1; /* Дозволяємо стискатися */
+}
 .controls-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Забороняємо перенесення на новий рядок */
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   position: relative;
   z-index: 1;
+  width: 100%;
+  white-space: nowrap; /* Забороняємо перенесення тексту */
+  padding: 10px 0; /* Додаємо відступи для кращого вигляду */
 }
 
 .controls-row label,
@@ -163,11 +172,13 @@ video {
   font-weight: bold;
   color: #cc6096ff;
   font-size: 1em;
+  flex-shrink: 0; /* Забороняємо стискання */
 }
 
 .controls-row label {
   font-size: 0.95em;
   color: #cc6096ff;
+  flex-shrink: 0;
 }
 .controls-row select {
   padding: 6px 10px;
@@ -176,6 +187,7 @@ video {
   background: #1d1d20;
   color: #cc6096ff;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .controls-row button {
@@ -187,6 +199,8 @@ video {
   background: #943a67ff;
   color: #ff69b4;
   transition: all 0.3s;
+  flex-shrink: 0;
+  white-space: nowrap; /* Забороняємо перенесення тексту в кнопках */
 }
 
 .controls-row button:hover {
