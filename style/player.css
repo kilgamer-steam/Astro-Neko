@@ -146,18 +146,47 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-shrink: 1;
-  cursor: pointer;
+  cursor: help;
   position: relative;
-  transition: all 0.3s ease;
 }
 
-/* Стильна підказка */
+/* Підказка знизу */
 #episode-title[title]:hover::after {
   content: attr(title);
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(-8px);
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(29, 29, 32, 0.95);
+  color: #cc6096ff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #943a67ff;
+  white-space: nowrap;
+  z-index: 1000;
+  font-size: 0.9em;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Стрілочка зверху для підказки знизу */
+#episode-title[title]:hover::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-bottom-color: #943a67ff;
+}
+
+/* Альтернативний стиль з градієнтом */
+#episode-title[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
   background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
   color: #ff82c1;
   padding: 10px 14px;
@@ -169,30 +198,30 @@ video {
   font-weight: 500;
   box-shadow: 0 6px 20px rgba(148, 58, 103, 0.3);
   backdrop-filter: blur(15px);
-  animation: tooltipFade 0.2s ease-out;
+  animation: tooltipFadeBottom 0.2s ease-out;
 }
 
-/* Анімація появи */
-@keyframes tooltipFade {
+/* Анімація появи знизу */
+@keyframes tooltipFadeBottom {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(-4px);
+    transform: translateX(-50%) translateY(4px);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(-8px);
+    transform: translateX(-50%) translateY(10px);
   }
 }
 
-/* Стрілочка */
+/* Стрілочка для градієнтної підказки */
 #episode-title[title]:hover::before {
   content: '';
   position: absolute;
-  bottom: calc(100% - 8px);
+  top: calc(100% - 8px);
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: #943a67ff;
+  border-bottom-color: #943a67ff;
   z-index: 1001;
 }
 .controls-row {
@@ -274,9 +303,8 @@ video {
   }
   
   #episode-title[title]:hover::after {
-    font-size: 0.8em;
-    padding: 6px 10px;
-    white-space: normal; /* Дозволяємо перенесення на мобільних */
+    top: calc(100% + 10px);
+    white-space: normal;
     max-width: 250px;
     text-align: center;
   }
