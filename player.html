@@ -70,7 +70,6 @@ function setAnimePreferences(animeId, preferences) {
 }
 
 async function loadPlayer() {
-  document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
     if (!animeId) {
         alert("Не вказано всі параметри для плеєра!");
         return;
@@ -80,7 +79,7 @@ async function loadPlayer() {
         const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
         if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
         const anime = await resp.json();
-
+        document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
         let isMovie = false;
         let season = null;
         let episode = null;
