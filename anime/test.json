@@ -23,7 +23,11 @@
           "dubbing": [
             {
               "studio": "Didko studio",
-              "videoUrl": "/anime/videos/test/seson1/Didko studio/ep1.mp4"
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
           "opening": [
@@ -41,7 +45,11 @@
           "dubbing": [
             {
               "studio": "Didko studio",
-              "videoUrl": "/anime/videos/test/seson1/Didko studio/ep2.mp4"
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
           "opening": [
@@ -59,7 +67,11 @@
           "dubbing": [
             {
               "studio": "Didko studio",
-              "videoUrl": "/anime/videos/test/seson1/Didko studio/ep3.mp4"
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
           "opening": [
@@ -82,7 +94,11 @@
           "dubbing": [
             {
               "studio": "Didko studio",
-              "videoUrl": "/anime/videos/test/seson2/Didko studio/ep1.mp4"
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
             }
           ],
           "opening": [
@@ -100,7 +116,11 @@
           "dubbing": [
             {
               "studio": "Didko studio",
-              "videoUrl": "/anime/videos/test/seson2/Didko studio/ep2.mp4"
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
           "opening": [
@@ -118,7 +138,11 @@
           "dubbing": [
             {
               "studio": "Didko studio",
-              "videoUrl": "/anime/videos/test/seson2/Didko studio/ep3.mp4"
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
             }
           ],
           "opening": [
@@ -140,9 +164,13 @@
       "name": "",
       "dubbing": [
         {
-          "studio": "Didko studio",
-          "videoUrl": "/anime/videos/test/movie/Didko studio/movie1.mp4"
-        }
+              "studio": "Didko studio",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            }
       ],
       "opening": [
         0,
@@ -159,9 +187,13 @@
       "name": "",
       "dubbing": [
         {
-          "studio": "Didko studio",
-          "videoUrl": "/anime/videos/test/movie/Didko studio/movie2.mp4"
-        }
+              "studio": "Didko studio",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            },
+            {
+              "studio": "Amanogava",
+              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+            }
       ],
       "opening": [
         0,
