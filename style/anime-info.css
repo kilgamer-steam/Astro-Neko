@@ -1,17 +1,10 @@
 body {
   margin: 0;
+  font-family: 'Orbitron', 'Poppins', sans-serif;
   color: #00ffe7;
-  font-family: 'Orbitron', sans-serif;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 50px 20px;
-  font-size: clamp(0.85rem, 1.5vw, 3rem);
   position: relative;
+  background: #0f0f10;
 }
 
 /* ===== Anime background ===== */
@@ -35,179 +28,240 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 20, 30, 0.9);
   color: #00ffe7;
   position: fixed;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 0 10px #00ffe7;
+  box-shadow: 0 0 15px #00ffe7;
+  border-bottom: 1px solid #00ffe7;
 }
 
 .site-header .logo a {
   color: #00ffe7;
-  font-size: 100%;
+  font-size: 1.4em;
   font-weight: bold;
   text-decoration: none;
-}
-
-.site-header .header-nav button,
-.site-header .header-nav a {
-  margin-right: 10px;
-  font-size: clamp(0.8rem, 1.5vw, 1.5rem);
-  background: transparent;
-  border: 1px solid #00ffe7;
-  color: #00ffe7;
-  padding: 0.5em 1em;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* ===== Card Container ===== */
-.card-container {
-  background: rgba(0, 20, 30, 0.85);
-  border: 2px solid #00ffe7;
-  margin-top: 60px;
-  border-radius: 15px;
-  padding: 20px;
-  max-width: 1200px;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-shadow: 0 0 20px rgba(0, 255, 231, 0.3);
-}
-
-/* ===== Top Section ===== */
-.top-section {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.top-section img {
-  width: clamp(200px, 25vw, 300px);
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid #00ffe7;
-  box-shadow: 0 0 15px rgba(0, 255, 231, 0.4);
-}
-
-.top-section .title-description {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  flex: 1;
-}
-
-.title-description h1 {
-  margin: 0;
-  font-size: clamp(1.5rem, 2.5vw, 3rem);
-  color: #00ffe7;
   text-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
 }
 
-#anime-description {
+.site-header .header-nav a {
+  font-size: 1em;
+  background: transparent;
+  border: 1px solid #00ffe7;
+  color: #00ffe7;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.site-header .header-nav a:hover {
+  background: rgba(0, 255, 231, 0.1);
+  box-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
+}
+
+/* ===== Main Card Container ===== */
+.main-card {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 80px auto 20px;
+  padding: 0 20px;
+}
+
+/* ===== Anime info block ===== */
+.anime-info-block {
+  background: rgba(0, 20, 30, 0.85);
+  backdrop-filter: blur(10px);
+  border: 2px solid #00ffe7;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 231, 0.3);
+}
+
+.anime-title-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.anime-title-section img {
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #00ffe7;
+  box-shadow: 0 0 20px rgba(0, 255, 231, 0.4);
+}
+
+.anime-meta {
+  max-width: 800px;
+  flex: 1;
+}
+
+.anime-meta h2 {
+  font-size: 2.2em;
+  margin-top: 0;
+  color: #00ffe7;
+  text-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
+  margin-bottom: 15px;
+}
+
+.anime-meta #anime-description {
   line-height: 1.6;
-  font-size: clamp(0.9rem, 1.2vw, 1.5rem);
+  margin-bottom: 20px;
+  font-size: 1em;
   color: #b0f0e8;
 }
 
-/* ===== Info Blocks ===== */
-.info-block {
-  border-top: 1px solid #00ffe7;
-  padding-top: 15px;
-  margin-top: 10px;
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 20px;
 }
 
-.info-block h3 {
-  margin: 8px 0;
-  font-size: clamp(0.9rem, 1.4vw, 1.8rem);
+.info-grid p {
+  margin: 5px 0;
+  font-size: 0.95em;
+}
+
+.info-grid strong {
   color: #00ffe7;
   text-shadow: 0 0 5px rgba(0, 255, 231, 0.3);
 }
 
-/* ===== Episodes ===== */
-.episodes {
+/* ===== Seasons block ===== */
+.seasons-block {
+  background: rgba(0, 20, 30, 0.85);
+  backdrop-filter: blur(10px);
+  border: 2px solid #00ffe7;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 0 25px rgba(0, 255, 231, 0.3);
+}
+
+.seasons-block h3 {
+  font-size: 1.6em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #00ffe7;
+  text-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
+  padding-bottom: 10px;
+  border-bottom: 1px solid #00ffe7;
+}
+
+/* ===== Individual season blocks ===== */
+.season {
+  background: rgba(0, 30, 40, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border-left: 4px solid #00ffe7;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.season:last-child {
+  margin-bottom: 0;
+}
+
+.season h4 {
+  margin-top: 0;
+  color: #00ffe7;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  text-shadow: 0 0 5px rgba(0, 255, 231, 0.3);
+}
+
+.episode-container,
+.movies-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
 }
 
-.episodes button {
-  border: 1px solid #00ffe7;
+.episode-btn,
+.movie-btn {
   background: transparent;
   color: #00ffe7;
-  padding: 0.4em 0.8em;
-  border-radius: 0.5em;
+  border: 1px solid #00ffe7;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: clamp(0.75rem, 1.2vw, 1.5rem);
+  font-size: 0.9em;
   font-family: 'Orbitron', sans-serif;
   transition: all 0.3s ease;
   text-shadow: 0 0 5px rgba(0, 255, 231, 0.5);
 }
 
-.episodes button:hover {
+.episode-btn:hover,
+.movie-btn:hover {
   background: rgba(0, 255, 231, 0.1);
   box-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
   transform: translateY(-2px);
 }
 
+/* ===== Movies block ===== */
+.movies-block {
+  background: rgba(0, 30, 40, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #00ffe7;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.movies-block h4 {
+  margin-top: 0;
+  color: #00ffe7;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  text-shadow: 0 0 5px rgba(0, 255, 231, 0.3);
+}
+
 /* ===== Responsive ===== */
-@media (max-width: 768px) {
-  body {
-    padding: 20px 10px;
-    align-items: stretch;
+@media (max-width: 800px) {
+  .main-card {
+    padding: 0 15px;
+    margin-top: 70px;
   }
-
-  .card-container {
-    padding: 15px;
-    gap: 15px;
-    width: 95%;
-    margin-top: 80px;
-  }
-
-  .top-section {
+  
+  .anime-title-section {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 15px;
+    gap: 20px;
   }
 
-  .top-section img {
-    width: 90%;
-    max-width: 250px;
+  .anime-title-section img {
+    width: 200px;
+    height: 280px;
   }
 
-  .title-description h1 {
-    font-size: clamp(1.2rem, 4vw, 2.5rem);
+  .anime-meta {
+    max-width: 100%;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .episode-container,
+  .movies-container {
+    justify-content: center;
+  }
+  
+  .anime-info-block,
+  .seasons-block {
+    padding: 20px;
   }
 
   .site-header {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 5px 10px;
+    padding: 8px 15px;
   }
 
   .site-header .logo a {
-    font-size: 16px;
-  }
-
-  .site-header .header-nav {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 5px;
-  }
-
-  .site-header .header-nav a,
-  .site-header .header-nav button {
-    font-size: 14px;
-    padding: 5px 8px;
-  }
-
-  .episodes {
-    justify-content: center;
+    font-size: 1.2em;
   }
 }

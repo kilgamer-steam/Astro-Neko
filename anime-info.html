@@ -6,7 +6,7 @@
   <title>AstroNeko — Інформація про аніме</title>
   <link rel="icon" href="images/favicon.png" type="image/png">
   <link rel="stylesheet" href="style/anime-info.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="anime-bg" id="anime-bg"></div>
@@ -20,26 +20,29 @@
     </nav>
   </header>
 
-  <div class="card-container">
+  <div class="main-card">
     <!-- Блок з описом та фото -->
-    <div class="top-section">
-      <img id="anime-image" src="" alt="Anime poster">
-      <div class="title-description">
-        <h1 id="anime-title">Назва аніме</h1>
-        <div id="anime-description">Опис аніме...</div>
-        <div class="info-block">
-          <h3>Рейтинг: <span id="anime-rating"></span>★</h3>
-          <h3>Статус: <span id="anime-status"></span></h3>
-          <h3>Тип / Жанр: <span id="anime-tags"></span></h3>
-          <h3>Сезони: <span id="anime-seasons-count"></span></h3>
-          <h3>Кількість серій: <span id="anime-episodes-count"></span></h3>
-          <h3>Віковий рейтинг: <span id="anime-age"></span></h3>
+    <section class="anime-info-block">
+      <div class="anime-title-section">
+        <img id="anime-image" src="" alt="Anime poster">
+        <div class="anime-meta">
+          <h2 id="anime-title">Назва аніме</h2>
+          <p id="anime-description">Опис аніме...</p>
+          <div class="info-grid">
+            <p><strong>Жанри:</strong> <span id="anime-tags"></span></p>
+            <p><strong>Статус:</strong> <span id="anime-status"></span></p>
+            <p><strong>Вік:</strong> <span id="anime-age"></span></p>
+            <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Блок з сезонами -->
-    <div id="seasons-container"></div>
+    <section class="seasons-block">
+      <h3>Сезони та серії</h3>
+      <div id="season-list"></div>
+    </section>
   </div>
 
   <script>
@@ -66,76 +69,71 @@
     }
 
     function displayAnimeInfo(anime) {
-      // Фон та основна інформація
+      document.title = `AstroNeko — ${anime.title}`;
       document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
       document.getElementById("anime-image").src = anime.img;
       document.getElementById("anime-title").textContent = anime.title;
       document.getElementById("anime-description").textContent = anime.description;
-      document.title = `AstroNeko — ${anime.title}`;
-
-      // Мета-інформація
       document.getElementById("anime-tags").textContent = anime.tags.join(", ");
       document.getElementById("anime-status").textContent = anime.status;
       document.getElementById("anime-age").textContent = anime.age;
       document.getElementById("anime-rating").textContent = anime.rating || "N/A";
-      document.getElementById("anime-seasons-count").textContent = anime.seasons.length;
-      
-      const totalEpisodes = anime.seasons.reduce((sum, season) => sum + season.episodes.length, 0);
-      document.getElementById("anime-episodes-count").textContent = totalEpisodes;
 
-      // Сезони та серії
-      const seasonsContainer = document.getElementById("seasons-container");
-      seasonsContainer.innerHTML = "";
+      const seasonList = document.getElementById("season-list");
+      seasonList.innerHTML = "";
 
+      // Генеруємо кнопки для сезонів та серій
       anime.seasons.forEach(season => {
         const seasonDiv = document.createElement("div");
-        seasonDiv.className = "info-block";
+        seasonDiv.classList.add("season");
 
-        const seasonTitle = document.createElement("h3");
-        seasonTitle.textContent = `Сезон ${season.seasonNumber}:`;
+        const seasonTitle = document.createElement("h4");
+        seasonTitle.textContent = `Сезон ${season.seasonNumber}`;
         seasonDiv.appendChild(seasonTitle);
 
-        const episodesDiv = document.createElement("div");
-        episodesDiv.className = "episodes";
+        const episodeContainer = document.createElement("div");
+        episodeContainer.classList.add("episode-container");
 
         season.episodes.forEach((ep, idx) => {
           const btn = document.createElement("button");
+          btn.classList.add("episode-btn");
           btn.textContent = ep.title;
           btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
             window.location.href = url;
           };
-          episodesDiv.appendChild(btn);
+          episodeContainer.appendChild(btn);
         });
 
-        seasonDiv.appendChild(episodesDiv);
-        seasonsContainer.appendChild(seasonDiv);
+        seasonDiv.appendChild(episodeContainer);
+        seasonList.appendChild(seasonDiv);
       });
 
       // Фільми, якщо є
       if (anime.movies && anime.movies.length > 0) {
-        const moviesDiv = document.createElement("div");
-        moviesDiv.className = "info-block";
+        const moviesBlock = document.createElement("div");
+        moviesBlock.classList.add("movies-block");
 
-        const moviesTitle = document.createElement("h3");
-        moviesTitle.textContent = "Фільми:";
-        moviesDiv.appendChild(moviesTitle);
+        const moviesTitle = document.createElement("h4");
+        moviesTitle.textContent = "Фільми";
+        moviesBlock.appendChild(moviesTitle);
 
-        const moviesList = document.createElement("div");
-        moviesList.className = "episodes";
+        const moviesContainer = document.createElement("div");
+        moviesContainer.classList.add("movies-container");
 
-        anime.movies.forEach((movie, idx) => {
+        anime.movies.forEach((mov, idx) => {
           const btn = document.createElement("button");
-          btn.textContent = movie.title;
+          btn.classList.add("movie-btn");
+          btn.textContent = mov.title;
           btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx+1}`;
             window.location.href = url;
           };
-          moviesList.appendChild(btn);
+          moviesContainer.appendChild(btn);
         });
 
-        moviesDiv.appendChild(moviesList);
-        seasonsContainer.appendChild(moviesDiv);
+        moviesBlock.appendChild(moviesContainer);
+        seasonList.appendChild(moviesBlock);
       }
     }
   </script>
