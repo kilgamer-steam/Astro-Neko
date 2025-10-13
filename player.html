@@ -9,81 +9,65 @@
 </head>
 <body>
   <header>
-    <img src="images/favicon1.png" alt="Logo">
-    <h1>AstroNeko Плеєр</h1>
+    <a href="index.html" class="logo">
+      <img src="images/favicon1.png" alt="Logo">
+      <h1>AstroNeko</h1>
+    </a>
   </header>
 
-  <main>
-    <div class="player-container">
-      <video id="anime-video" controls>
-        Ваш браузер не підтримує відео.
-      </video>
+  <video id="anime-player" controls autoplay style="width:100%; max-width:900px;"></video>
+<div id="audio-options"></div>
 
-      <div class="controls">
-        <label for="voice-selection">Озвучка:</label>
-        <select id="voice-selection"></select>
-      </div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const animeId = params.get("id");
+const seasonNumber = parseInt(params.get("season"));
+const episodeNumber = parseInt(params.get("episode"));
 
-      <div class="info">
-        <p>Сезон: <span id="season-number">?</span></p>
-        <p>Епізод: <span id="episode-number">?</span></p>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const animeId = params.get("anime");
-    const seasonNum = parseInt(params.get("season"));
-    const episodeNum = parseInt(params.get("episode"));
-
-    const video = document.getElementById("anime-video");
-    const seasonEl = document.getElementById("season-number");
-    const episodeEl = document.getElementById("episode-number");
-    const voiceSelect = document.getElementById("voice-selection");
-
-    seasonEl.textContent = seasonNum || "?";
-    episodeEl.textContent = episodeNum || "?";
-
-    async function loadEpisode() {
-      try {
-        if (!animeId || !seasonNum || !episodeNum) throw new Error("Не вказано всі параметри");
-
-        const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
-        if (!resp.ok) throw new Error("Не вдалося знайти JSON аніме");
-
-        const anime = await resp.json();
-        const season = anime.seasons.find(s => s.seasonNumber === seasonNum);
-        if (!season) throw new Error("Сезон не знайдено");
-
-        const episode = season.episodes[episodeNum - 1];
-        if (!episode) throw new Error("Епізод не знайдено");
-
-        voiceSelect.innerHTML = "";
-
-        episode.dubbing.forEach(dub => {
-          const option = document.createElement("option");
-          option.value = dub.videoUrl;
-          option.textContent = dub.studio;
-          voiceSelect.appendChild(option);
-        });
-
-        if (episode.dubbing.length > 0) {
-          video.src = episode.dubbing[0].videoUrl;
-          video.play();
-        }
-      } catch(err) {
-        alert(err.message);
-        console.error(err);
-      }
+async function loadPlayer() {
+    if (!animeId || !seasonNumber || !episodeNumber) {
+        alert("Не вказано всі параметри для плеєра!");
+        return;
     }
 
-    voiceSelect.addEventListener("change", e => {
-      video.src = e.target.value;
-      video.play();
-    });
+    try {
+        const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+        if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
 
-    loadEpisode();
-  </script>
+        const anime = await resp.json();
+        const season = anime.seasons.find(s => s.seasonNumber === seasonNumber);
+        if (!season) throw new Error("Сезон не знайдено");
+
+        const episode = season.episodes[episodeNumber - 1];
+        if (!episode) throw new Error("Епізод не знайдено");
+
+        const player = document.getElementById("anime-player");
+
+        // Автовибір першої озвучки
+        let currentDubbing = episode.dubbing[0];
+        player.src = currentDubbing.videoUrl;
+
+        // Створюємо кнопки для інших озвучок
+        const audioOptions = document.getElementById("audio-options");
+        audioOptions.innerHTML = "";
+        episode.dubbing.forEach(d => {
+            const btn = document.createElement("button");
+            btn.textContent = d.studio;
+            btn.onclick = () => { 
+                player.src = d.videoUrl; 
+                player.play();
+            };
+            audioOptions.appendChild(btn);
+        });
+
+    } catch (err) {
+        console.error(err);
+        alert("Помилка при завантаженні плеєра");
+    }
+}
+
+loadPlayer();
+</script>
+
 </body>
 </html>
