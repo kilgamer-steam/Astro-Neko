@@ -141,11 +141,42 @@ video {
   z-index: 1;
 }
 #episode-title {
-  max-width: 200px; /* Обмежуємо максимальну ширину назви */
+  max-width: 200px;
   overflow: hidden;
-  text-overflow: ellipsis; /* Додаємо "..." якщо назва задовга */
+  text-overflow: ellipsis;
   white-space: nowrap;
-  flex-shrink: 1; /* Дозволяємо стискатися */
+  flex-shrink: 1;
+  cursor: help; /* Змінює курсор на "допомога" */
+  position: relative;
+}
+/* Підказка з повною назвою */
+#episode-title[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(29, 29, 32, 0.95);
+  color: #cc6096ff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #943a67ff;
+  white-space: nowrap;
+  z-index: 1000;
+  font-size: 0.9em;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Стрілочка для підказки */
+#episode-title[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% - 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #943a67ff;
 }
 .controls-row {
   display: flex;

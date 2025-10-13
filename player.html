@@ -98,14 +98,16 @@ async function loadPlayer() {
         }
 
         // Динамічний текст
-        if (isMovie) {
-            seasonOrMovieSpan.textContent = `Фільм ${movieNumber}`;
-            episodeNumSpan.textContent = "";
-        } else {
-            seasonOrMovieSpan.textContent = `Сезон ${seasonNumber}`;
-            episodeNumSpan.textContent = `Серія ${episodeNumber}`;
-        }
-        titleSpan.textContent = episode.name;
+        // Динамічний текст
+if (isMovie) {
+    seasonOrMovieSpan.textContent = `Фільм ${movieNumber}`;
+    episodeNumSpan.textContent = "";
+} else {
+    seasonOrMovieSpan.textContent = `Сезон ${seasonNumber}`;
+    episodeNumSpan.textContent = `Серія ${episodeNumber}`;
+}
+titleSpan.textContent = episode.name;
+titleSpan.title = episode.name; // Додаємо підказку з повною назвою
 
         // Завантажуємо налаштування аніме
         const animePreferences = getAnimePreferences(animeId);
