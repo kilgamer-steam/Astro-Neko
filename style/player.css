@@ -29,7 +29,7 @@ header .logo h1 {
 }
 header {
   width: 100%;
-  background: rgba(24, 24, 27, 0.85);
+  background: rgba(24, 24, 27, 0.56);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
