@@ -4,6 +4,7 @@ body {
   color: #fff;
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -33,6 +34,7 @@ header {
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  box-sizing: border-box;
 }
 
 .header-left {
