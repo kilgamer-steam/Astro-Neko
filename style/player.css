@@ -146,9 +146,13 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-shrink: 1;
+  cursor: help;
   position: relative;
+  pointer-events: none;
 }
-
+#episode-title[title] {
+  pointer-events: none;
+}
 /* Підказка знизу, яка може виходити за межі батьківського контейнера */
 #episode-title[title]:hover::after {
   content: attr(title);
