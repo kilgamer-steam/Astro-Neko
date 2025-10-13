@@ -116,7 +116,7 @@
           btn.classList.add("movie-btn"); // <-- додали клас
           btn.textContent = mov.title;
           btn.onclick = () => {
-            const url = `player.html?anime=${encodeURIComponent(anime.id)}&movie=${idx+1}`;
+            const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx+1}`;
             window.location.href = url;
           };
           moviesDiv.appendChild(btn);
