@@ -120,28 +120,38 @@ titleSpan.addEventListener('mouseenter', (e) => {
     const rect = e.target.getBoundingClientRect();
     customTooltip.textContent = episode.name;
     customTooltip.style.left = (rect.left + rect.width / 2) + 'px';
-    customTooltip.style.top = (rect.bottom + 15) + 'px'; // Трохи нижче
-    customTooltip.style.transform = 'translateX(-50%) translateY(-10px)';
+    customTooltip.style.top = (rect.bottom + 10) + 'px';
+    customTooltip.style.transform = 'translateX(-50%) scale(0.5)';
     customTooltip.style.opacity = '0';
     customTooltip.style.display = 'block';
     
-    // Плавна поява
+    // Анімація з пульсацією
     setTimeout(() => {
-        customTooltip.style.transition = 'all 0.25s ease-out';
-        customTooltip.style.transform = 'translateX(-50%) translateY(0)';
+        customTooltip.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        customTooltip.style.transform = 'translateX(-50%) scale(1)';
         customTooltip.style.opacity = '1';
+        
+        // Додаткова пульсація
+        setTimeout(() => {
+            customTooltip.style.transition = 'transform 0.15s ease';
+            customTooltip.style.transform = 'translateX(-50%) scale(1.05)';
+            
+            setTimeout(() => {
+                customTooltip.style.transform = 'translateX(-50%) scale(1)';
+            }, 150);
+        }, 500);
     }, 10);
 });
 
 titleSpan.addEventListener('mouseleave', () => {
     if (customTooltip) {
-        customTooltip.style.transition = 'all 0.2s ease-in';
-        customTooltip.style.transform = 'translateX(-50%) translateY(-5px)';
+        customTooltip.style.transition = 'all 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045)';
+        customTooltip.style.transform = 'translateX(-50%) scale(0.7)';
         customTooltip.style.opacity = '0';
         
         setTimeout(() => {
             customTooltip.style.display = 'none';
-        }, 200);
+        }, 300);
     }
 });
 
