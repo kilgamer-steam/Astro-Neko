@@ -1,291 +1,206 @@
+/* ====== Головні стилі ====== */
 body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
+  background: #0f0f10;
   color: #fff;
   min-height: 100vh;
-  background: #0f0f10;
-  position: relative;
 }
 
-/* ===== Header ===== */
+/* ====== Хедер ====== */
 header {
-  background: rgba(24, 24, 27, 0.85);
-  backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  background: #18181b;
+  padding: 15px 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
   position: sticky;
   top: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  z-index: 10;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.header-left img {
-  height: 50px;
-  width: 50px;
-  border-radius: 10px;
-}
-
-.header-left h1 {
+header h1 {
+  font-size: 1.8em;
+  margin: 0 10px 0 0;
   color: #ff69b4;
-  margin: 0;
-  font-size: 2em;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+  display: inline-block;
+  vertical-align: middle;
 }
 
-/* ===== Search Container ===== */
-.search-container {
+header img {
+  height: 45px;
+  width: 45px;
+  vertical-align: middle;
+}
+
+header .search-container {
   display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 10px;
 }
 
-#search {
-  padding: 12px 20px;
-  border: 2px solid rgba(255, 105, 180, 0.5);
-  border-radius: 25px;
-  background: rgba(29, 29, 32, 0.8);
-  color: #fff;
-  font-size: 1em;
-  width: 300px;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
-}
-
-#search:focus {
+header input[type="text"] {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
   outline: none;
-  border-color: #ff69b4;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
-  background: rgba(29, 29, 32, 0.9);
-}
-
-#search::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-#surprise {
-  padding: 12px 25px;
-  border: 2px solid #ff69b4;
-  border-radius: 25px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
-  font-size: 1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-#surprise:hover {
-  background: #ff69b4;
+  background: #2a2a2e;
   color: #fff;
-  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
+  width: 220px;
+  transition: 0.3s;
 }
 
-/* ===== Main Content ===== */
-main {
-  padding: 30px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
+header input[type="text"]:focus {
+  background: #3a3a3f;
 }
 
-/* ===== Anime Grid ===== */
+header button {
+  background: #ff69b4;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+header button:hover {
+  background: #ff82c1;
+}
+
+/* ====== Сітка аніме ====== */
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 25px;
-  padding: 20px 0;
+  padding: 30px;
+  justify-items: center;
 }
 
-/* ===== Anime Card (Minuliy Styl) ===== */
+/* ====== Картка аніме ====== */
 .anime-card {
-  background: rgba(24, 24, 27, 0.8);
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: 1px solid rgba(255, 105, 180, 0.2);
-  backdrop-filter: blur(10px);
+  width: 200px;
+  height: 320px;
+  perspective: 1000px;
+  position: relative;
 }
 
-.anime-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(255, 105, 180, 0.2);
-  border-color: rgba(255, 105, 180, 0.4);
-}
-
-/* Front Side - Zvychayna Kartka */
-.anime-card .front {
+.anime-card .front,
+.anime-card .back {
+  position: absolute;
+  width: 100%;
   height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.6s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.anime-card .front {
+  background: #1d1d20;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
-.image-container {
-  height: 320px;
+.anime-card .front .image-container {
+  width: 100%;
+  height: 85%;
   overflow: hidden;
 }
 
-.image-container img {
+.anime-card .front img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
-.anime-card:hover .image-container img {
+.anime-card .front img:hover {
   transform: scale(1.05);
 }
 
-.title-container {
-  padding: 20px;
-  background: rgba(24, 24, 27, 0.9);
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-}
-
-.title-container h3 {
-  margin: 0;
-  color: #fff;
-  font-size: 1.1em;
-  line-height: 1.3;
+.anime-card .front .title-container {
   text-align: center;
-  width: 100;
+  background: #1a1a1d;
+  padding: 6px;
+  font-weight: 600;
+  font-size: 0.95em;
 }
 
-/* Back Side - Povnistyu Prizhovena */
+/* ====== Задня сторона ====== */
 .anime-card .back {
-  display: none;
-}
-
-/* ===== Loading Text ===== */
-#loading {
-  font-size: 1.2em;
-  color: #ff69b4;
+  background: #242427;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
   text-align: center;
-  padding: 30px;
-  font-weight: 500;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
 }
 
-/* ===== Responsive Design ===== */
-@media (max-width: 1024px) {
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
+.anime-card .back p {
+  font-size: 0.9em;
+  margin: 6px 0;
+  color: #ddd;
 }
 
-@media (max-width: 768px) {
+.anime-card .back button {
+  background: #ff69b4;
+  border: none;
+  color: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.anime-card .back button:hover {
+  background: #ff82c1;
+}
+
+/* ====== Ефект перевороту ====== */
+.anime-card.flipped .front {
+  transform: rotateY(180deg);
+}
+
+.anime-card.flipped .back {
+  transform: rotateY(360deg);
+}
+
+/* ====== Адаптивність ====== */
+@media (max-width: 800px) {
   header {
-    padding: 12px 20px;
     flex-direction: column;
-    gap: 15px;
-  }
-
-  .header-left h1 {
-    font-size: 1.6em;
-  }
-
-  .search-container {
-    width: 100%;
-    justify-content: center;
-  }
-
-  #search {
-    width: 200px;
-  }
-
-  main {
-    padding: 20px 15px;
-  }
-
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
-  }
-
-  .image-container {
-    height: 280px;
-  }
-}
-
-@media (max-width: 480px) {
-  header {
-    padding: 10px 15px;
-  }
-
-  .header-left {
+    text-align: center;
     gap: 10px;
-  }
-
-  .header-left img {
-    height: 40px;
-    width: 40px;
-  }
-
-  .header-left h1 {
-    font-size: 1.4em;
-  }
-
-  .search-container {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-
-  #search {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  #surprise {
-    width: 100%;
-    max-width: 300px;
   }
 
   .anime-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
   }
 
-  .image-container {
-    height: 240px;
+  .anime-card {
+    width: 180px;
+    height: 290px;
   }
 
-  .title-container {
-    padding: 15px;
-  }
-
-  .title-container h3 {
-    font-size: 1em;
+  header input[type="text"] {
+    width: 180px;
   }
 }
 
-/* ===== Scrollbar Styling ===== */
-::-webkit-scrollbar {
-  width: 8px;
-}
+@media (max-width: 480px) {
+  header input[type="text"] {
+    width: 140px;
+  }
 
-::-webkit-scrollbar-track {
-  background: rgba(24, 24, 27, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 105, 180, 0.5);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 105, 180, 0.7);
+  .anime-card {
+    width: 160px;
+    height: 260px;
+  }
 }
