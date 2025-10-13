@@ -1,15 +1,15 @@
 {
   "id": "test",
-  "title": "test №8",
-  "description": "testing",
+  "title": "ТЕСТОВА НАЗВА",
+  "description": "ТЕСТОВИЙ ОПИС ДЛЯ ТЕСТОВОЇ КАРТКИ",
   "tags": [
-    "Бойовик",
-    "Фантастика",
-    "Екшн"
+    "ТЕСТОВИЙ ТЕГ 1",
+    "ТЕСТОВИЙ ТЕГ 2",
+    "ТЕСТОВИЙ ТЕГ 3"
   ],
   "rating": "5",
-  "status": "Завершено",
-  "age": "16+",
+  "status": "ТЕСТОВИЙ СТАТУС",
+  "age": "ТУСТОВИЙ ВІК",
   "img": "anime/image/test.jpg",
   "background": "anime/background/test_bg.jpg",
   "preview": "anime/preview/test_preview.jpg",
@@ -19,7 +19,7 @@
       "episodes": [
         {
           "title": "Епізод 1",
-          "name": "Людина, що стала кайджю",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
           "dubbing": [
             {
               "studio": "Didko studio",
@@ -41,7 +41,7 @@
         },
         {
           "title": "Епізод 2",
-          "name": "Кайджю, який знищує кайджю",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
           "dubbing": [
             {
               "studio": "Didko studio",
@@ -90,7 +90,7 @@
       "episodes": [
         {
           "title": "Епізод 1",
-          "name": "Зброя із кайджю",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
           "dubbing": [
             {
               "studio": "Didko studio",
@@ -112,7 +112,7 @@
         },
         {
           "title": "Епізод 2",
-          "name": "Випробування для молодих",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 2",
           "dubbing": [
             {
               "studio": "Didko studio",
@@ -134,7 +134,7 @@
         },
         {
           "title": "Епізод 3",
-          "name": "Початок",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
           "dubbing": [
             {
               "studio": "Didko studio",
@@ -161,7 +161,7 @@
     {
       "movieNumber": 1,
       "title": "Фільм 1",
-      "name": "фівапролд",
+      "name": "ТЕСТОВА НАЗВА ФІЛЬМ 1",
       "dubbing": [
         {
               "studio": "Didko studio",
@@ -184,7 +184,7 @@
     {
       "movieNumber": 2,
       "title": "Фільм 2",
-      "name": "еуіеук",
+      "name": "ТЕСТОВА НАЗВА ФІЛЬМ 2",
       "dubbing": [
         {
               "studio": "Didko studio",
