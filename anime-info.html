@@ -92,7 +92,7 @@
           btn.classList.add("episode-btn"); // <-- додали клас
           btn.textContent = ep.title;
           btn.onclick = () => {
-            const url = `player.html?anime=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
+            const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
             window.location.href = url;
           };
           episodeContainer.appendChild(btn);
