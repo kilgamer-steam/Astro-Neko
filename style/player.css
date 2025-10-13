@@ -145,15 +145,14 @@ video {
 
 .controls-row label {
   font-size: 0.95em;
-  color: #943a67ff;
+  color: #ff69b4;
 }
-
 .controls-row select {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #943a67ff;
   background: #1d1d20;
-  color: #fff;
+  color: #ff69b4;
   cursor: pointer;
 }
 
