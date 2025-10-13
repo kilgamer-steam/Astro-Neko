@@ -27,6 +27,7 @@ header .logo h1 {
   font-size: 1.8em;
 }
 header {
+  width: 100%;
   background: rgba(24, 24, 27, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
