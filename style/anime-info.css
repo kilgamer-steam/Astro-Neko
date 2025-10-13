@@ -99,14 +99,14 @@ header .logo h1 {
 /* ===== Seasons and episodes ===== */
 .anime-seasons {
   padding: 30px 40px;
-  background: rgba(24, 24, 27, 0.36);
-  backdrop-filter: blur(2px); /* Додатковий блюр */
 }
 
 .anime-seasons h3 {
   font-size: 1.5em;
   margin-bottom: 15px;
   color: #ff69b4;
+  background: rgba(24, 24, 27, 0.36);
+  backdrop-filter: blur(2px); /* Додатковий блюр */
 }
 
 .season {
@@ -114,6 +114,7 @@ header .logo h1 {
   padding: 15px 20px;
   border-radius: 10px;
   margin-bottom: 20px;
+  backdrop-filter: blur(2px); /* Додатковий блюр */
 }
 
 .season h4 {

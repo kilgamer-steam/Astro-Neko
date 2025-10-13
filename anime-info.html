@@ -18,8 +18,9 @@
       </a>
     </header>
 
-    <main id="anime-info">
-      <div class="anime-header">
+    <div class="main-container">
+      <!-- Блок з описом та фото -->
+      <section class="anime-info-block">
         <div class="anime-title-section">
           <img id="anime-image" src="" alt="Anime poster">
           <div class="anime-meta">
@@ -31,17 +32,18 @@
             <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <section class="anime-seasons">
+      <!-- Блок з сезонами -->
+      <section class="seasons-block">
         <h3>Сезони та серії</h3>
         <div id="season-list"></div>
       </section>
-    </main>
+    </div>
   </div>
 
   <script>
-    // Отримуємо ID аніме з URL
+    // Твій JavaScript код залишається незмінним
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
 
@@ -78,7 +80,6 @@
       const seasonList = document.getElementById("season-list");
       seasonList.innerHTML = "";
 
-      // Генеруємо кнопки для сезонів та серій
       anime.seasons.forEach(season => {
         const seasonDiv = document.createElement("div");
         seasonDiv.classList.add("season");
@@ -107,12 +108,15 @@
 
       // Фільми, якщо є
       if (anime.movies && anime.movies.length > 0) {
-        const moviesDiv = document.createElement("div");
-        moviesDiv.classList.add("movies");
+        const moviesBlock = document.createElement("div");
+        moviesBlock.classList.add("movies-block");
 
         const moviesTitle = document.createElement("h4");
         moviesTitle.textContent = "Фільми";
-        moviesDiv.appendChild(moviesTitle);
+        moviesBlock.appendChild(moviesTitle);
+
+        const moviesContainer = document.createElement("div");
+        moviesContainer.classList.add("movies");
 
         anime.movies.forEach((mov, idx) => {
           const btn = document.createElement("button");
@@ -122,10 +126,11 @@
             const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx+1}`;
             window.location.href = url;
           };
-          moviesDiv.appendChild(btn);
+          moviesContainer.appendChild(btn);
         });
 
-        seasonList.appendChild(moviesDiv);
+        moviesBlock.appendChild(moviesContainer);
+        document.querySelector(".main-container").appendChild(moviesBlock);
       }
     }
   </script>
