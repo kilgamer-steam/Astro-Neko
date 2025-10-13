@@ -163,12 +163,13 @@ video {
   border-radius: 8px;
   cursor: pointer;
   background: #943a67ff;
-  color: #cc6096ff;
+  color: #ff69b4;
   transition: all 0.3s;
 }
 
 .controls-row button:hover {
   background: #ff82c1;
+  color: #fff;
 }
 
 @media(max-width: 700px){
