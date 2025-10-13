@@ -146,37 +146,54 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-shrink: 1;
-  cursor: help; /* Змінює курсор на "допомога" */
+  cursor: pointer;
   position: relative;
+  transition: all 0.3s ease;
 }
-/* Підказка з повною назвою */
+
+/* Стильна підказка */
 #episode-title[title]:hover::after {
   content: attr(title);
   position: absolute;
   bottom: 100%;
   left: 50%;
-  transform: translateX(-50%);
-  background: rgba(29, 29, 32, 0.95);
-  color: #cc6096ff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #943a67ff;
+  transform: translateX(-50%) translateY(-8px);
+  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
+  color: #ff82c1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #943a67ff;
   white-space: nowrap;
   z-index: 1000;
   font-size: 0.9em;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  font-weight: 500;
+  box-shadow: 0 6px 20px rgba(148, 58, 103, 0.3);
+  backdrop-filter: blur(15px);
+  animation: tooltipFade 0.2s ease-out;
 }
 
-/* Стрілочка для підказки */
+/* Анімація появи */
+@keyframes tooltipFade {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+/* Стрілочка */
 #episode-title[title]:hover::before {
   content: '';
   position: absolute;
-  bottom: calc(100% - 5px);
+  bottom: calc(100% - 8px);
   left: 50%;
   transform: translateX(-50%);
-  border: 5px solid transparent;
+  border: 6px solid transparent;
   border-top-color: #943a67ff;
+  z-index: 1001;
 }
 .controls-row {
   display: flex;
@@ -251,5 +268,16 @@ video {
   }
   .controls-row span {
     font-size: 0.95em;
+  }
+  #episode-title {
+    max-width: 150px; /* Менша ширина на мобільних */
+  }
+  
+  #episode-title[title]:hover::after {
+    font-size: 0.8em;
+    padding: 6px 10px;
+    white-space: normal; /* Дозволяємо перенесення на мобільних */
+    max-width: 250px;
+    text-align: center;
   }
 }
