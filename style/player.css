@@ -9,16 +9,6 @@
   min-height: 100vh;
 }
 
-header {
-  width: 100%;
-  background: #18181b;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* логотип і назва ліворуч */
-  padding: 10px 30px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-}
-
 header .logo {
   display: flex;
   align-items: center;
