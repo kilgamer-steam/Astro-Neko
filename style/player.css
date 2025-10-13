@@ -140,23 +140,8 @@ video {
   position: relative;
   z-index: 1;
 }
-#episode-title {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex-shrink: 1;
-  cursor: help;
-  position: relative;
-}
-/* Підказка знизу, яка може виходити за межі батьківського контейнера */
-#episode-title[data-title]:hover::after {
-  content: attr(data-title); /* Змінюємо на data-title */
+.custom-tooltip {
   position: fixed;
-  top: auto;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100%);
   background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
   color: #ff82c1;
   padding: 10px 14px;
@@ -168,32 +153,18 @@ video {
   font-weight: 500;
   box-shadow: 0 6px 20px rgba(148, 58, 103, 0.3);
   backdrop-filter: blur(15px);
-  animation: tooltipFadeBottom 0.2s ease-out;
+  display: none;
+  pointer-events: none;
 }
 
-/* Аналогічно для стрілочки */
-#episode-title[data-title]:hover::before {
+.custom-tooltip::before {
   content: '';
-  position: fixed;
-  top: auto;
-  bottom: -4px;
+  position: absolute;
+  top: -8px;
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-bottom-color: #943a67ff;
-  z-index: 10001;
-}
-
-/* Анімація появи */
-@keyframes tooltipFadeBottom {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(80%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(100%);
-  }
 }
 
 

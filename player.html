@@ -107,7 +107,29 @@ if (isMovie) {
     episodeNumSpan.textContent = `Серія ${episodeNumber}`;
 }
 titleSpan.textContent = episode.name;
-titleSpan.dataset.title = episode.name; // Додаємо підказку з повною назвою
+// Додаємо власну підказку через JavaScript
+let customTooltip = null;
+
+titleSpan.addEventListener('mouseenter', (e) => {
+    if (!customTooltip) {
+        customTooltip = document.createElement('div');
+        customTooltip.className = 'custom-tooltip';
+        document.body.appendChild(customTooltip);
+    }
+    
+    const rect = e.target.getBoundingClientRect();
+    customTooltip.textContent = episode.name;
+    customTooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    customTooltip.style.top = (rect.bottom + 10) + 'px';
+    customTooltip.style.transform = 'translateX(-50%)';
+    customTooltip.style.display = 'block';
+});
+
+titleSpan.addEventListener('mouseleave', () => {
+    if (customTooltip) {
+        customTooltip.style.display = 'none';
+    }
+});
 
         // Завантажуємо налаштування аніме
         const animePreferences = getAnimePreferences(animeId);
