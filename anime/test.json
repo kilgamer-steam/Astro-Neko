@@ -22,11 +22,11 @@
           "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
           "dubbing": [
             {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
@@ -44,11 +44,11 @@
           "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
           "dubbing": [
             {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
@@ -66,11 +66,11 @@
           "name": "Реванш",
           "dubbing": [
             {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
@@ -93,11 +93,11 @@
           "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
           "dubbing": [
             {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
             }
           ],
@@ -115,11 +115,11 @@
           "name": "ТЕСТОВА НАЗВА ЕПІЗОД 2",
           "dubbing": [
             {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
           ],
@@ -137,11 +137,11 @@
           "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
           "dubbing": [
             {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
             }
           ],
@@ -164,11 +164,11 @@
       "name": "ТЕСТОВА НАЗВА ФІЛЬМ 1",
       "dubbing": [
         {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
             }
       ],
@@ -187,11 +187,11 @@
       "name": "ТЕСТОВА НАЗВА ФІЛЬМ 2",
       "dubbing": [
         {
-              "studio": "Didko studio",
+              "studio": "СТУДІЯ 1",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
             },
             {
-              "studio": "Amanogava",
+              "studio": "СТУДІЯ 2",
               "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
             }
       ],
