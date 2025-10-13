@@ -30,6 +30,7 @@
         function createAnimeCard(anime) {
             const card = document.createElement('div');
             card.classList.add('anime-card');
+            card.dataset.id = anime.id;
             card.onclick = () => card.classList.toggle('flipped');
 
             const front = document.createElement('div');
@@ -86,7 +87,7 @@
             const cards = document.querySelectorAll('.anime-card');
             if (cards.length === 0) return;
             const randomCard = cards[Math.floor(Math.random() * cards.length)];
-            const animeId = encodeURIComponent(randomCard.dataset.id || randomCard.querySelector('button').onclick.toString().match(/id=([^\']+)/)[1]);
+            const animeId = encodeURIComponent(randomCard.dataset.id);
             window.location.href = `/Astro-Neko/anime-info.html?id=${animeId}`;
         });
 
