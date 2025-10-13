@@ -140,6 +140,15 @@ video {
   position: relative;
   z-index: 1;
 }
+#episode-title {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+  cursor: help;
+  position: relative;
+}
 .custom-tooltip {
   position: fixed;
   background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
