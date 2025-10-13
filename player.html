@@ -84,7 +84,7 @@
       throw new Error("Не вказано сезон або фільм");
     }
 
-    // Динамічний текст - використовуємо episode.name
+    // Динамічний текст
     if (isMovie) {
       seasonOrMovieSpan.textContent = `Фільм ${movieNumber}`;
       episodeNumSpan.textContent = "";
@@ -92,7 +92,7 @@
       seasonOrMovieSpan.textContent = `Сезон ${seasonNumber}`;
       episodeNumSpan.textContent = `Серія ${episodeNumber}`;
     }
-    titleSpan.textContent = episode.name; // Змінено з title на name
+    titleSpan.textContent = episode.name;
 
     // Встановлюємо відео
     player.src = episode.dubbing[0].videoUrl;
@@ -110,7 +110,7 @@
       player.play();
     };
 
-    // Кнопки серії
+    // Кнопки серії з логікою переходу між сезонами
     if (isMovie) {
       prevBtn.style.display = "none";
       nextBtn.style.display = "none";
@@ -118,17 +118,51 @@
       prevBtn.style.display = "inline";
       nextBtn.style.display = "inline";
 
+      // Попередня серія
       prevBtn.onclick = () => {
         if (episodeNumber > 1) {
+          // Звичайний перехід до попередньої серії
           window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber-1}`;
+        } else if (seasonNumber > 1) {
+          // Перехід до останньої серії попереднього сезону
+          const prevSeason = anime.seasons.find(s => s.seasonNumber === seasonNumber - 1);
+          if (prevSeason && prevSeason.episodes.length > 0) {
+            const lastEpisodeInPrevSeason = prevSeason.episodes.length;
+            window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber-1}&episode=${lastEpisodeInPrevSeason}`;
+          }
         }
       };
 
+      // Наступна серія
       nextBtn.onclick = () => {
-        if (episodeNumber < season.episodes.length) {
+        const currentSeason = anime.seasons.find(s => s.seasonNumber === seasonNumber);
+        
+        if (episodeNumber < currentSeason.episodes.length) {
+          // Звичайний перехід до наступної серії
           window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber+1}`;
+        } else {
+          // Перехід до першої серії наступного сезону
+          const nextSeason = anime.seasons.find(s => s.seasonNumber === seasonNumber + 1);
+          if (nextSeason && nextSeason.episodes.length > 0) {
+            window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber+1}&episode=1`;
+          } else {
+            // Якщо це остання серія останнього сезону - можна показати повідомлення
+            alert("Це остання серія аніме!");
+          }
         }
       };
+
+      // Додатково: робимо кнопки неактивними якщо немає куди переходити
+      if (episodeNumber === 1 && seasonNumber === 1) {
+        prevBtn.disabled = true;
+        prevBtn.style.opacity = "0.5";
+      }
+
+      const lastSeason = anime.seasons[anime.seasons.length - 1];
+      if (episodeNumber === lastSeason.episodes.length && seasonNumber === lastSeason.seasonNumber) {
+        nextBtn.disabled = true;
+        nextBtn.style.opacity = "0.5";
+      }
     }
 
   } catch (err) {
