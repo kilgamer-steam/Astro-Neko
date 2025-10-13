@@ -187,7 +187,7 @@ header .logo h1 {
 .episode-btn,
 .movie-btn {
   background: #943a67ff;
-  color: #cc6096ff;
+  color: #ff69b4;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
@@ -198,7 +198,8 @@ header .logo h1 {
 
 .episode-btn:hover,
 .movie-btn:hover {
-  background: #e66eaaff;
+  background: #ff69b4;
+  color: #fff;
   transform: scale(1.05);
 }
 
