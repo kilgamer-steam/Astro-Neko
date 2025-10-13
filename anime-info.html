@@ -6,51 +6,49 @@
   <title>AstroNeko — Інформація про аніме</title>
   <link rel="icon" href="images/favicon.png" type="image/png">
   <link rel="stylesheet" href="style/anime-info.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="anime-bg" id="anime-bg"></div>
   
-  <header class="site-header">
-    <div class="logo">
-      <a href="index.html">AstroNeko <img src="images/favicon1.png" alt="logo" style="height:40px; vertical-align: middle;"></a>
-    </div>
-    <nav class="header-nav">
-      <a href="index.html">Головна</a>
-    </nav>
-  </header>
+  <div class="content-wrapper">
+    <header>
+      <a href="index.html" class="logo">
+        <img src="images/favicon1.png" alt="Logo">
+        <h1>AstroNeko</h1>
+      </a>
+    </header>
 
-  <div class="main-card">
-    <!-- Блок з описом та фото -->
-    <section class="anime-info-block">
-      <div class="anime-title-section">
-        <img id="anime-image" src="" alt="Anime poster">
-        <div class="anime-meta">
-          <h2 id="anime-title">Назва аніме</h2>
-          <p id="anime-description">Опис аніме...</p>
-          <div class="info-grid">
+    <div class="main-container">
+      <!-- Блок з описом та фото -->
+      <section class="anime-info-block">
+        <div class="anime-title-section">
+          <img id="anime-image" src="" alt="Anime poster">
+          <div class="anime-meta">
+            <h2 id="anime-title">Назва аніме</h2>
+            <p id="anime-description">Опис аніме...</p>
             <p><strong>Жанри:</strong> <span id="anime-tags"></span></p>
             <p><strong>Статус:</strong> <span id="anime-status"></span></p>
             <p><strong>Вік:</strong> <span id="anime-age"></span></p>
             <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Блок з сезонами -->
-    <section class="seasons-block">
-      <h3>Сезони та серії</h3>
-      <div id="season-list"></div>
-    </section>
+      <!-- Блок з сезонами -->
+      <section class="seasons-block">
+        <h3>Сезони та серії</h3>
+        <div id="season-list"></div>
+      </section>
+    </div>
   </div>
 
   <script>
+    // Твій JavaScript код залишається незмінним
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
 
     if (!animeId) {
-      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px; color: #00ffe7;'>Аніме не знайдено 😿</h2>";
+      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Аніме не знайдено 😿</h2>";
     } else {
       loadAnime(animeId);
     }
@@ -63,7 +61,7 @@
         const anime = await response.json();
         displayAnimeInfo(anime);
       } catch (error) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px; color: #00ffe7;'>Помилка при завантаженні аніме 😿</h2>";
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка при завантаженні аніме 😿</h2>";
         console.error(error);
       }
     }
@@ -82,7 +80,6 @@
       const seasonList = document.getElementById("season-list");
       seasonList.innerHTML = "";
 
-      // Генеруємо кнопки для сезонів та серій
       anime.seasons.forEach(season => {
         const seasonDiv = document.createElement("div");
         seasonDiv.classList.add("season");
@@ -119,7 +116,7 @@
         moviesBlock.appendChild(moviesTitle);
 
         const moviesContainer = document.createElement("div");
-        moviesContainer.classList.add("movies-container");
+        moviesContainer.classList.add("movies");
 
         anime.movies.forEach((mov, idx) => {
           const btn = document.createElement("button");
@@ -133,7 +130,7 @@
         });
 
         moviesBlock.appendChild(moviesContainer);
-        seasonList.appendChild(moviesBlock);
+        document.querySelector(".main-container").appendChild(moviesBlock);
       }
     }
   </script>
