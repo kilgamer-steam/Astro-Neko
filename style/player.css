@@ -1,4 +1,4 @@
-body {
+ body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
   background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
@@ -67,7 +67,7 @@ video {
 
 .controls-row label {
   font-size: 0.95em;
-  color: #fff;
+  color: #ff69b4;
 }
 
 .controls-row select {
