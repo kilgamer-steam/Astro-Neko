@@ -15,49 +15,59 @@
     </a>
   </header>
 
-  <main id="player-container">
-    <div id="video-section">
-      <video id="anime-video" controls></video>
-    </div>
+  <video id="anime-player" controls autoplay style="width:100%; max-width:900px;"></video>
+<div id="audio-options"></div>
 
-    <div id="video-info">
-      <h2 id="episode-title"></h2>
-      <p id="episode-description"></p>
-    </div>
-  </main>
+<script>
+const params = new URLSearchParams(window.location.search);
+const animeId = params.get("id");
+const seasonNumber = parseInt(params.get("season"));
+const episodeNumber = parseInt(params.get("episode"));
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const animeId = params.get("anime");
-    const seasonNumber = parseInt(params.get("season"));
-    const episodeNumber = parseInt(params.get("episode"));
-
+async function loadPlayer() {
     if (!animeId || !seasonNumber || !episodeNumber) {
-      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка параметрів 😿</h2>";
-    } else {
-      loadEpisode(animeId, seasonNumber, episodeNumber);
+        alert("Не вказано всі параметри для плеєра!");
+        return;
     }
 
-    async function loadEpisode(animeId, seasonNumber, episodeNumber) {
-      try {
-        const res = await fetch(`anime/${animeId}.json`);
-        if (!res.ok) throw new Error("Не знайдено файл аніме");
-        const anime = await res.json();
+    try {
+        const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+        if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
 
+        const anime = await resp.json();
         const season = anime.seasons.find(s => s.seasonNumber === seasonNumber);
-        const episode = season.episodes.find(e => e.episodeNumber === episodeNumber);
+        if (!season) throw new Error("Сезон не знайдено");
 
+        const episode = season.episodes[episodeNumber - 1];
         if (!episode) throw new Error("Епізод не знайдено");
 
-        document.title = `${anime.title} — ${episode.name}`;
-        document.getElementById("episode-title").textContent = `${anime.title} — ${episode.title}: ${episode.name}`;
-        document.getElementById("episode-description").textContent = episode.description || "Опис відсутній";
-        document.getElementById("anime-video").src = episode.dubbing[0].videoUrl;
-      } catch (err) {
+        const player = document.getElementById("anime-player");
+
+        // Автовибір першої озвучки
+        let currentDubbing = episode.dubbing[0];
+        player.src = currentDubbing.videoUrl;
+
+        // Створюємо кнопки для інших озвучок
+        const audioOptions = document.getElementById("audio-options");
+        audioOptions.innerHTML = "";
+        episode.dubbing.forEach(d => {
+            const btn = document.createElement("button");
+            btn.textContent = d.studio;
+            btn.onclick = () => { 
+                player.src = d.videoUrl; 
+                player.play();
+            };
+            audioOptions.appendChild(btn);
+        });
+
+    } catch (err) {
         console.error(err);
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Не вдалося завантажити епізод 😿</h2>";
-      }
+        alert("Помилка при завантаженні плеєра");
     }
-  </script>
+}
+
+loadPlayer();
+</script>
+
 </body>
 </html>
