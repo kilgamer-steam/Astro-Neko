@@ -32,6 +32,7 @@ body {
 
 /* ===== Header ===== */
 header {
+  width: 100%;
   background: rgba(24, 24, 27, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
@@ -75,7 +76,7 @@ header .logo h1 {
   border: 2px solid #943a67ff;
   border-radius: 8px;
   background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
+  color: #cc6096ff;
   font-size: 1em;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -186,7 +187,7 @@ header .logo h1 {
 .episode-btn,
 .movie-btn {
   background: #943a67ff;
-  color: #fff;
+  color: #cc6096ff;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;

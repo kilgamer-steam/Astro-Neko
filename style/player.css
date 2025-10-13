@@ -52,7 +52,7 @@ header {
   border: 2px solid #943a67ff;
   border-radius: 8px;
   background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
+  color: #cc6096ff;
   font-size: 1em;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -65,7 +65,7 @@ header {
   border: 2px solid #943a67ff;
   border-radius: 8px;
   background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
+  color: #cc6096ff;
   font-size: 1em;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -133,26 +133,26 @@ video {
 .controls-row select,
 .controls-row button,
 .controls-row span {
-  color: #ff69b4;
+  color: #cc6096ff;
 }
 
 
 .controls-row span {
   font-weight: bold;
-  color: #ff69b4;
+  color: #cc6096ff;
   font-size: 1em;
 }
 
 .controls-row label {
   font-size: 0.95em;
-  color: #ff69b4;
+  color: #cc6096ff;
 }
 .controls-row select {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #943a67ff;
   background: #1d1d20;
-  color: #ff69b4;
+  color: #cc6096ff;
   cursor: pointer;
 }
 
@@ -163,7 +163,7 @@ video {
   border-radius: 8px;
   cursor: pointer;
   background: #943a67ff;
-  color: #fff;
+  color: #cc6096ff;
   transition: all 0.3s;
 }
 
