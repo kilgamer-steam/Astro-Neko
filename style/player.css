@@ -148,7 +148,6 @@ video {
   flex-shrink: 1;
   cursor: help;
   position: relative;
-  pointer-events: none;
 }
 #episode-title[title] {
   pointer-events: none;
