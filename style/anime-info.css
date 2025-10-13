@@ -55,7 +55,7 @@ header .logo img {
 }
 
 header .logo h1 {
-  color: #943a67ff;
+  color: #cc6096ff;
   margin: 0;
   font-size: 1.8em;
 }
@@ -93,7 +93,7 @@ header .logo h1 {
 .anime-meta {
   max-width: 800px;
   flex: 1;
-  color: #943a67ff;
+  color: #cc6096ff;
 }
 
 .anime-meta h2 {
@@ -121,7 +121,7 @@ header .logo h1 {
   font-size: 1.5em;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #943a67ff;
+  color: #cc6096ff;
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(255, 105, 180, 0.3);
 }
@@ -141,7 +141,7 @@ header .logo h1 {
 
 .season h4 {
   margin-top: 0;
-  color: #943a67ff;
+  color: #cc6096ff;
   margin-bottom: 15px;
   font-size: 1.2em;
 }

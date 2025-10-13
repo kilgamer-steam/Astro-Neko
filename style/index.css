@@ -48,12 +48,14 @@ header {
 }
 
 .header-left h1 {
-  color: #943a67ff;
+  color: #cc6096ff;
   margin: 0;
   font-size: 2em;
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
 }
-
+.h3 {
+  color: #cc6096ff;
+}
 /* ===== Search Container ===== */
 .search-container {
   display: flex;
