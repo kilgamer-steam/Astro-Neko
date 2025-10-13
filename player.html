@@ -47,22 +47,28 @@ video {
   max-height: 500px;
   border-radius: 10px;
   background: #000;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .controls-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.controls-row label {
+  font-size: 0.9em;
+  color: #ff82c1;
+  font-weight: bold;
 }
 
 .controls-row span,
 .controls-row select,
 .controls-row button {
   font-size: 1em;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border-radius: 8px;
   border: none;
   background: #ff69b4;
@@ -93,10 +99,12 @@ video {
   <video id="anime-player" controls autoplay></video>
 
   <div class="controls-row">
-    <span id="season-number">?</span>
-    <span id="episode-number">?</span>
-    <span id="episode-title">?</span>
-    <select id="audio-options"></select>
+    <label>Сезон / Фільм: <span id="season-number">?</span></label>
+    <label>Серія / Номер: <span id="episode-number">?</span></label>
+    <label>Назва: <span id="episode-title">?</span></label>
+    <label>Озвучка: 
+      <select id="audio-options"></select>
+    </label>
     <button id="prev-episode">Попередня серія</button>
     <button id="next-episode">Наступна серія</button>
   </div>
@@ -141,7 +149,6 @@ function loadEpisode() {
   let season = animeData.seasons.find(s => s.seasonNumber === seasonNumber);
   let isMovie = false;
   if (!season) { 
-    // Якщо це фільм
     isMovie = true; 
     currentEpisode = animeData.movies[episodeNumber - 1];
     if (!currentEpisode) { alert("Фільм не знайдено"); return; }
@@ -150,16 +157,14 @@ function loadEpisode() {
   } else {
     currentEpisode = season.episodes[episodeNumber - 1];
     if (!currentEpisode) { alert("Епізод не знайдено"); return; }
-    seasonEl.textContent = `Сезон: ${seasonNumber}`;
-    episodeEl.textContent = `Серія: ${episodeNumber}`;
+    seasonEl.textContent = `${seasonNumber}`;
+    episodeEl.textContent = `${episodeNumber}`;
   }
 
   titleEl.textContent = currentEpisode.name;
 
-  // Встановлюємо плеєр на першу озвучку
   player.src = currentEpisode.dubbing[0].videoUrl;
 
-  // Наповнюємо select озвучками
   audioSelect.innerHTML = "";
   currentEpisode.dubbing.forEach((d, idx) => {
     const option = document.createElement("option");
@@ -174,7 +179,6 @@ function loadEpisode() {
     player.play();
   };
 
-  // Кнопки наступна/попередня серія
   if (isMovie) {
     prevBtn.style.display = "none";
     nextBtn.style.display = "none";
@@ -184,7 +188,6 @@ function loadEpisode() {
   }
 }
 
-// Навігація серій
 prevBtn.onclick = () => {
   if (episodeNumber > 1) { episodeNumber--; loadEpisode(); }
 };
