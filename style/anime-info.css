@@ -16,7 +16,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(0.2); /* Хороше затемнення */
+  filter: brightness(0.3); /* Хороше затемнення */
   z-index: -1;
 }
 
@@ -88,6 +88,7 @@ header .logo h1 {
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  filter: brightness(0.4); /* Хороше затемнення */
 }
 
 .anime-meta {
