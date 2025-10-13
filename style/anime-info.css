@@ -59,11 +59,26 @@ header .logo h1 {
   margin: 0;
   font-size: 1.8em;
 }
+
 .header-nav {
   display: flex;
   gap: 15px;
   align-items: center;
 }
+
+#backToInfo {
+  padding: 10px 20px;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #ff69b4;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  order: 2; /* Кнопка повернення останньою */
+}
+
 .header-nav a {
   padding: 10px 20px;
   border: 2px solid #ff69b4;
@@ -76,6 +91,7 @@ header .logo h1 {
   font-family: "Poppins", "Segoe UI", sans-serif;
   order: 1; /* Головна першою */
 }
+
 #backToInfo:hover,
 .header-nav a:hover {
   background: #ff69b4;
