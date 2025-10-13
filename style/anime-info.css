@@ -68,7 +68,7 @@ header .logo h1 {
   padding: 40px;
   gap: 30px;
   position: relative;
-  color: rgba(1, 1, 1, 0.33);
+  background: rgba(1, 1, 1, 0.36);
 }
 
 .anime-title-section img {
@@ -104,10 +104,11 @@ header .logo h1 {
   font-size: 1.5em;
   margin-bottom: 15px;
   color: #ff69b4;
+  background: rgba(1, 1, 1, 0.36);
 }
 
 .season {
-  background: rgba(29, 29, 32, 0.85); /* Напівпрозорий фон */
+  background: rgba(29, 29, 32, 0.36); /* Напівпрозорий фон */
   padding: 15px 20px;
   border-radius: 10px;
   margin-bottom: 20px;
