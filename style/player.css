@@ -146,7 +146,6 @@ video {
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-shrink: 1;
-  cursor: help;
   position: relative;
 }
 
