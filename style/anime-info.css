@@ -16,7 +16,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px) brightness(0.7); /* brightness(0.7) - затемнення на 30% */
+  filter: brightness(0.4); /* Хороше затемнення */
   z-index: -1;
 }
 
