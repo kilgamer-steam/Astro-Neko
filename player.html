@@ -44,41 +44,63 @@
 
   <script>
     // Отримуємо параметри з URL
-    const params = new URLSearchParams(window.location.search);
-    const animeId = params.get("anime");
-    const seasonNum = params.get("season");
-    const episodeNum = params.get("episode");
+    // Отримуємо параметри з URL
+const params = new URLSearchParams(window.location.search);
+const animeId = params.get("anime");
+const seasonNum = parseInt(params.get("season"));
+const episodeNum = parseInt(params.get("episode"));
 
-    const video = document.getElementById("anime-video");
-    const seasonEl = document.getElementById("season-number");
-    const episodeEl = document.getElementById("episode-number");
-    const voiceSelect = document.getElementById("voice-selection");
+const video = document.getElementById("anime-video");
+const seasonEl = document.getElementById("season-number");
+const episodeEl = document.getElementById("episode-number");
+const voiceSelect = document.getElementById("voice-selection");
 
-    // Відображаємо сезон та епізод
-    seasonEl.textContent = seasonNum || "?";
-    episodeEl.textContent = episodeNum || "?";
+seasonEl.textContent = seasonNum || "?";
+episodeEl.textContent = episodeNum || "?";
 
-    // Додамо тестову озвучку
-    const voices = [
-      { name: "Didko studio", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-      { name: "Українське озвучення", url: "https://www.w3schools.com/html/movie.mp4" }
-    ];
+async function loadEpisode() {
+  try {
+    const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+    if (!resp.ok) throw new Error("Не вдалося знайти JSON аніме");
 
-    voices.forEach(v => {
+    const anime = await resp.json();
+    const season = anime.seasons.find(s => s.seasonNumber === seasonNum);
+    if (!season) throw new Error("Сезон не знайдено");
+
+    const episode = season.episodes.find(e => e.number === episodeNum);
+    if (!episode) throw new Error("Епізод не знайдено");
+
+    // Очищуємо попередні опції
+    voiceSelect.innerHTML = "";
+
+    // Додаємо озвучки
+    episode.dubbing.forEach((dub, i) => {
       const option = document.createElement("option");
-      option.value = v.url;
-      option.textContent = v.name;
+      option.value = dub.videoUrl;
+      option.textContent = dub.name;
       voiceSelect.appendChild(option);
     });
 
-    // Встановлюємо початкове відео
-    video.src = voices[0].url;
-
-    // Зміна озвучки
-    voiceSelect.addEventListener("change", e => {
-      video.src = e.target.value;
+    // Встановлюємо першу озвучку
+    if (episode.dubbing.length > 0) {
+      video.src = episode.dubbing[0].videoUrl;
       video.play();
-    });
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Не вдалося завантажити епізод. Перевірте параметри URL.");
+  }
+}
+
+// Зміна озвучки
+voiceSelect.addEventListener("change", e => {
+  video.src = e.target.value;
+  video.play();
+});
+
+loadEpisode();
+
 
     // Кнопки наступний/попередній епізод (тестові, змінюють тільки номер)
     document.getElementById("prev-episode").addEventListener("click", () => {
