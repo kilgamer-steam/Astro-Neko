@@ -106,25 +106,20 @@
   </header>
 
   <div class="player-wrapper">
-    <video id="anime-player" controls autoplay></video>
+  <video id="anime-player" controls autoplay></video>
 
-    <div class="episode-info">
-      <label>Сезон / Фільм: <span id="season-number">?</span></label>
-      <label>Серія / Номер: <span id="episode-number">?</span></label>
-      <label>Назва: <span id="episode-title">?</span></label>
-    </div>
+  <div class="controls-row">
+    <span id="season-or-movie">?</span>
+    <span id="episode-number">?</span>
+    <span id="episode-title">?</span>
+    
+    <label for="audio-select">Зміна озвучки:</label>
+    <select id="audio-select"></select>
 
-    <div class="audio-select-wrapper">
-      <label>Озвучка:
-        <select id="audio-select"></select>
-      </label>
-    </div>
-
-    <div class="controls">
-      <button id="prev-episode">Попередня серія</button>
-      <button id="next-episode">Наступна серія</button>
-    </div>
+    <button id="prev-episode">Попередня серія</button>
+    <button id="next-episode">Наступна серія</button>
   </div>
+</div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
@@ -168,13 +163,14 @@
 
         // Динамічний текст
         if (isMovie) {
-          seasonNumSpan.textContent = episode.number;
-          episodeNumSpan.textContent = "-";
+          document.getElementById("season-or-movie").textContent = `Фільм ${episode.number}`;
+          document.getElementById("episode-number").textContent = "";
         } else {
-          seasonNumSpan.textContent = seasonNumber;
-          episodeNumSpan.textContent = episodeNumber;
+          document.getElementById("season-or-movie").textContent = `Сезон ${seasonNumber}`;
+          document.getElementById("episode-number").textContent = `Серія ${episodeNumber}`;
         }
-        titleSpan.textContent = episode.name;
+        document.getElementById("episode-title").textContent = episode.name;
+
 
         // Встановлюємо відео
         player.src = episode.dubbing[0].videoUrl;
