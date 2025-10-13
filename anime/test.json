@@ -10,9 +10,9 @@
   "rating": "5",
   "status": "Завершено",
   "age": "16+",
-  "img": "/anime/image/kaijuu 8-gou.jpg",
-  "background": "/anime/background/kaijuu 8-gou_bg.jpg",
-  "preview": "/anime/preview/kaijuu 8-gou_preview.jpg",
+  "img": "anime/image/kaijuu 8-gou.jpg",
+  "background": "anime/background/kaijuu 8-gou_bg.jpg",
+  "preview": "anime/preview/kaijuu 8-gou_preview.jpg",
   "seasons": [
     {
       "seasonNumber": 1,
