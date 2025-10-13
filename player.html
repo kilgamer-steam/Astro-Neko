@@ -1,134 +1,48 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AstroNeko — Плеєр</title>
-<link rel="icon" href="images/favicon.png" type="image/png">
-<style>
-body {
-  margin: 0;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-
-header {
-  width: 100%;
-  background: #18181b;
-  display: flex;
-  align-items: center;
-  padding: 10px 30px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-}
-
-header img { height: 40px; margin-right: 10px; }
-header h1 { color: #ff69b4; margin: 0; font-size: 1.8em; }
-
-.player-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 900px;
-  width: 95%;
-  margin-top: 30px;
-  background: #1d1d20;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
-
-video {
-  width: 100%;
-  max-height: 500px;
-  border-radius: 10px;
-  background: #000;
-  margin-bottom: 20px;
-}
-
-.controls-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.controls-row label {
-  font-size: 0.9em;
-  color: #ff82c1;
-  font-weight: bold;
-}
-
-.controls-row span,
-.controls-row select,
-.controls-row button {
-  font-size: 1em;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  background: #ff69b4;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.controls-row span { background: none; color: #ff82c1; font-weight: bold; padding:0; }
-.controls-row select { background: #232327; color: #fff; }
-.controls-row button:hover, .controls-row select:hover { background: #ff82c1; }
-
-@media(max-width:700px){
-  .controls-row { flex-direction: column; align-items: center; }
-  .controls-row span, .controls-row select, .controls-row button { font-size:0.9em; }
-  video { max-height: 300px; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroNeko — Плеєр</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style/player.css">
 </head>
 <body>
+  <header>
+    <a href="index.html" class="logo">
+      <img src="images/favicon1.png" alt="Logo">
+      <h1>AstroNeko</h1>
+    </a>
+  </header>
 
-<header>
-  <img src="images/favicon1.png" alt="Logo">
-  <h1>AstroNeko Плеєр</h1>
-</header>
+  <main class="player-container">
+    <video id="anime-player" controls autoplay class="player"></video>
 
-<div class="player-wrapper">
-  <video id="anime-player" controls autoplay></video>
+    <div class="player-controls">
+      <label>Сезон / Фільм: <span id="season-number">?</span></label>
+      <label>Серія / Номер: <span id="episode-number">?</span></label>
+      <label>Назва: <span id="episode-title">?</span></label>
 
-  <div class="controls-row">
-    <label>Сезон / Фільм: <span id="season-number">?</span></label>
-    <label>Серія / Номер: <span id="episode-number">?</span></label>
-    <label>Назва: <span id="episode-title">?</span></label>
-    <label>Озвучка: 
-      <select id="audio-options"></select>
-    </label>
-    <button id="prev-episode">Попередня серія</button>
-    <button id="next-episode">Наступна серія</button>
-  </div>
-</div>
+      <label>Озвучка:
+        <select id="audio-select"></select>
+      </label>
+
+      <button id="prev-episode">Попередня серія</button>
+      <button id="next-episode">Наступна серія</button>
+    </div>
+  </main>
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const animeId = params.get("id");
-let seasonNumber = parseInt(params.get("season"));
-let episodeNumber = parseInt(params.get("episode"));
+const animeId = params.get("anime");
+const seasonNumber = parseInt(params.get("season"));
+const episodeNumber = parseInt(params.get("episode"));
 
-const player = document.getElementById("anime-player");
-const seasonEl = document.getElementById("season-number");
-const episodeEl = document.getElementById("episode-number");
-const titleEl = document.getElementById("episode-title");
-const audioSelect = document.getElementById("audio-options");
-const prevBtn = document.getElementById("prev-episode");
-const nextBtn = document.getElementById("next-episode");
-
-let animeData = null;
-let currentEpisode = null;
+let currentSeason = seasonNumber;
+let currentEpisode = episodeNumber;
 
 async function loadPlayer() {
-  if (!animeId || !seasonNumber || !episodeNumber) {
+  if (!animeId || !currentSeason || !currentEpisode) {
     alert("Не вказано всі параметри для плеєра!");
     return;
   }
@@ -136,66 +50,90 @@ async function loadPlayer() {
   try {
     const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
     if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
+    const anime = await resp.json();
 
-    animeData = await resp.json();
-    loadEpisode();
+    const isMovie = !anime.seasons || anime.seasons.length === 0; // визначаємо фільм
+    let season, episode;
+
+    if (!isMovie) {
+      season = anime.seasons.find(s => s.seasonNumber === currentSeason);
+      if (!season) throw new Error("Сезон не знайдено");
+      episode = season.episodes[currentEpisode - 1];
+      if (!episode) throw new Error("Епізод не знайдено");
+    } else {
+      episode = anime.movies.find(m => m.number === currentEpisode);
+      if (!episode) throw new Error("Фільм не знайдено");
+    }
+
+    const player = document.getElementById("anime-player");
+
+    // Автовибір першої озвучки
+    let currentDubbing = episode.dubbing[0];
+    player.src = currentDubbing.videoUrl;
+
+    // Заповнюємо select для озвучок
+    const audioSelect = document.getElementById("audio-select");
+    audioSelect.innerHTML = "";
+    episode.dubbing.forEach((d, idx) => {
+      const opt = document.createElement("option");
+      opt.value = idx;
+      opt.textContent = d.studio;
+      audioSelect.appendChild(opt);
+    });
+
+    audioSelect.onchange = () => {
+      const dub = episode.dubbing[audioSelect.value];
+      player.src = dub.videoUrl;
+      player.play();
+    };
+
+    // Відображення інформації
+    const seasonEl = document.getElementById("season-number");
+    const episodeEl = document.getElementById("episode-number");
+    const titleEl = document.getElementById("episode-title");
+
+    if (isMovie) {
+      seasonEl.textContent = `${episode.number}`;
+      episodeEl.parentElement.style.display = "none"; // приховуємо серію
+    } else {
+      seasonEl.textContent = `${currentSeason}`;
+      episodeEl.textContent = `${currentEpisode}`;
+      episodeEl.parentElement.style.display = "inline";
+    }
+
+    titleEl.textContent = episode.name;
+
+    // Кнопки попередня / наступна серія
+    const prevBtn = document.getElementById("prev-episode");
+    const nextBtn = document.getElementById("next-episode");
+
+    if (isMovie) {
+      prevBtn.style.display = "none";
+      nextBtn.style.display = "none";
+    } else {
+      prevBtn.style.display = "inline";
+      nextBtn.style.display = "inline";
+
+      prevBtn.onclick = () => {
+        if (currentEpisode > 1) {
+          currentEpisode--;
+          loadPlayer();
+        }
+      };
+
+      nextBtn.onclick = () => {
+        if (currentEpisode < season.episodes.length) {
+          currentEpisode++;
+          loadPlayer();
+        }
+      };
+    }
+
   } catch (err) {
     console.error(err);
     alert("Помилка при завантаженні плеєра");
   }
 }
-
-function loadEpisode() {
-  let season = animeData.seasons.find(s => s.seasonNumber === seasonNumber);
-  let isMovie = false;
-  if (!season) { 
-    isMovie = true; 
-    currentEpisode = animeData.movies[episodeNumber - 1];
-    if (!currentEpisode) { alert("Фільм не знайдено"); return; }
-    seasonEl.textContent = `Фільм №${episodeNumber}`;
-    episodeEl.textContent = "";
-  } else {
-    currentEpisode = season.episodes[episodeNumber - 1];
-    if (!currentEpisode) { alert("Епізод не знайдено"); return; }
-    seasonEl.textContent = `${seasonNumber}`;
-    episodeEl.textContent = `${episodeNumber}`;
-  }
-
-  titleEl.textContent = currentEpisode.name;
-
-  player.src = currentEpisode.dubbing[0].videoUrl;
-
-  audioSelect.innerHTML = "";
-  currentEpisode.dubbing.forEach((d, idx) => {
-    const option = document.createElement("option");
-    option.value = idx;
-    option.textContent = d.studio;
-    audioSelect.appendChild(option);
-  });
-
-  audioSelect.onchange = () => {
-    const idx = parseInt(audioSelect.value);
-    player.src = currentEpisode.dubbing[idx].videoUrl;
-    player.play();
-  };
-
-  if (isMovie) {
-    prevBtn.style.display = "none";
-    nextBtn.style.display = "none";
-  } else {
-    prevBtn.style.display = "inline-block";
-    nextBtn.style.display = "inline-block";
-  }
-}
-
-prevBtn.onclick = () => {
-  if (episodeNumber > 1) { episodeNumber--; loadEpisode(); }
-};
-
-nextBtn.onclick = () => {
-  const season = animeData.seasons.find(s => s.seasonNumber === seasonNumber);
-  if (episodeNumber < season.episodes.length) { episodeNumber++; loadEpisode(); }
-};
 
 loadPlayer();
 </script>
