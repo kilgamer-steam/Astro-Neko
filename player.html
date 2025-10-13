@@ -52,7 +52,7 @@ async function loadPlayer() {
     if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
     const anime = await resp.json();
 
-    const isMovie = !anime.seasons || anime.seasons.length === 0; // визначаємо фільм
+    const isMovie = !anime.seasons || anime.seasons.length === 0;
     let season, episode;
 
     if (!isMovie) {
@@ -66,8 +66,6 @@ async function loadPlayer() {
     }
 
     const player = document.getElementById("anime-player");
-
-    // Автовибір першої озвучки
     let currentDubbing = episode.dubbing[0];
     player.src = currentDubbing.videoUrl;
 
@@ -87,14 +85,14 @@ async function loadPlayer() {
       player.play();
     };
 
-    // Відображення інформації
+    // Динамічний текст
     const seasonEl = document.getElementById("season-number");
     const episodeEl = document.getElementById("episode-number");
     const titleEl = document.getElementById("episode-title");
 
     if (isMovie) {
       seasonEl.textContent = `${episode.number}`;
-      episodeEl.parentElement.style.display = "none"; // приховуємо серію
+      episodeEl.parentElement.style.display = "none";
     } else {
       seasonEl.textContent = `${currentSeason}`;
       episodeEl.textContent = `${currentEpisode}`;
@@ -103,7 +101,7 @@ async function loadPlayer() {
 
     titleEl.textContent = episode.name;
 
-    // Кнопки попередня / наступна серія
+    // Кнопки навігації
     const prevBtn = document.getElementById("prev-episode");
     const nextBtn = document.getElementById("next-episode");
 
