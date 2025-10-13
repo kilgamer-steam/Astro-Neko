@@ -1,76 +1,68 @@
-body {
+ body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
   color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
 }
 
-/* Фон сторінки */
-.page-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(15px) brightness(0.4);
-  z-index: -2;
-}
-
-/* Темний шар поверх */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10, 10, 10, 0.45);
-  z-index: -1;
-}
-
-/* Хедер */
 header {
   width: 100%;
-  background: rgba(24, 24, 27, 0.6);
+  background: #18181b;
   display: flex;
   align-items: center;
+  justify-content: flex-start; /* логотип і назва ліворуч */
   padding: 10px 30px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  backdrop-filter: blur(10px);
 }
 
-header img {
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* відстань між логотипом та назвою */
+  text-decoration: none;
+}
+
+header .logo img {
   height: 40px;
-  margin-right: 10px;
+  width: 40px;
 }
 
-header h1 {
+header .logo h1 {
   color: #ff69b4;
   margin: 0;
   font-size: 1.8em;
 }
 
-/* Плеєр */
+
 .player-wrapper {
+  position: relative; /* щоб фон і плеєр були в одному блоці */
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 900px;
   width: 90%;
   margin-top: 30px;
-  background: rgba(29, 29, 32, 0.85);
+  background: #1d1d20;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  backdrop-filter: blur(8px);
+  overflow: hidden; /* щоб фон не виходив за рамки */
+}
+
+.player-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.5);
+  z-index: 0;
 }
 
 video {
@@ -80,25 +72,37 @@ video {
   background: #000;
   margin-bottom: 15px;
   border: 2px solid #ff69b4;
+  position: relative;
+  z-index: 1;
 }
 
-/* Контролери */
 .controls-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.controls-row label,
+.controls-row select,
+.controls-row button,
+.controls-row span {
+  color: #fff;
+}
+
+
+.controls-row span {
+  font-weight: bold;
+  color: #ff69b4;
+  font-size: 1em;
 }
 
 .controls-row label {
   font-size: 0.95em;
   color: #ff69b4;
-}
-
-.controls-row span {
-  font-weight: bold;
-  color: #fff;
 }
 
 .controls-row select {
@@ -125,11 +129,17 @@ video {
   background: #ff82c1;
 }
 
-/* Адаптивність */
 @media(max-width: 700px){
   video { max-height: 300px; }
-  .controls-row { flex-direction: column; gap: 8px; }
+  .controls-row {
+    flex-direction: column;
+    gap: 8px;
+  }
   .controls-row button, .controls-row select {
-    font-size: 0.9em; padding: 6px 10px;
+    font-size: 0.9em;
+    padding: 6px 10px;
+  }
+  .controls-row span {
+    font-size: 0.95em;
   }
 }
