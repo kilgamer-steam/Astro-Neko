@@ -16,7 +16,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(0.4); /* Хороше затемнення */
+  filter: brightness(0.2); /* Хороше затемнення */
   z-index: -1;
 }
 
