@@ -36,7 +36,7 @@ header {
   background: rgba(24, 24, 27, 0.85);
   backdrop-filter: blur(10px);
   display: flex;
-  justify-content: space-between; /* Лого зліва, навігація справа */
+  justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
@@ -44,8 +44,8 @@ header {
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  box-sizing: border-box; /* Важливо: щоб padding не додавав ширину */
 }
-
 header .logo {
   display: flex;
   align-items: center;
