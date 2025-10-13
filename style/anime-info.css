@@ -29,7 +29,7 @@ body {
 
 /* ===== Header ===== */
 header {
-  background: rgba(24, 24, 27, 0.85); /* Напівпрозорий фон */
+  background: rgba(24, 24, 27, 0.32); /* Напівпрозорий фон */
   display: flex;
   align-items: center;
   padding: 10px 30px;
@@ -68,6 +68,7 @@ header .logo h1 {
   padding: 40px;
   gap: 30px;
   position: relative;
+  color: rgba(1, 1, 1, 0.33);
 }
 
 .anime-title-section img {
