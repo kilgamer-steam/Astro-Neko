@@ -1,8 +1,16 @@
 body {
   margin: 0;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  color: #fff;
+  color: #00ffe7;
+  font-family: 'Orbitron', sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px 20px;
+  font-size: clamp(0.85rem, 1.5vw, 3rem);
   position: relative;
 }
 
@@ -16,157 +24,190 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(2px) brightness(0.98);
+  filter: blur(2px) brightness(0.7);
   z-index: -1;
 }
 
-/* ===== Content wrapper ===== */
-.content-wrapper {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-}
-
 /* ===== Header ===== */
-header {
-  background: rgba(24, 24, 27, 0.32); /* Напівпрозорий фон */
+.site-header {
+  width: 100%;
+  padding: 10px 20px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
-  box-shadow: 0 2px 10px rgba(24, 24, 27, 0.4);
-  backdrop-filter: blur(2px); /* Додатковий блюр */
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ffe7;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 0 10px #00ffe7;
 }
 
-header .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.site-header .logo a {
+  color: #00ffe7;
+  font-size: 100%;
+  font-weight: bold;
   text-decoration: none;
 }
 
-header .logo img {
-  height: 45px;
-  width: 45px;
+.site-header .header-nav button,
+.site-header .header-nav a {
+  margin-right: 10px;
+  font-size: clamp(0.8rem, 1.5vw, 1.5rem);
+  background: transparent;
+  border: 1px solid #00ffe7;
+  color: #00ffe7;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-header .logo h1 {
-  color: #ff69b4;
-  margin: 0;
-  font-size: 1.8em;
-}
-
-/* ===== Anime header section ===== */
-.anime-header {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.anime-title-section {
+/* ===== Card Container ===== */
+.card-container {
+  background: rgba(0, 20, 30, 0.85);
+  border: 2px solid #00ffe7;
+  margin-top: 60px;
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 1200px;
+  width: 90%;
   display: flex;
-  align-items: flex-start;
-  padding: 40px;
-  gap: 30px;
-  position: relative;
-  background: rgba(24, 24, 27, 0.36);
-  backdrop-filter: blur(2px); /* Додатковий блюр */
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 231, 0.3);
 }
 
-.anime-title-section img {
-  width: 220px;
-  height: 330px;
+/* ===== Top Section ===== */
+.top-section {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.top-section img {
+  width: clamp(200px, 25vw, 300px);
+  height: auto;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  border: 2px solid #00ffe7;
+  box-shadow: 0 0 15px rgba(0, 255, 231, 0.4);
 }
 
-.anime-meta {
-  max-width: 800px;
+.top-section .title-description {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
 }
 
-.anime-meta h2 {
-  font-size: 2em;
-  margin-top: 0;
-  color: #ff69b4;
+.title-description h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 3rem);
+  color: #00ffe7;
+  text-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
 }
 
-.anime-meta p {
-  line-height: 1.5;
-  margin: 6px 0;
-  font-size: 0.95em;
+#anime-description {
+  line-height: 1.6;
+  font-size: clamp(0.9rem, 1.2vw, 1.5rem);
+  color: #b0f0e8;
 }
 
-/* ===== Seasons and episodes ===== */
-.anime-seasons {
-  padding: 30px 40px;
+/* ===== Info Blocks ===== */
+.info-block {
+  border-top: 1px solid #00ffe7;
+  padding-top: 15px;
+  margin-top: 10px;
 }
 
-.anime-seasons h3 {
-  font-size: 1.5em;
-  margin-bottom: 15px;
-  color: #ff69b4;
-  background: rgba(24, 24, 27, 0.36);
-  backdrop-filter: blur(2px); /* Додатковий блюр */
+.info-block h3 {
+  margin: 8px 0;
+  font-size: clamp(0.9rem, 1.4vw, 1.8rem);
+  color: #00ffe7;
+  text-shadow: 0 0 5px rgba(0, 255, 231, 0.3);
 }
 
-.season {
-  background: rgba(29, 29, 32, 0.36); /* Напівпрозорий фон */
-  padding: 15px 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(2px); /* Додатковий блюр */
-}
-
-.season h4 {
-  margin-top: 0;
-  color: #ff82c1;
-}
-
-.episode-container,
-.movies {
+/* ===== Episodes ===== */
+.episodes {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-.episode-btn,
-.movie-btn {
-    background: #ff69b4;
-    color: #fff;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: 0.2s ease-in-out;
+.episodes button {
+  border: 1px solid #00ffe7;
+  background: transparent;
+  color: #00ffe7;
+  padding: 0.4em 0.8em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-size: clamp(0.75rem, 1.2vw, 1.5rem);
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(0, 255, 231, 0.5);
 }
 
-.episode-btn:hover,
-.movie-btn:hover {
-    background: #ff82c1;
-    transform: scale(1.05);
+.episodes button:hover {
+  background: rgba(0, 255, 231, 0.1);
+  box-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
+  transform: translateY(-2px);
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 800px) {
-  .anime-title-section {
+@media (max-width: 768px) {
+  body {
+    padding: 20px 10px;
+    align-items: stretch;
+  }
+
+  .card-container {
+    padding: 15px;
+    gap: 15px;
+    width: 95%;
+    margin-top: 80px;
+  }
+
+  .top-section {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 15px;
   }
 
-  .anime-title-section img {
-    width: 180px;
-    height: 260px;
+  .top-section img {
+    width: 90%;
+    max-width: 250px;
   }
 
-  .anime-meta {
-    max-width: 90%;
+  .title-description h1 {
+    font-size: clamp(1.2rem, 4vw, 2.5rem);
   }
 
-  .episode-container,
-  .movies {
+  .site-header {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 5px 10px;
+  }
+
+  .site-header .logo a {
+    font-size: 16px;
+  }
+
+  .site-header .header-nav {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .site-header .header-nav a,
+  .site-header .header-nav button {
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+
+  .episodes {
     justify-content: center;
   }
 }

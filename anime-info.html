@@ -6,49 +6,48 @@
   <title>AstroNeko — Інформація про аніме</title>
   <link rel="icon" href="images/favicon.png" type="image/png">
   <link rel="stylesheet" href="style/anime-info.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="anime-bg" id="anime-bg"></div>
   
-  <div class="content-wrapper">
-    <header>
-      <a href="index.html" class="logo">
-        <img src="images/favicon1.png" alt="Logo">
-        <h1>AstroNeko</h1>
-      </a>
-    </header>
-
-    <div class="main-container">
-      <!-- Блок з описом та фото -->
-      <section class="anime-info-block">
-        <div class="anime-title-section">
-          <img id="anime-image" src="" alt="Anime poster">
-          <div class="anime-meta">
-            <h2 id="anime-title">Назва аніме</h2>
-            <p id="anime-description">Опис аніме...</p>
-            <p><strong>Жанри:</strong> <span id="anime-tags"></span></p>
-            <p><strong>Статус:</strong> <span id="anime-status"></span></p>
-            <p><strong>Вік:</strong> <span id="anime-age"></span></p>
-            <p><strong>Оцінка:</strong> <span id="anime-rating"></span></p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Блок з сезонами -->
-      <section class="seasons-block">
-        <h3>Сезони та серії</h3>
-        <div id="season-list"></div>
-      </section>
+  <header class="site-header">
+    <div class="logo">
+      <a href="index.html">AstroNeko <img src="images/favicon1.png" alt="logo" style="height:40px; vertical-align: middle;"></a>
     </div>
+    <nav class="header-nav">
+      <a href="index.html">Головна</a>
+    </nav>
+  </header>
+
+  <div class="card-container">
+    <!-- Блок з описом та фото -->
+    <div class="top-section">
+      <img id="anime-image" src="" alt="Anime poster">
+      <div class="title-description">
+        <h1 id="anime-title">Назва аніме</h1>
+        <div id="anime-description">Опис аніме...</div>
+        <div class="info-block">
+          <h3>Рейтинг: <span id="anime-rating"></span>★</h3>
+          <h3>Статус: <span id="anime-status"></span></h3>
+          <h3>Тип / Жанр: <span id="anime-tags"></span></h3>
+          <h3>Сезони: <span id="anime-seasons-count"></span></h3>
+          <h3>Кількість серій: <span id="anime-episodes-count"></span></h3>
+          <h3>Віковий рейтинг: <span id="anime-age"></span></h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Блок з сезонами -->
+    <div id="seasons-container"></div>
   </div>
 
   <script>
-    // Твій JavaScript код залишається незмінним
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
 
     if (!animeId) {
-      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Аніме не знайдено 😿</h2>";
+      document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px; color: #00ffe7;'>Аніме не знайдено 😿</h2>";
     } else {
       loadAnime(animeId);
     }
@@ -61,76 +60,82 @@
         const anime = await response.json();
         displayAnimeInfo(anime);
       } catch (error) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка при завантаженні аніме 😿</h2>";
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px; color: #00ffe7;'>Помилка при завантаженні аніме 😿</h2>";
         console.error(error);
       }
     }
 
     function displayAnimeInfo(anime) {
-      document.title = `AstroNeko — ${anime.title}`;
+      // Фон та основна інформація
       document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
       document.getElementById("anime-image").src = anime.img;
       document.getElementById("anime-title").textContent = anime.title;
       document.getElementById("anime-description").textContent = anime.description;
+      document.title = `AstroNeko — ${anime.title}`;
+
+      // Мета-інформація
       document.getElementById("anime-tags").textContent = anime.tags.join(", ");
       document.getElementById("anime-status").textContent = anime.status;
       document.getElementById("anime-age").textContent = anime.age;
       document.getElementById("anime-rating").textContent = anime.rating || "N/A";
+      document.getElementById("anime-seasons-count").textContent = anime.seasons.length;
+      
+      const totalEpisodes = anime.seasons.reduce((sum, season) => sum + season.episodes.length, 0);
+      document.getElementById("anime-episodes-count").textContent = totalEpisodes;
 
-      const seasonList = document.getElementById("season-list");
-      seasonList.innerHTML = "";
+      // Сезони та серії
+      const seasonsContainer = document.getElementById("seasons-container");
+      seasonsContainer.innerHTML = "";
 
       anime.seasons.forEach(season => {
         const seasonDiv = document.createElement("div");
-        seasonDiv.classList.add("season");
+        seasonDiv.className = "info-block";
 
-        const seasonTitle = document.createElement("h4");
-        seasonTitle.textContent = `Сезон ${season.seasonNumber}`;
+        const seasonTitle = document.createElement("h3");
+        seasonTitle.textContent = `Сезон ${season.seasonNumber}:`;
         seasonDiv.appendChild(seasonTitle);
 
-        const episodeContainer = document.createElement("div");
-        episodeContainer.classList.add("episode-container");
+        const episodesDiv = document.createElement("div");
+        episodesDiv.className = "episodes";
 
         season.episodes.forEach((ep, idx) => {
           const btn = document.createElement("button");
-          btn.classList.add("episode-btn");
           btn.textContent = ep.title;
           btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
             window.location.href = url;
           };
-          episodeContainer.appendChild(btn);
+          episodesDiv.appendChild(btn);
         });
 
-        seasonDiv.appendChild(episodeContainer);
-        seasonList.appendChild(seasonDiv);
+        seasonDiv.appendChild(episodesDiv);
+        seasonsContainer.appendChild(seasonDiv);
       });
 
       // Фільми, якщо є
       if (anime.movies && anime.movies.length > 0) {
-        const moviesBlock = document.createElement("div");
-        moviesBlock.classList.add("movies-block");
+        const moviesDiv = document.createElement("div");
+        moviesDiv.className = "info-block";
 
-        const moviesTitle = document.createElement("h4");
-        moviesTitle.textContent = "Фільми";
-        moviesBlock.appendChild(moviesTitle);
+        const moviesTitle = document.createElement("h3");
+        moviesTitle.textContent = "Фільми:";
+        moviesDiv.appendChild(moviesTitle);
 
-        const moviesContainer = document.createElement("div");
-        moviesContainer.classList.add("movies");
+        const moviesList = document.createElement("div");
+        moviesList.className = "episodes";
 
-        anime.movies.forEach((mov, idx) => {
+        anime.movies.forEach((movie, idx) => {
           const btn = document.createElement("button");
-          btn.classList.add("movie-btn");
-          btn.textContent = mov.title;
+          btn.textContent = movie.title;
           btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx+1}`;
             window.location.href = url;
           };
-          moviesContainer.appendChild(btn);
+          moviesList.appendChild(btn);
         });
 
-        moviesBlock.appendChild(moviesContainer);
-        document.querySelector(".main-container").appendChild(moviesBlock);
+        moviesDiv.appendChild(moviesList);
+        seasonsContainer.appendChild(moviesDiv);
       }
     }
   </script>
