@@ -88,7 +88,7 @@ header .logo h1 {
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-  filter: brightness(0.4); /* Хороше затемнення */
+  filter: brightness(0.6); /* Хороше затемнення */
 }
 
 .anime-meta {
