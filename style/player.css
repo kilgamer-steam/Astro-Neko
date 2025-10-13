@@ -115,7 +115,7 @@ header.hidden {
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   overflow: hidden;
   backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 105, 180, 0.2); /* Додаємо обводку */
+  border: 1px solid rgba(16, 9, 26, 0.2); /* Додаємо обводку */
 }
 
 .player-bg {
