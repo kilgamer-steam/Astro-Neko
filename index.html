@@ -31,6 +31,7 @@
         let animeList = [];
         let loadedCount = 0;
         const batchSize = 20;
+        let currentFlippedCard = null;
 
         // Створюємо картку аніме
         function createAnimeCard(anime) {
@@ -55,6 +56,8 @@
                 <p>Статус: ${anime.status}</p>
                 <button class="details-btn">Детальніше</button>
             `;
+            
+            // Обробник кліку на кнопку "Детальніше"
             back.querySelector('button').onclick = (e) => {
                 e.stopPropagation();
                 window.location.href = `anime-info.html?id=${encodeURIComponent(anime.id)}`;
@@ -62,7 +65,29 @@
 
             card.appendChild(front);
             card.appendChild(back);
-            card.onclick = () => card.classList.toggle('flipped');
+            
+            // Обробник кліку на картку
+            card.onclick = (e) => {
+                // Якщо клік на кнопці "Детальніше" - не обробляємо переворот
+                if (e.target.classList.contains('details-btn')) {
+                    return;
+                }
+                
+                // Закриваємо попередню відкриту картку
+                if (currentFlippedCard && currentFlippedCard !== card) {
+                    currentFlippedCard.classList.remove('flipped');
+                }
+                
+                // Перевертаємо поточну картку
+                card.classList.toggle('flipped');
+                
+                // Оновлюємо поточну відкриту картку
+                if (card.classList.contains('flipped')) {
+                    currentFlippedCard = card;
+                } else {
+                    currentFlippedCard = null;
+                }
+            };
 
             return card;
         }
@@ -103,6 +128,14 @@
             loadingText.style.display = 'none';
         }
 
+        // Закриття картки при кліку поза нею
+        document.addEventListener('click', (e) => {
+            if (currentFlippedCard && !currentFlippedCard.contains(e.target)) {
+                currentFlippedCard.classList.remove('flipped');
+                currentFlippedCard = null;
+            }
+        });
+
         // Інфініт-скролл
         window.addEventListener('scroll', () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
@@ -128,37 +161,38 @@
 
         // Ініціалізація
         loadAnimeList();
+
         // Auto-hide header functionality for index page
-let lastScrollY = window.scrollY;
-const header = document.querySelector('header');
-const headerHeight = header.offsetHeight;
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
 
-// Встановлюємо правильний відступ для контенту
-document.querySelector('main').style.paddingTop = headerHeight + 'px';
+        // Встановлюємо правильний відступ для контенту
+        document.querySelector('main').style.paddingTop = headerHeight + 'px';
 
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    
-    if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
-        // Скролимо вниз - ховаємо хедер
-        header.classList.add('hidden');
-    } else {
-        // Скролимо вгору - показуємо хедер
-        header.classList.remove('hidden');
-    }
-    
-    lastScrollY = currentScrollY;
-});
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
+                // Скролимо вниз - ховаємо хедер
+                header.classList.add('hidden');
+            } else {
+                // Скролимо вгору - показуємо хедер
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollY = currentScrollY;
+        });
 
-// Додатково: показуємо хедер при ховері
-header.addEventListener('mouseenter', () => {
-    header.classList.remove('hidden');
-});
+        // Додатково: показуємо хедер при ховері
+        header.addEventListener('mouseenter', () => {
+            header.classList.remove('hidden');
+        });
 
-// Запобігаємо миттєвому хованню при виході курсора
-header.addEventListener('mouseleave', () => {
-    lastScrollY = window.scrollY;
-});
+        // Запобігаємо миттєвому хованню при виході курсора
+        header.addEventListener('mouseleave', () => {
+            lastScrollY = window.scrollY;
+        });
     </script>
 </body>
 </html>

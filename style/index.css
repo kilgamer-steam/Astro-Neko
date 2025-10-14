@@ -16,7 +16,7 @@ body::before {
   height: 100%;
   background: 
     url('https://abrakadabra.fun/uploads/posts/2022-03/1646107979_1-abrakadabra-fun-p-sao-na-rabochii-stol-1.jpg') no-repeat center center;
-  filter: brightness(0.4); /* Хороше затемнення */
+  filter: brightness(0.4);
   background-size: cover;
   z-index: -1;
 }
@@ -31,7 +31,7 @@ header {
   align-items: center;
   padding: 15px 40px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: fixed; /* Змінив з sticky на fixed */
+  position: fixed;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 105, 180, 0.3);
@@ -49,7 +49,7 @@ main {
   padding: 30px 40px;
   max-width: 1400px;
   margin: 0 auto;
-  padding-top: 80px; /* Відступ рівний висоті хедера */
+  padding-top: 80px;
   position: relative;
   z-index: 1;
 }
@@ -130,6 +130,7 @@ main {
   padding: 30px;
   color: #cc6096ff;
   justify-items: center;
+  align-items: start;
 }
 
 /* ====== Картка аніме ====== */
@@ -138,6 +139,7 @@ main {
   height: 320px;
   perspective: 1000px;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .anime-card .front,
@@ -158,6 +160,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transform: rotateY(0deg);
+  z-index: 2;
 }
 
 .anime-card .front .image-container {
@@ -170,7 +174,7 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.7); /* Хороше затемнення */
+  filter: brightness(0.7);
   transition: transform 0.4s ease;
 }
 
@@ -189,11 +193,13 @@ main {
 /* ====== Задня сторона ====== */
 .anime-card .back {
   background: #242427;
-  transform: rotateY(180deg);
+  transform: rotateY(-180deg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 15px;
   text-align: center;
+  z-index: 1;
 }
 
 .anime-card .back p {
@@ -218,12 +224,21 @@ main {
 }
 
 /* ====== Ефект перевороту ====== */
+.anime-card.flipped {
+  z-index: 10;
+}
+
+.anime-card:not(.flipped) {
+  z-index: 1;
+}
+
 .anime-card.flipped .front {
   transform: rotateY(180deg);
 }
 
 .anime-card.flipped .back {
-  transform: rotateY(360deg);
+  transform: rotateY(0deg);
+  z-index: 11;
 }
 
 /* ====== Адаптивність ====== */
@@ -243,13 +258,13 @@ main {
     height: 290px;
   }
 
-  header input[type="text"] {
+  #search {
     width: 180px;
   }
 }
 
 @media (max-width: 480px) {
-  header input[type="text"] {
+  #search {
     width: 140px;
   }
 
