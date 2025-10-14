@@ -67,6 +67,28 @@
       }
     }
 
+    // Функція для форматування тривалості
+    function formatDuration(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        
+        if (hours > 0) {
+            return `${hours} год ${minutes} хв`;
+        } else {
+            return `${minutes} хв`;
+        }
+    }
+
+    // Функція для форматування дати
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('uk-UA', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
     function displayAnimeInfo(anime) {
       document.title = `AstroNeko — ${anime.title}`;
       document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
@@ -81,149 +103,130 @@
       const seasonList = document.getElementById("season-list");
       seasonList.innerHTML = "";
 
-      // Замінюємо цей блок в функції displayAnimeInfo():
-anime.seasons.forEach(season => {
-    const seasonDiv = document.createElement("div");
-    seasonDiv.classList.add("season");
+      // Відображення сезонів
+      anime.seasons.forEach(season => {
+          const seasonDiv = document.createElement("div");
+          seasonDiv.classList.add("season");
 
-    const seasonTitle = document.createElement("h4");
-    seasonTitle.textContent = `Сезон ${season.seasonNumber}: "${season.title}"`; // Додали назву сезону
-    seasonDiv.appendChild(seasonTitle);
+          const seasonTitle = document.createElement("h4");
+          seasonTitle.textContent = `Сезон ${season.seasonNumber}: "${season.title}"`;
+          seasonDiv.appendChild(seasonTitle);
 
-    // Додаємо інформацію про рік та кількість серій
-    const seasonMeta = document.createElement("div");
-    seasonMeta.classList.add("season-meta");
-    seasonMeta.innerHTML = `
-        <span class="season-year">${season.year} рік</span>
-        <span class="season-episodes">${season.episodeCount} серій</span>
-    `;
-    seasonDiv.appendChild(seasonMeta);
+          // Додаємо інформацію про рік та кількість серій
+          const seasonMeta = document.createElement("div");
+          seasonMeta.classList.add("season-meta");
+          seasonMeta.innerHTML = `
+              <span class="season-year">${season.year} рік</span>
+              <span class="season-episodes">${season.episodeCount} серій</span>
+          `;
+          seasonDiv.appendChild(seasonMeta);
 
-    const episodeContainer = document.createElement("div");
-    episodeContainer.classList.add("episode-container");
+          const episodeContainer = document.createElement("div");
+          episodeContainer.classList.add("episode-container");
 
-    season.episodes.forEach((ep, idx) => {
-        const btn = document.createElement("button");
-        btn.classList.add("episode-btn");
-        btn.textContent = ep.title;
-        btn.onclick = () => {
-            const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
-            window.location.href = url;
-        };
-        episodeContainer.appendChild(btn);
-    });
+          season.episodes.forEach((ep, idx) => {
+              const btn = document.createElement("button");
+              btn.classList.add("episode-btn");
+              btn.textContent = ep.title;
+              btn.onclick = () => {
+                  const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
+                  window.location.href = url;
+              };
+              episodeContainer.appendChild(btn);
+          });
 
-    seasonDiv.appendChild(episodeContainer);
-    seasonList.appendChild(seasonDiv);
-});
-      // Замінюємо блок фільмів на оновлений з тривалістю:
-if (anime.movies && anime.movies.length > 0) {
-    const moviesBlock = document.createElement("div");
-    moviesBlock.classList.add("movies-block");
+          seasonDiv.appendChild(episodeContainer);
+          seasonList.appendChild(seasonDiv);
+      });
 
-    const moviesTitle = document.createElement("h4");
-    moviesTitle.textContent = "Фільми";
-    moviesBlock.appendChild(moviesTitle);
+      // Відображення фільмів
+      if (anime.movies && anime.movies.length > 0) {
+          const moviesBlock = document.createElement("div");
+          moviesBlock.classList.add("movies-block");
 
-    // Створюємо таблицю для фільмів
-    const moviesTable = document.createElement("table");
-    moviesTable.classList.add("movies-table");
-    
-    // Заголовки таблиці
-    const tableHeader = document.createElement("tr");
-    tableHeader.innerHTML = `
-        <th>№</th>
-        <th>Назва фільму</th>
-        <th>Дата релізу</th>
-        <th>Тривалість</th>
-        <th></th>
-    `;
-    moviesTable.appendChild(tableHeader);
+          const moviesTitle = document.createElement("h4");
+          moviesTitle.textContent = "Фільми";
+          moviesBlock.appendChild(moviesTitle);
 
-    // Заповнюємо таблицю даними
-    anime.movies.forEach((movie, idx) => {
-        const row = document.createElement("tr");
-        row.classList.add("movie-row");
-        
-        // Конвертуємо секунди в читабельний формат
-        const duration = formatDuration(movie.duration);
-        
-        row.innerHTML = `
-            <td class="movie-number">${movie.movieNumber}</td>
-            <td class="movie-title">${movie.name}</td>
-            <td class="movie-date">${formatDate(movie.releaseDate)}</td>
-            <td class="movie-duration">${duration}</td>
-            <td class="movie-action">
-                <button class="watch-movie-btn" data-movie="${idx + 1}">Дивитися</button>
-            </td>
-        `;
-        
-        // Обробник кнопки "Дивитися"
-        const watchBtn = row.querySelector('.watch-movie-btn');
-        watchBtn.onclick = () => {
-            const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
-            window.location.href = url;
-        };
-        
-        moviesTable.appendChild(row);
-    });
+          // Створюємо таблицю для фільмів
+          const moviesTable = document.createElement("table");
+          moviesTable.classList.add("movies-table");
+          
+          // Заголовки таблиці
+          const tableHeader = document.createElement("tr");
+          tableHeader.innerHTML = `
+              <th>№</th>
+              <th>Назва фільму</th>
+              <th>Дата релізу</th>
+              <th>Тривалість</th>
+              <th></th>
+          `;
+          moviesTable.appendChild(tableHeader);
 
-    moviesBlock.appendChild(moviesTable);
-    seasonList.appendChild(moviesBlock);
-}
+          // Заповнюємо таблицю даними
+          anime.movies.forEach((movie, idx) => {
+              const row = document.createElement("tr");
+              row.classList.add("movie-row");
+              
+              // Конвертуємо секунди в читабельний формат
+              const duration = formatDuration(movie.duration);
+              
+              row.innerHTML = `
+                  <td class="movie-number">${movie.movieNumber}</td>
+                  <td class="movie-title">${movie.name}</td>
+                  <td class="movie-date">${formatDate(movie.releaseDate)}</td>
+                  <td class="movie-duration">${duration}</td>
+                  <td class="movie-action">
+                      <button class="watch-movie-btn" data-movie="${idx + 1}">Дивитися</button>
+                  </td>
+              `;
+              
+              // Обробник кнопки "Дивитися"
+              const watchBtn = row.querySelector('.watch-movie-btn');
+              watchBtn.onclick = () => {
+                  const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
+                  window.location.href = url;
+              };
+              
+              moviesTable.appendChild(row);
+          });
 
-// Функція для форматування тривалості
-function formatDuration(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    
-    if (hours > 0) {
-        return `${hours} год ${minutes} хв`;
-    } else {
-        return `${minutes} хв`;
+          moviesBlock.appendChild(moviesTable);
+          seasonList.appendChild(moviesBlock);
+      }
     }
-}
 
-// Функція для форматування дати
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('uk-UA', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
     // Auto-hide header functionality
-let lastScrollY = window.scrollY;
-const header = document.querySelector('header');
-const headerHeight = header.offsetHeight;
+    let lastScrollY = window.scrollY;
+    const header = document.querySelector('header');
+    const headerHeight = header.offsetHeight;
 
-// Встановлюємо правильний відступ для контенту
-document.querySelector('.content-wrapper').style.paddingTop = headerHeight + 'px';
+    // Встановлюємо правильний відступ для контенту
+    document.querySelector('.content-wrapper').style.paddingTop = headerHeight + 'px';
 
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    
-    if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
-        // Скролимо вниз - ховаємо хедер
-        header.classList.add('hidden');
-    } else {
-        // Скролимо вгору - показуємо хедер
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
+            // Скролимо вниз - ховаємо хедер
+            header.classList.add('hidden');
+        } else {
+            // Скролимо вгору - показуємо хедер
+            header.classList.remove('hidden');
+        }
+        
+        lastScrollY = currentScrollY;
+    });
+
+    // Додатково: показуємо хедер при ховері
+    header.addEventListener('mouseenter', () => {
         header.classList.remove('hidden');
-    }
-    
-    lastScrollY = currentScrollY;
-});
+    });
 
-// Додатково: показуємо хедер при ховері
-header.addEventListener('mouseenter', () => {
-    header.classList.remove('hidden');
-});
-
-// Запобігаємо миттєвому хованню при виході курсора
-header.addEventListener('mouseleave', () => {
-    lastScrollY = window.scrollY; // Скидаємо позицію скролу
-});
+    // Запобігаємо миттєвому хованню при виході курсора
+    header.addEventListener('mouseleave', () => {
+        lastScrollY = window.scrollY;
+    });
   </script>
 </body>
 </html>
