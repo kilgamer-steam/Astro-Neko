@@ -26,16 +26,28 @@
           "dubbing":[         
           {
               "studio": "СТУДІЯ 1",
-              "language":"language",
+              "language":"українська",
               "subtitle": "subtitleurl",
               "opening": [0,0],
               "ending": [1282,1372],
               "quality": [
-                {"value":"1080", "videoUrl":"url1080"},
-                {"value":"720", "videoUrl":"url720"}, 
-                {"value":"480", "videoUrl":"url480"}
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
               ]
-            }
+            },
+            {
+          "studio": "СТУДІЯ 2",
+          "language":"Англійська",
+          "subtitle": "subtitleurl",
+          "opening": [0,0],
+          "ending": [1282,1372],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+            {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+          ]
+          }
           ]
         }
       ]
@@ -51,16 +63,28 @@
       "dubbing":[
         {
           "studio": "СТУДІЯ 1",
-          "language":"language",
+          "language":"Англійська",
           "subtitle": "subtitleurl",
           "opening": [0,0],
           "ending": [1282,1372],
           "quality": [
-            {"value":"1080", "videoUrl":"url1080"},
-            {"value":"720", "videoUrl":"url720"}, 
-            {"value":"480", "videoUrl":"url480"}
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+            {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
           ]
-        }
+        },
+        {
+              "studio": "СТУДІЯ 2",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,0],
+              "ending": [1282,1372],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            }
       ]
     }
   ]
