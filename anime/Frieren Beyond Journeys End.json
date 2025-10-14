@@ -7,7 +7,7 @@
     "Фантастика",
     "Драма"
   ],
-  "rating": "",
+  "rating": "9",
   "status": "Завершено",
   "age": "PG-16",
   "img": "anime/image/Frieren%20Beyond%20Journeys%20End.jpg",
@@ -16,9 +16,9 @@
   "seasons": [
     {
       "seasonNumber": 1,
-      "title": "season name",
-      "year": "2024",
-      "episodeCount": "12",
+      "title": " ",
+      "year": "2023",
+      "episodeCount": "28",
       "episodes": [
         {
           "title": "Епізод 1",
@@ -28,8 +28,8 @@
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -39,15 +39,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 2",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -57,15 +57,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 3",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -75,15 +75,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 4",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -93,15 +93,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 5",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -111,15 +111,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 6",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -129,15 +129,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 7",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -147,15 +147,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 8",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -165,15 +165,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 9",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -183,15 +183,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 10",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -201,15 +201,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 11",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -219,15 +219,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 12",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -237,15 +237,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 13",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -255,15 +255,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 14",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -273,15 +273,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 15",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -291,15 +291,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 16",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -309,15 +309,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 17",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -327,15 +327,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 18",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -345,15 +345,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 19",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -363,15 +363,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 20",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -381,15 +381,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 21",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -399,15 +399,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 22",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -417,15 +417,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 23",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -435,15 +435,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 24",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -453,15 +453,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 25",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -471,15 +471,15 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 26",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
@@ -489,15 +489,33 @@
           ]
         },
         {
-          "title": "Епізод 1",
+          "title": "Епізод 27",
           "name": "",
           "dubbing":[         
             {
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,5],
-              "ending": [10,15],
+              "opening": [0,0],
+              "ending": [0,0],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 28",
+          "name": "",
+          "dubbing":[         
+            {
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,0],
+              "ending": [0,0],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
