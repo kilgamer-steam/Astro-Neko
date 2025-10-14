@@ -1,784 +1,332 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Neko</title>
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="style/index.css">
-    <style>
-        /* Контейнер для фільтрів та сортування */
-        .controls-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding: 0 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .filters-section {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .sort-section {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .filter-select, .view-select {
-            padding: 10px 15px;
-            border: 2px solid rgba(255, 105, 180, 0.5);
-            border-radius: 25px;
-            background: rgba(29, 29, 32, 0.8);
-            color: #fff;
-            font-size: 0.9em;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-            min-width: 150px;
-        }
-        
-        /* Об'єднаний блок сортування */
-        .sort-container {
-            display: flex;
-            align-items: center;
-            background: rgba(29, 29, 32, 0.8);
-            border: 2px solid rgba(255, 105, 180, 0.5);
-            border-radius: 25px;
-            overflow: hidden;
-        }
-        
-        .sort-select {
-            padding: 10px 15px;
-            border: none;
-            background: transparent;
-            color: #fff;
-            font-size: 0.9em;
-            outline: none;
-            min-width: 120px;
-        }
-        
-        .sort-order {
-            padding: 10px 12px;
-            background: transparent;
-            border: none;
-            border-left: 1px solid rgba(255, 105, 180, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #ff69b4;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-        }
-        
-        .sort-order:hover {
-            background: rgba(255, 105, 180, 0.1);
-        }
-        
-        .filter-select:focus, .view-select:focus {
-            outline: none;
-            border-color: #943a67ff;
-            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
-        }
-        
-        /* Компактний вигляд сітки */
-        .anime-grid.compact {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-        }
-        
-        .anime-grid.compact .anime-card {
-            width: 150px;
-            height: 240px;
-        }
-        
-        .anime-grid.compact .back-content h4 {
-            font-size: 0.95em;
-        }
-        
-        .anime-grid.compact .back-info p {
-            font-size: 0.75em;
-        }
-        
-        /* Стилі для списку */
-        .anime-list {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            padding: 0 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .anime-list-item {
-            display: flex;
-            background: rgba(29, 29, 32, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-        
-        .anime-list-item:hover {
-            background: rgba(29, 29, 32, 0.9);
-            border-left-color: #943a67ff;
-            transform: translateX(5px);
-        }
-        
-        .list-item-image {
-            width: 80px;
-            height: 120px;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-        
-        .list-item-content {
-            flex: 1;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .list-item-title {
-            font-size: 1.1em;
-            color: #ff69b4;
-            margin: 0 0 10px 0;
-        }
-        
-        .list-item-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.85em;
-            color: #cc6096ff;
-            margin-bottom: 10px;
-        }
-        
-        .list-item-tags {
-            font-size: 0.8em;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 10px;
-        }
-        
-        .list-item-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .list-details-btn {
-            padding: 6px 12px;
-            background: #943a67ff;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: background 0.3s ease;
-        }
-        
-        .list-details-btn:hover {
-            background: #ff82c1;
-        }
-        
-        /* Індикатор завантаження */
-        .loading-indicator {
-            text-align: center;
-            padding: 20px;
-            color: #ff69b4;
-        }
-        
-        .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(255, 105, 180, 0.3);
-            border-radius: 50%;
-            border-top-color: #ff69b4;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Стилі для повідомлення про відсутність результатів */
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: #cc6096ff;
-            font-size: 1.1em;
-            grid-column: 1 / -1;
-        }
-        
-        /* Мобільна версія */
-        @media (max-width: 768px) {
-            .controls-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filters-section, .sort-section {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .filter-select, .view-select {
-                flex: 1;
-                min-width: 120px;
-            }
-            
-            .sort-container {
-                flex: 1;
-            }
-            
-            .sort-select {
-                flex: 1;
-            }
-            
-            .anime-list-item {
-                flex-direction: column;
-            }
-            
-            .list-item-image {
-                width: 100%;
-                height: 200px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-left">
-            <img src="images/favicon1.png" alt="logo">
-            <h1>AstroNeko</h1>
-        </div>
+body {
+  margin: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
 
-        <div class="search-container">
-            <input type="text" id="search" placeholder="Пошук аніме...">
-            <button id="surprise">Здивуй мене</button>
-        </div>
-    </header>
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    url('https://kilgamer-steam.github.io/Astro-Neko/images/background.JPEG') no-repeat center center;
+  filter: brightness(0.4);
+  background-size: cover;
+  z-index: -1;
+}
 
-    <main>
-        <!-- Контейнер для всіх контролів -->
-        <div class="controls-container">
-            <div class="filters-section">
-                <select class="filter-select" id="genre-filter">
-                    <option value="">Всі жанри</option>
-                </select>
-                
-                <select class="filter-select" id="status-filter">
-                    <option value="">Всі статуси</option>
-                    <option value="Онґоїнг">Онґоїнг</option>
-                    <option value="Завершено">Завершено</option>
-                    <option value="Анонс">Анонс</option>
-                </select>
-                
-                <select class="filter-select" id="year-filter">
-                    <option value="">Всі роки</option>
-                </select>
-            </div>
-            
-            <div class="sort-section">
-                <!-- Об'єднаний блок сортування -->
-                <div class="sort-container">
-                    <select class="sort-select" id="sort-by">
-                        <option value="title">Назва</option>
-                        <option value="rating">Рейтинг</option>
-                        <option value="episodes">Серії</option>
-                        <option value="year">Рік</option>
-                    </select>
-                    <button class="sort-order" id="sort-order" data-order="asc">↑</button>
-                </div>
-                
-                <select class="view-select" id="view-select">
-                    <option value="grid">Сітка</option>
-                    <option value="compact">Компактно</option>
-                    <option value="list">Список</option>
-                </select>
-            </div>
-        </div>
-        
-        <!-- Сітка аніме -->
-        <div class="anime-grid" id="anime-grid">
-            <!-- Картки аніме будуть згенеровані тут -->
-        </div>
-        
-        <!-- Список аніме -->
-        <div class="anime-list" id="anime-list">
-            <!-- Елементи списку будуть згенеровані тут -->
-        </div>
-        
-        <div class="loading-indicator" id="loading" style="display:none;">
-            <div class="loading-spinner"></div> Завантаження...
-        </div>
-    </main>
+/* ===== Header ===== */
+header {
+  width: 100%;
+  background: rgba(24, 24, 27, 0.56);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
 
-    <script>
-        let animeList = [];
-        let loadedAnimeData = [];
-        let loadedCount = 0;
-        const batchSize = 20;
-        let currentFlippedCard = null;
-        
-        // Налаштування (зберігаємо тільки вигляд)
-        let viewSettings = JSON.parse(localStorage.getItem('viewSettings')) || {
-            view: 'grid'
-        };
+/* Клас для ховання хедера */
+header.hidden {
+  transform: translateY(-100%);
+}
 
-        // Тимчасові налаштування сортування та фільтрів (не зберігаються)
-        let currentSort = {
-            by: 'title',
-            order: 'asc'
-        };
-        
-        let currentFilters = {
-            genre: '',
-            status: '',
-            year: ''
-        };
+/* Додаємо відступ для контенту, щоб він не ховався під хедер */
+main {
+  padding: 30px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 80px;
+  position: relative;
+  z-index: 1;
+}
 
-        // Функція для підрахунку загальної кількості серій
-        function calculateTotalEpisodes(anime) {
-            let total = 0;
-            
-            if (anime.seasons && Array.isArray(anime.seasons)) {
-                anime.seasons.forEach(season => {
-                    if (season.episodes && Array.isArray(season.episodes)) {
-                        total += season.episodes.length;
-                    }
-                });
-            }
-            
-            if (anime.movies && Array.isArray(anime.movies)) {
-                total += anime.movies.length;
-            }
-            
-            return total > 0 ? total : 0;
-        }
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-        // Функція для підрахунку загальної кількості сезонів
-        function calculateTotalSeasons(anime) {
-            if (anime.seasons && Array.isArray(anime.seasons)) {
-                return anime.seasons.length;
-            }
-            return 0;
-        }
+.header-left img {
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+}
 
-        // Функція для отримання року випуску
-        function getReleaseYear(anime) {
-            if (anime.seasons && anime.seasons.length > 0 && anime.seasons[0].year) {
-                return parseInt(anime.seasons[0].year);
-            }
-            return 0;
-        }
+.header-left h1 {
+  color: #cc6096ff;
+  margin: 0;
+  font-size: 2em;
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+}
 
-        // Функція для отримання рейтингу
-        function getRating(anime) {
-            if (anime.rating && typeof anime.rating === 'string') {
-                const match = anime.rating.match(/(\d+\.?\d?)/);
-                return match ? parseFloat(match[1]) : 0;
-            }
-            return 0;
-        }
+/* ===== Search Container ===== */
+.search-container {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
 
-        // Функція сортування
-        function sortAnimeData(animeData) {
-            return [...animeData].sort((a, b) => {
-                let aValue, bValue;
-                
-                switch (currentSort.by) {
-                    case 'title':
-                        aValue = a.title || '';
-                        bValue = b.title || '';
-                        break;
-                    case 'rating':
-                        aValue = getRating(a);
-                        bValue = getRating(b);
-                        break;
-                    case 'episodes':
-                        aValue = calculateTotalEpisodes(a);
-                        bValue = calculateTotalEpisodes(b);
-                        break;
-                    case 'year':
-                        aValue = getReleaseYear(a);
-                        bValue = getReleaseYear(b);
-                        break;
-                    default:
-                        aValue = a.title || '';
-                        bValue = b.title || '';
-                }
-                
-                if (typeof aValue === 'string') {
-                    aValue = aValue.toLowerCase();
-                    bValue = bValue.toLowerCase();
-                }
-                
-                let result = 0;
-                if (aValue < bValue) result = -1;
-                if (aValue > bValue) result = 1;
-                
-                return currentSort.order === 'desc' ? -result : result;
-            });
-        }
+#search {
+  padding: 12px 20px;
+  border: 2px solid rgba(255, 105, 180, 0.5);
+  border-radius: 25px;
+  background: rgba(29, 29, 32, 0.8);
+  color: #fff;
+  font-size: 1em;
+  width: 300px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
 
-        // Функція фільтрації
-        function filterAnimeData(animeData) {
-            return animeData.filter(anime => {
-                if (currentFilters.genre && 
-                    (!anime.tags || !anime.tags.includes(currentFilters.genre))) {
-                    return false;
-                }
-                
-                if (currentFilters.status && anime.status !== currentFilters.status) {
-                    return false;
-                }
-                
-                if (currentFilters.year) {
-                    const year = getReleaseYear(anime);
-                    if (year !== parseInt(currentFilters.year)) {
-                        return false;
-                    }
-                }
-                
-                return true;
-            });
-        }
+#search:focus {
+  outline: none;
+  border-color: #943a67ff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+  background: rgba(29, 29, 32, 0.9);
+}
 
-        // Оновлення відображення
-        function updateDisplay() {
-            const grid = document.getElementById('anime-grid');
-            const list = document.getElementById('anime-list');
-            
-            grid.innerHTML = '';
-            list.innerHTML = '';
-            
-            const filteredData = filterAnimeData(loadedAnimeData);
-            const sortedData = sortAnimeData(filteredData);
-            
-            if (sortedData.length === 0) {
-                showNoResultsMessage(true);
-                return;
-            }
-            
-            showNoResultsMessage(false);
-            
-            sortedData.forEach(anime => {
-                grid.appendChild(createAnimeCard(anime));
-                list.appendChild(createAnimeListItem(anime));
-            });
-            
-            changeView(viewSettings.view);
-        }
+#search::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
 
-        // Створюємо картку аніме
-        function createAnimeCard(anime) {
-            const card = document.createElement('div');
-            card.classList.add('anime-card');
+#surprise {
+  padding: 12px 25px;
+  border: 2px solid #943a67ff;
+  border-radius: 25px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #943a67ff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
 
-            const front = document.createElement('div');
-            front.classList.add('front');
-            front.innerHTML = `
-              <div class="image-container">
-                <img src="${anime.img || 'N/A'}" alt="${anime.title || 'N/A'}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-              </div>
-              <div class="title-container">
-                <h3>${anime.title || 'N/A'}</h3>
-              </div>`;
+#surprise:hover {
+  background: #943a67ff;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
+}
 
-            const totalEpisodes = calculateTotalEpisodes(anime);
-            const totalSeasons = calculateTotalSeasons(anime);
-            
-            const back = document.createElement('div');
-            back.classList.add('back');
-            back.innerHTML = `
-                <div class="back-content">
-                    <h4>${anime.title || 'N/A'}</h4>
-                    <div class="back-info">
-                        <p><strong>Серії:</strong> ${totalEpisodes}</p>
-                        <p><strong>Сезони:</strong> ${totalSeasons}</p>
-                        <p><strong>Рейтинг:</strong> ${anime.rating || 'N/A'}</p>
-                        <p><strong>Жанри:</strong> ${anime.tags && anime.tags.length > 0 ? anime.tags.join(', ') : 'N/A'}</p>
-                    </div>
-                    <button class="details-btn">Детальніше</button>
-                </div>
-            `;
-            
-            back.querySelector('button').onclick = (e) => {
-                e.stopPropagation();
-                window.location.href = `anime-info.html?id=${encodeURIComponent(anime.id)}`;
-            };
+/* ====== Сітка аніме ====== */
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+  padding: 30px;
+  color: #cc6096ff;
+  justify-items: center;
+  align-items: start;
+}
 
-            card.appendChild(front);
-            card.appendChild(back);
-            
-            card.onclick = (e) => {
-                if (e.target.classList.contains('details-btn')) {
-                    return;
-                }
-                
-                if (currentFlippedCard && currentFlippedCard !== card) {
-                    currentFlippedCard.classList.remove('flipped');
-                }
-                
-                card.classList.toggle('flipped');
-                
-                if (card.classList.contains('flipped')) {
-                    currentFlippedCard = card;
-                } else {
-                    currentFlippedCard = null;
-                }
-            };
+/* ====== Картка аніме ====== */
+.anime-card {
+  width: 200px;
+  height: 320px;
+  perspective: 1000px;
+  position: relative;
+  margin-bottom: 10px;
+}
 
-            return card;
-        }
+.anime-card .front,
+.anime-card .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  color: #cc6096ff;
+  transition: transform 0.6s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
 
-        // Створюємо елемент списку аніме
-        function createAnimeListItem(anime) {
-            const item = document.createElement('div');
-            item.classList.add('anime-list-item');
+.anime-card .front {
+  background: #1d1d20;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: rotateY(0deg);
+  z-index: 2;
+}
 
-            const totalEpisodes = calculateTotalEpisodes(anime);
-            const totalSeasons = calculateTotalSeasons(anime);
-            const year = getReleaseYear(anime);
+.anime-card .front .image-container {
+  width: 100%;
+  height: 85%;
+  overflow: hidden;
+}
 
-            item.innerHTML = `
-                <img class="list-item-image" src="${anime.img || 'N/A'}" alt="${anime.title || 'N/A'}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-                <div class="list-item-content">
-                    <h3 class="list-item-title">${anime.title || 'N/A'}</h3>
-                    <div class="list-item-meta">
-                        <span><strong>Серії:</strong> ${totalEpisodes}</span>
-                        <span><strong>Сезони:</strong> ${totalSeasons}</span>
-                        <span><strong>Рейтинг:</strong> ${anime.rating || 'N/A'}</span>
-                        <span><strong>Рік:</strong> ${year || 'N/A'}</span>
-                    </div>
-                    <div class="list-item-tags">
-                        ${anime.tags && anime.tags.length > 0 ? anime.tags.join(', ') : 'N/A'}
-                    </div>
-                    <div class="list-item-actions">
-                        <button class="list-details-btn">Детальніше</button>
-                    </div>
-                </div>
-            `;
-            
-            item.querySelector('.list-details-btn').onclick = () => {
-                window.location.href = `anime-info.html?id=${encodeURIComponent(anime.id)}`;
-            };
+.anime-card .front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+  transition: transform 0.4s ease;
+}
 
-            return item;
-        }
+.anime-card .front img:hover {
+  transform: scale(1.05);
+}
 
-        // Завантажуємо список аніме
-        async function loadAnimeList() {
-            try {
-                const resp = await fetch('anime/anime-list.json');
-                if (!resp.ok) throw new Error('Не вдалося завантажити anime-list.json');
-                animeList = await resp.json();
-                loadNextBatch();
-            } catch (err) {
-                console.error('Помилка при завантаженні списку аніме:', err);
-            }
-        }
+.anime-card .front .title-container {
+  text-align: center;
+  background: #1a1a1d;
+  padding: 6px;
+  font-weight: 600;
+  font-size: 0.95em;
+}
 
-        // Завантажуємо наступну партію карток
-        async function loadNextBatch() {
-            if (loadedCount >= animeList.length) return;
+/* ====== Задня сторона ====== */
+.anime-card .back {
+  background: #242427;
+  transform: rotateY(-180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  text-align: center;
+  z-index: 1;
+}
 
-            const loadingText = document.getElementById('loading');
-            loadingText.style.display = 'block';
-            
-            const nextBatch = animeList.slice(loadedCount, loadedCount + batchSize);
+/* Стилі для задньої сторони картки */
+.back-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
 
-            for (const animeId of nextBatch) {
-                try {
-                    const resp = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
-                    if (!resp.ok) continue;
-                    const anime = await resp.json();
-                    loadedAnimeData.push(anime);
-                    updateFilters(anime);
-                } catch (err) {
-                    console.error(`Не вдалося завантажити ${animeId}.json`, err);
-                }
-            }
+.back-content h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.1em;
+  text-align: center;
+  color: #ff69b4;
+  font-weight: 600;
+  line-height: 1.3;
+  max-height: 2.6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
-            loadedCount += nextBatch.length;
-            loadingText.style.display = 'none';
-            
-            updateDisplay();
-        }
+.back-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
 
-        // Оновлюємо опції фільтрів
-        function updateFilters(anime) {
-            const genreFilter = document.getElementById('genre-filter');
-            const yearFilter = document.getElementById('year-filter');
-            
-            if (anime.tags) {
-                anime.tags.forEach(tag => {
-                    if (![...genreFilter.options].some(opt => opt.value === tag)) {
-                        const option = document.createElement('option');
-                        option.value = tag;
-                        option.textContent = tag;
-                        genreFilter.appendChild(option);
-                    }
-                });
-            }
-            
-            const year = getReleaseYear(anime);
-            if (year > 0 && ![...yearFilter.options].some(opt => opt.value === year.toString())) {
-                const option = document.createElement('option');
-                option.value = year.toString();
-                option.textContent = year.toString();
-                yearFilter.appendChild(option);
-            }
-        }
+.back-info p {
+  margin: 0;
+  font-size: 0.85em;
+  line-height: 1.3;
+  color: #cc6096ff;
+}
 
-        // Показуємо/ховаємо повідомлення про відсутність результатів
-        function showNoResultsMessage(show) {
-            let message = document.getElementById('no-results-message');
-            
-            if (show && !message) {
-                message = document.createElement('div');
-                message.id = 'no-results-message';
-                message.classList.add('no-results');
-                message.textContent = 'За вашим запитом нічого не знайдено. Спробуйте змінити фільтри.';
-                
-                const grid = document.getElementById('anime-grid');
-                grid.appendChild(message);
-            } else if (!show && message) {
-                message.remove();
-            }
-        }
+.back-info strong {
+  color: #ff69b4;
+  font-weight: 600;
+}
 
-        // Змінюємо вид відображення
-        function changeView(view) {
-            viewSettings.view = view;
-            localStorage.setItem('viewSettings', JSON.stringify(viewSettings));
-            
-            const grid = document.getElementById('anime-grid');
-            const list = document.getElementById('anime-list');
-            const viewSelect = document.getElementById('view-select');
-            
-            viewSelect.value = view;
-            
-            if (view === 'list') {
-                grid.style.display = 'none';
-                list.style.display = 'flex';
-            } else {
-                grid.style.display = 'grid';
-                list.style.display = 'none';
-                grid.classList.toggle('compact', view === 'compact');
-            }
-        }
+.back-content .details-btn {
+  background: #943a67ff;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  width: 100%;
+}
 
-        // Ініціалізація UI
-        function initializeUI() {
-            changeView(viewSettings.view);
-        }
+.back-content .details-btn:hover {
+  background: #ff82c1;
+  transform: translateY(-1px);
+}
 
-        // Обробники подій
-        document.getElementById('sort-by').addEventListener('change', (e) => {
-            currentSort.by = e.target.value;
-            updateDisplay();
-        });
-        
-        document.getElementById('sort-order').addEventListener('click', () => {
-            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
-            document.getElementById('sort-order').textContent = currentSort.order === 'asc' ? '↑' : '↓';
-            document.getElementById('sort-order').dataset.order = currentSort.order;
-            updateDisplay();
-        });
-        
-        document.getElementById('view-select').addEventListener('change', (e) => {
-            changeView(e.target.value);
-        });
-        
-        document.getElementById('genre-filter').addEventListener('change', (e) => {
-            currentFilters.genre = e.target.value;
-            updateDisplay();
-        });
-        
-        document.getElementById('status-filter').addEventListener('change', (e) => {
-            currentFilters.status = e.target.value;
-            updateDisplay();
-        });
-        
-        document.getElementById('year-filter').addEventListener('change', (e) => {
-            currentFilters.year = e.target.value;
-            updateDisplay();
-        });
+/* ====== Ефект перевороту ====== */
+.anime-card.flipped {
+  z-index: 10;
+}
 
-        // Пошук
-        document.getElementById('search').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            document.querySelectorAll('.anime-card, .anime-list-item').forEach(item => {
-                const title = item.querySelector('h3').textContent.toLowerCase();
-                item.style.display = title.includes(query) ? '' : 'none';
-            });
-        });
+.anime-card:not(.flipped) {
+  z-index: 1;
+}
 
-        // Кнопка "Здивуй мене"
-        document.getElementById('surprise').addEventListener('click', () => {
-            if (loadedAnimeData.length === 0) return;
-            const filteredData = filterAnimeData(loadedAnimeData);
-            if (filteredData.length === 0) return;
-            const randomAnime = filteredData[Math.floor(Math.random() * filteredData.length)];
-            window.location.href = `anime-info.html?id=${encodeURIComponent(randomAnime.id)}`;
-        });
+.anime-card.flipped .front {
+  transform: rotateY(180deg);
+}
 
-        // Інфініт-скролл
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
-                loadNextBatch();
-            }
-        });
+.anime-card.flipped .back {
+  transform: rotateY(0deg);
+  z-index: 11;
+}
 
-        // Закриття картки при кліку поза нею
-        document.addEventListener('click', (e) => {
-            if (currentFlippedCard && !currentFlippedCard.contains(e.target)) {
-                currentFlippedCard.classList.remove('flipped');
-                currentFlippedCard = null;
-            }
-        });
+/* ====== Адаптивність ====== */
+@media (max-width: 800px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
 
-        // Auto-hide header
-        let lastScrollY = window.scrollY;
-        const header = document.querySelector('header');
-        const headerHeight = header.offsetHeight;
+  .anime-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
 
-        document.querySelector('main').style.paddingTop = headerHeight + 'px';
+  .anime-card {
+    width: 180px;
+    height: 290px;
+  }
 
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            
-            if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
-                header.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
-            
-            lastScrollY = currentScrollY;
-        });
+  #search {
+    width: 180px;
+  }
 
-        header.addEventListener('mouseenter', () => {
-            header.classList.remove('hidden');
-        });
+  .back-content h4 {
+    font-size: 1em;
+  }
 
-        header.addEventListener('mouseleave', () => {
-            lastScrollY = window.scrollY;
-        });
+  .back-info p {
+    font-size: 0.8em;
+  }
+}
 
-        // Ініціалізація
-        loadAnimeList();
-        initializeUI();
-    </script>
-</body>
-</html>
+@media (max-width: 480px) {
+  #search {
+    width: 140px;
+  }
+
+  .anime-card {
+    width: 160px;
+    height: 260px;
+  }
+
+  .back-content h4 {
+    font-size: 0.95em;
+  }
+
+  .back-info p {
+    font-size: 0.75em;
+  }
+}
