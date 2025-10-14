@@ -115,9 +115,11 @@
     let currentAnime = null;
     let currentDubbingStudio = null;
     let currentQuality = null;
+    let autoSkipInterval = null;
 
     // Кнопка повернення до сторінки аніме
     backToInfoBtn.onclick = () => {
+      saveProgress(); // Зберігаємо прогрес перед переходом
       window.location.href = `anime-info.html?id=${encodeURIComponent(animeId)}`;
     };
 
@@ -131,6 +133,30 @@
     function setAnimePreferences(animeId, preferences) {
         const key = `preferences_${animeId}`;
         localStorage.setItem(key, JSON.stringify(preferences));
+    }
+
+    // Функції для збереження прогресу
+    function getEpisodeProgress(animeId, season, episode) {
+        const key = `progress_${animeId}_s${season}_e${episode}`;
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    }
+
+    function setEpisodeProgress(animeId, season, episode, progress) {
+        const key = `progress_${animeId}_s${season}_e${episode}`;
+        localStorage.setItem(key, JSON.stringify(progress));
+    }
+
+    function saveProgress() {
+        if (!animeId || !seasonNumber || !currentEpisode) return;
+        
+        const progress = {
+            time: player.currentTime,
+            duration: player.duration,
+            timestamp: new Date().toISOString()
+        };
+        
+        setEpisodeProgress(animeId, seasonNumber, episodeNumber, progress);
     }
 
     // Відкриття/закриття модального вікна налаштувань
@@ -173,8 +199,8 @@
       updateQualityOptions();
       
       // Завантаження чекбоксів
-      autoSkipCheckbox.checked = prefs.autoSkip === true; // false за замовчуванням
-      autoNextCheckbox.checked = prefs.autoNext === true; // false за замовчуванням
+      autoSkipCheckbox.checked = prefs.autoSkip === true;
+      autoNextCheckbox.checked = prefs.autoNext === true;
     }
 
     // Оновлення опцій якості
@@ -204,7 +230,11 @@
 
     settingsQualitySelect.addEventListener('change', applyQualityChange);
 
-    autoSkipCheckbox.addEventListener('change', saveSettings);
+    autoSkipCheckbox.addEventListener('change', () => {
+      saveSettings();
+      setupAutoSkip(); // Перезапускаємо авто-скіп при зміні налаштування
+    });
+
     autoNextCheckbox.addEventListener('change', saveSettings);
 
     // Застосування зміни озвучки
@@ -246,11 +276,16 @@
       const wasPaused = player.paused;
       
       player.src = videoUrl;
-      player.currentTime = currentTime;
       
-      if (!wasPaused) {
-        player.play().catch(e => console.log('Auto-play prevented'));
-      }
+      // Відновлюємо прогрес після завантаження метаданих
+      player.addEventListener('loadedmetadata', function onLoad() {
+        player.currentTime = Math.min(currentTime, player.duration - 1);
+        player.removeEventListener('loadedmetadata', onLoad);
+        
+        if (!wasPaused) {
+          player.play().catch(e => console.log('Auto-play prevented'));
+        }
+      }, { once: true });
     }
 
     // Збереження всіх налаштувань
@@ -271,19 +306,42 @@
 
     // Функція авто-скіп
     function setupAutoSkip() {
+      // Видаляємо попередні слухачі подій
+      if (autoSkipInterval) {
+        clearInterval(autoSkipInterval);
+        autoSkipInterval = null;
+      }
+
       const prefs = getAnimePreferences(animeId) || {};
       if (!prefs.autoSkip || !currentEpisode) return;
       
       const currentDubbing = currentEpisode.dubbing.find(d => d.studio === currentDubbingStudio);
-      if (!currentDubbing || !currentDubbing.opening) return;
+      if (!currentDubbing) return;
       
-      const [openingStart, openingEnd] = currentDubbing.opening;
+      const [openingStart, openingEnd] = currentDubbing.opening || [0, 0];
+      const [endingStart, endingEnd] = currentDubbing.ending || [0, 0];
       
-      player.addEventListener('timeupdate', () => {
-        if (player.currentTime >= openingStart && player.currentTime <= openingEnd) {
+      console.log('Auto-skip enabled:', { openingStart, openingEnd, endingStart, endingEnd });
+      
+      autoSkipInterval = setInterval(() => {
+        if (player.paused || player.ended) return;
+        
+        const currentTime = player.currentTime;
+        
+        // Перевірка опенінгу
+        if (openingStart > 0 && openingEnd > 0 && 
+            currentTime >= openingStart && currentTime <= openingEnd) {
+          console.log('Skipping opening:', currentTime);
           player.currentTime = openingEnd;
         }
-      });
+        
+        // Перевірка ендінгу
+        if (endingStart > 0 && endingEnd > 0 && 
+            currentTime >= endingStart && currentTime <= endingEnd) {
+          console.log('Skipping ending:', currentTime);
+          player.currentTime = endingEnd;
+        }
+      }, 1000); // Перевіряємо кожну секунду
     }
 
     // Функція авто-продовження
@@ -424,9 +482,20 @@
             player.src = selectedQuality.videoUrl;
             player.volume = initialVolume;
 
+            // Відновлюємо прогрес перегляду
+            const progress = getEpisodeProgress(animeId, seasonNumber, episodeNumber);
+            if (progress && progress.time) {
+                player.addEventListener('loadedmetadata', function() {
+                    player.currentTime = Math.min(progress.time, player.duration - 1);
+                }, { once: true });
+            }
+
             // Налаштовуємо авто-скіп та авто-продовження
             setupAutoSkip();
             setupAutoNext();
+
+            // Збереження прогресу кожні 5 секунд
+            setInterval(saveProgress, 5000);
 
             // Збереження гучності при зміні
             player.addEventListener('volumechange', () => {
@@ -435,6 +504,7 @@
 
             // Зберігаємо налаштування при закритті
             window.addEventListener('beforeunload', () => {
+                saveProgress();
                 saveSettings();
             });
 
@@ -447,6 +517,7 @@
                 nextBtn.style.display = "inline";
 
                 prevBtn.onclick = () => {
+                    saveProgress();
                     if (episodeNumber > 1) {
                         window.location.href = `player.html?id=${encodeURIComponent(animeId)}&season=${seasonNumber}&episode=${episodeNumber-1}`;
                     } else if (seasonNumber > 1) {
@@ -459,6 +530,7 @@
                 };
 
                 nextBtn.onclick = () => {
+                    saveProgress();
                     const currentSeason = anime.seasons.find(s => s.seasonNumber === seasonNumber);
                     
                     if (episodeNumber < currentSeason.episodes.length) {
