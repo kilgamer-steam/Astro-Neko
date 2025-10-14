@@ -461,7 +461,7 @@ header .logo h1 {
   .movie-date {
     display: block;
     margin-bottom: 5px;
-    color:;
+    color: #cc6096ff;
   }
   
   .movie-date::before {
