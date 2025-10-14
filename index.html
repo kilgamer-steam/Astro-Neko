@@ -6,451 +6,6 @@
     <title>Astro Neko</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="stylesheet" href="style/index.css">
-    <style>
-        /* Контейнер для фільтрів та сортування */
-        .controls-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding: 0 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .filters-section {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .sort-section {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .filter-select, .view-select {
-            padding: 10px 15px;
-            border: 2px solid rgba(255, 105, 180, 0.5);
-            border-radius: 25px;
-            background: rgba(29, 29, 32, 0.8);
-            color: #fff;
-            font-size: 0.9em;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-            min-width: 150px;
-            font-family: "Poppins", "Segoe UI", sans-serif;
-        }
-        
-        /* Об'єднаний блок сортування */
-        .sort-container {
-            display: flex;
-            align-items: center;
-            background: rgba(29, 29, 32, 0.8);
-            border: 2px solid rgba(255, 105, 180, 0.5);
-            border-radius: 25px;
-            overflow: hidden;
-        }
-        
-        .sort-select {
-            padding: 10px 15px;
-            border: none;
-            background: transparent;
-            color: #fff;
-            font-size: 0.9em;
-            outline: none;
-            min-width: 120px;
-            font-family: "Poppins", "Segoe UI", sans-serif;
-            cursor: pointer;
-        }
-        
-        .sort-order {
-            padding: 10px 12px;
-            background: transparent;
-            border: none;
-            border-left: 1px solid rgba(255, 105, 180, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #ff69b4;
-            font-size: 1.1em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-        }
-        
-        .sort-order:hover {
-            background: rgba(255, 105, 180, 0.1);
-        }
-        
-        .filter-select:focus, .view-select:focus, .sort-container:focus-within {
-            outline: none;
-            border-color: #943a67ff;
-            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
-        }
-
-        /* Важливість для основних елементів */
-        main {
-            padding: 30px 40px !important;
-            max-width: 1400px !important;
-            margin: 0 auto !important;
-            padding-top: 80px !important;
-            position: relative !important;
-            z-index: 1 !important;
-        }
-
-        .anime-grid {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
-            gap: 25px !important;
-            padding: 30px !important;
-            color: #cc6096ff !important;
-            justify-items: center !important;
-            align-items: start !important;
-        }
-
-        .anime-card {
-            width: 200px !important;
-            height: 320px !important;
-            perspective: 1000px !important;
-            position: relative !important;
-            margin-bottom: 10px !important;
-        }
-
-        .anime-card .front,
-        .anime-card .back {
-            position: absolute !important;
-            width: 100% !important;
-            height: 100% !important;
-            backface-visibility: hidden !important;
-            border-radius: 12px !important;
-            overflow: hidden !important;
-            color: #cc6096ff !important;
-            transition: transform 0.6s ease !important;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) !important;
-        }
-
-        .anime-card .front {
-            background: #1d1d20 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-            transform: rotateY(0deg) !important;
-            z-index: 2 !important;
-        }
-
-        .anime-card .front .image-container {
-            width: 100% !important;
-            height: 85% !important;
-            overflow: hidden !important;
-        }
-
-        .anime-card .front img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-            filter: brightness(0.7) !important;
-            transition: transform 0.4s ease !important;
-        }
-
-        .anime-card .front img:hover {
-            transform: scale(1.05) !important;
-        }
-
-        .anime-card .front .title-container {
-            text-align: center !important;
-            background: #1a1a1d !important;
-            padding: 6px !important;
-            font-weight: 600 !important;
-            font-size: 0.95em !important;
-        }
-
-        .anime-card .back {
-            background: #242427 !important;
-            transform: rotateY(-180deg) !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-            padding: 15px !important;
-            text-align: center !important;
-            z-index: 1 !important;
-        }
-
-        .back-content {
-            height: 100% !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-            padding: 0 !important;
-        }
-
-        .back-content h4 {
-            margin: 0 0 15px 0 !important;
-            font-size: 1.1em !important;
-            text-align: center !important;
-            color: #ff69b4 !important;
-            font-weight: 600 !important;
-            line-height: 1.3 !important;
-            max-height: 2.6em !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-            display: -webkit-box !important;
-            -webkit-line-clamp: 2 !important;
-            -webkit-box-orient: vertical !important;
-        }
-
-        .back-info {
-            flex-grow: 1 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            gap: 8px !important;
-            margin-bottom: 15px !important;
-        }
-
-        .back-info p {
-            margin: 0 !important;
-            font-size: 0.85em !important;
-            line-height: 1.3 !important;
-            color: #cc6096ff !important;
-        }
-
-        .back-info strong {
-            color: #ff69b4 !important;
-            font-weight: 600 !important;
-        }
-
-        .back-content .details-btn {
-            background: #943a67ff !important;
-            border: none !important;
-            color: #fff !important;
-            padding: 10px !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            font-weight: 600 !important;
-            transition: background 0.3s ease !important;
-            width: 100% !important;
-            font-family: "Poppins", "Segoe UI", sans-serif !important;
-        }
-
-        .back-content .details-btn:hover {
-            background: #ff82c1 !important;
-            transform: translateY(-1px) !important;
-        }
-
-        .anime-card.flipped .front {
-            transform: rotateY(180deg) !important;
-        }
-
-        .anime-card.flipped .back {
-            transform: rotateY(0deg) !important;
-            z-index: 11 !important;
-        }
-        
-        /* Компактний вигляд сітки */
-        .anime-grid.compact {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
-            gap: 15px !important;
-        }
-        
-        .anime-grid.compact .anime-card {
-            width: 150px !important;
-            height: 240px !important;
-        }
-        
-        .anime-grid.compact .back-content h4 {
-            font-size: 0.95em !important;
-        }
-        
-        .anime-grid.compact .back-info p {
-            font-size: 0.75em !important;
-        }
-        
-        /* Стилі для списку */
-        .anime-list {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            padding: 0 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .anime-list-item {
-            display: flex;
-            background: rgba(29, 29, 32, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-        
-        .anime-list-item:hover {
-            background: rgba(29, 29, 32, 0.9);
-            border-left-color: #943a67ff;
-            transform: translateX(5px);
-        }
-        
-        .list-item-image {
-            width: 80px;
-            height: 120px;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-        
-        .list-item-content {
-            flex: 1;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .list-item-title {
-            font-size: 1.1em;
-            color: #ff69b4;
-            margin: 0 0 10px 0;
-        }
-        
-        .list-item-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.85em;
-            color: #cc6096ff;
-            margin-bottom: 10px;
-        }
-        
-        .list-item-tags {
-            font-size: 0.8em;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 10px;
-        }
-        
-        .list-item-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .list-details-btn {
-            padding: 6px 12px;
-            background: #943a67ff;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            font-size: 0.85em;
-            transition: background 0.3s ease;
-            font-family: "Poppins", "Segoe UI", sans-serif;
-        }
-        
-        .list-details-btn:hover {
-            background: #ff82c1;
-        }
-        
-        /* Індикатор завантаження */
-        .loading-indicator {
-            text-align: center;
-            padding: 20px;
-            color: #ff69b4;
-            font-family: "Poppins", "Segoe UI", sans-serif;
-        }
-        
-        .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(255, 105, 180, 0.3);
-            border-radius: 50%;
-            border-top-color: #ff69b4;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Стилі для повідомлення про відсутність результатів */
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            color: #cc6096ff;
-            font-size: 1.1em;
-            grid-column: 1 / -1;
-            font-family: "Poppins", "Segoe UI", sans-serif;
-        }
-        
-        /* Мобільна версія */
-        @media (max-width: 768px) {
-            .controls-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filters-section, .sort-section {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .filter-select, .view-select {
-                flex: 1;
-                min-width: 120px;
-            }
-            
-            .sort-container {
-                flex: 1;
-            }
-            
-            .sort-select {
-                flex: 1;
-            }
-            
-            .anime-list-item {
-                flex-direction: column;
-            }
-            
-            .list-item-image {
-                width: 100%;
-                height: 200px;
-            }
-
-            /* Мобільні стилі з CSS */
-            .anime-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-            }
-
-            .anime-card {
-                width: 180px !important;
-                height: 290px !important;
-            }
-
-            .back-content h4 {
-                font-size: 1em !important;
-            }
-
-            .back-info p {
-                font-size: 0.8em !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .anime-card {
-                width: 160px !important;
-                height: 260px !important;
-            }
-
-            .back-content h4 {
-                font-size: 0.95em !important;
-            }
-
-            .back-info p {
-                font-size: 0.75em !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -486,7 +41,6 @@
             </div>
             
             <div class="sort-section">
-                <!-- Об'єднаний блок сортування -->
                 <div class="sort-container">
                     <select class="sort-select" id="sort-by">
                         <option value="title">Назва</option>
@@ -521,28 +75,23 @@
     </main>
 
     <script>
-        // JavaScript код залишається незмінним
         let animeList = [];
         let loadedAnimeData = [];
         let loadedCount = 0;
         const batchSize = 20;
         let currentFlippedCard = null;
         
-        let viewSettings = JSON.parse(localStorage.getItem('viewSettings')) || {
-            view: 'grid'
-        };
-
-        let currentSort = {
+        // Налаштування з localStorage
+        let sortSettings = JSON.parse(localStorage.getItem('sortSettings')) || {
             by: 'title',
             order: 'asc'
         };
         
-        let currentFilters = {
-            genre: '',
-            status: '',
-            year: ''
+        let viewSettings = JSON.parse(localStorage.getItem('viewSettings')) || {
+            view: 'grid'
         };
 
+        // Функція для підрахунку загальної кількості серій
         function calculateTotalEpisodes(anime) {
             let total = 0;
             
@@ -587,7 +136,7 @@
             return [...animeData].sort((a, b) => {
                 let aValue, bValue;
                 
-                switch (currentSort.by) {
+                switch (sortSettings.by) {
                     case 'title':
                         aValue = a.title || '';
                         bValue = b.title || '';
@@ -618,24 +167,27 @@
                 if (aValue < bValue) result = -1;
                 if (aValue > bValue) result = 1;
                 
-                return currentSort.order === 'desc' ? -result : result;
+                return sortSettings.order === 'desc' ? -result : result;
             });
         }
 
         function filterAnimeData(animeData) {
+            const genreFilter = document.getElementById('genre-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            const yearFilter = document.getElementById('year-filter').value;
+            
             return animeData.filter(anime => {
-                if (currentFilters.genre && 
-                    (!anime.tags || !anime.tags.includes(currentFilters.genre))) {
+                if (genreFilter && (!anime.tags || !anime.tags.includes(genreFilter))) {
                     return false;
                 }
                 
-                if (currentFilters.status && anime.status !== currentFilters.status) {
+                if (statusFilter && anime.status !== statusFilter) {
                     return false;
                 }
                 
-                if (currentFilters.year) {
+                if (yearFilter) {
                     const year = getReleaseYear(anime);
-                    if (year !== parseInt(currentFilters.year)) {
+                    if (year !== parseInt(yearFilter)) {
                         return false;
                     }
                 }
@@ -861,20 +413,30 @@
             }
         }
 
+        function saveSortSettings() {
+            localStorage.setItem('sortSettings', JSON.stringify(sortSettings));
+        }
+
         function initializeUI() {
+            document.getElementById('sort-by').value = sortSettings.by;
+            document.getElementById('sort-order').textContent = sortSettings.order === 'asc' ? '↑' : '↓';
+            document.getElementById('sort-order').dataset.order = sortSettings.order;
+            
             changeView(viewSettings.view);
         }
 
         // Обробники подій
         document.getElementById('sort-by').addEventListener('change', (e) => {
-            currentSort.by = e.target.value;
+            sortSettings.by = e.target.value;
+            saveSortSettings();
             updateDisplay();
         });
         
         document.getElementById('sort-order').addEventListener('click', () => {
-            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
-            document.getElementById('sort-order').textContent = currentSort.order === 'asc' ? '↑' : '↓';
-            document.getElementById('sort-order').dataset.order = currentSort.order;
+            sortSettings.order = sortSettings.order === 'asc' ? 'desc' : 'asc';
+            document.getElementById('sort-order').textContent = sortSettings.order === 'asc' ? '↑' : '↓';
+            document.getElementById('sort-order').dataset.order = sortSettings.order;
+            saveSortSettings();
             updateDisplay();
         });
         
@@ -882,18 +444,15 @@
             changeView(e.target.value);
         });
         
-        document.getElementById('genre-filter').addEventListener('change', (e) => {
-            currentFilters.genre = e.target.value;
+        document.getElementById('genre-filter').addEventListener('change', () => {
             updateDisplay();
         });
         
-        document.getElementById('status-filter').addEventListener('change', (e) => {
-            currentFilters.status = e.target.value;
+        document.getElementById('status-filter').addEventListener('change', () => {
             updateDisplay();
         });
         
-        document.getElementById('year-filter').addEventListener('change', (e) => {
-            currentFilters.year = e.target.value;
+        document.getElementById('year-filter').addEventListener('change', () => {
             updateDisplay();
         });
 
