@@ -342,8 +342,8 @@
               "studio": "Didko studio",
               "language": "українська",
               "subtitle": "subtitleurl",
-              "opening": [85, 172],
-              "ending": [1286, 1452],
+              "opening": [98, 185],
+              "ending": [1306, 1452],
               "quality": [
                 {"value":"1080", "videoUrl":""},
                 {"value":"720", "videoUrl":""},
