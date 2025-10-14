@@ -466,7 +466,7 @@ header .logo h1 {
   
   .movie-date::before {
     content: "📅 Реліз: ";
-    color: rgba(255, 255, 255, 0.7);
+    color: #cc6096ff;
   }
   
   .movie-duration {
