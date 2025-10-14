@@ -174,6 +174,21 @@ header .logo h1 {
   margin-bottom: 20px;
   border-left: 4px solid #943a67ff;
 }
+/* Стилі для мета-інформації сезону */
+.season-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.season-year, .season-episodes {
+    background: rgba(255, 105, 180, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 105, 180, 0.3);
+}
 
 .season:last-child {
   margin-bottom: 0;
@@ -185,48 +200,82 @@ header .logo h1 {
   margin-bottom: 15px;
   font-size: 1.2em;
 }
-
-.episode-container,
-.movies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+/* Стилі для таблиці фільмів */
+.movies-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: rgba(29, 29, 32, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.episode-btn,
-.movie-btn {
-  background: #943a67ff;
-  color: #ff69b4;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: 0.2s ease-in-out;
+.movies-table th {
+    background: rgba(148, 58, 103, 0.3);
+    padding: 15px;
+    text-align: left;
+    color: #ff82c1;
+    font-weight: 600;
+    border-bottom: 2px solid #943a67ff;
+    font-size: 0.95em;
 }
 
-.episode-btn:hover,
-.movie-btn:hover {
-  background: #ff69b4;
-  color: #fff;
-  transform: scale(1.05);
+.movies-table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 105, 180, 0.1);
+    transition: background-color 0.3s ease;
 }
 
-/* ===== Movies block ===== */
-.movies-block {
-  background: rgba(24, 24, 27, 0.36);
-  backdrop-filter: blur(2px);
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  border-left: 4px solid #943a67ff;
+.movie-row:hover {
+    background: rgba(255, 105, 180, 0.08);
 }
 
-.movies-block h4 {
-  margin-top: 0;
-  color: #943a67ff;
-  margin-bottom: 15px;
-  font-size: 1.2em;
+.movie-number {
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+    color: #cc6096ff;
+    font-size: 1.1em;
+}
+
+.movie-title {
+    font-weight: 500;
+    color: #fff;
+    font-size: 1em;
+}
+
+.movie-date {
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+.movie-duration {
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+    font-weight: 500;
+    color: #cc6096ff;
+}
+
+.watch-movie-btn {
+    background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+}
+
+.watch-movie-btn:hover {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
 }
 
 /* ===== Responsive ===== */
@@ -261,4 +310,98 @@ header .logo h1 {
   .movies-block {
     padding: 20px;
   }
+  .movies-table {
+        font-size: 0.9em;
+    }
+    
+    .movies-table th,
+    .movies-table td {
+        padding: 12px 8px;
+    }
+    
+    .movie-date {
+        display: none; /* Ховаємо дату на планшетах */
+    }
+    
+    .watch-movie-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    .movies-table {
+        display: block;
+    }
+    
+    .movies-table thead {
+        display: none;
+    }
+    
+    .movie-row {
+        display: block;
+        margin-bottom: 15px;
+        background: rgba(29, 29, 32, 0.7);
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid rgba(255, 105, 180, 0.2);
+    }
+    
+    .movies-table td {
+        display: block;
+        padding: 8px 0;
+        border: none;
+        text-align: center;
+    }
+    
+    .movie-number {
+        width: 100%;
+        font-size: 1.2em;
+        margin-bottom: 5px;
+    }
+    
+    .movie-number::before {
+        content: "Фільм ";
+        font-weight: normal;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .movie-title {
+        font-size: 1.1em;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    
+    .movie-date {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .movie-date::before {
+        content: "📅 Реліз: ";
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .movie-duration {
+        margin-bottom: 10px;
+        font-size: 1em;
+    }
+    
+    .movie-duration::before {
+        content: "⏱️ Тривалість: ";
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .movie-action {
+        text-align: center;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 105, 180, 0.2);
+    }
+    
+    .watch-movie-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1em;
+    }
 }
