@@ -28,8 +28,7 @@
       <span id="episode-number">?</span>
       <span id="episode-title">?</span>
       
-      <!-- Замінено вибір озвучки на кнопку налаштувань -->
-      <button id="open-settings" class="settings-btn">⚙️</button>
+      <button id="open-settings" class="settings-btn">⚙️ Налаштування</button>
 
       <button id="prev-episode">Попередня серія</button>
       <button id="next-episode">Наступна серія</button>
@@ -64,7 +63,7 @@
         <!-- Авто-скіп -->
         <div class="setting-group">
           <label class="checkbox-label">
-            <input type="checkbox" id="auto-skip" checked>
+            <input type="checkbox" id="auto-skip">
             <span class="checkmark"></span>
             Автоматично пропускати опенінг/ендінг
           </label>
@@ -73,7 +72,7 @@
         <!-- Авто-продовження -->
         <div class="setting-group">
           <label class="checkbox-label">
-            <input type="checkbox" id="auto-next" checked>
+            <input type="checkbox" id="auto-next">
             <span class="checkmark"></span>
             Автоматично переходити на наступну серію
           </label>
@@ -81,7 +80,7 @@
       </div>
       
       <div class="settings-footer">
-        <button id="apply-settings" class="apply-btn">Застосувати</button>
+        <button id="close-modal" class="apply-btn">Закрити</button>
       </div>
     </div>
   </div>
@@ -105,7 +104,7 @@
     const settingsModal = document.getElementById('settings-modal');
     const openSettingsBtn = document.getElementById('open-settings');
     const closeSettingsBtn = document.getElementById('close-settings');
-    const applySettingsBtn = document.getElementById('apply-settings');
+    const closeModalBtn = document.getElementById('close-modal');
     const settingsAudioSelect = document.getElementById('settings-audio');
     const settingsQualitySelect = document.getElementById('settings-quality');
     const autoSkipCheckbox = document.getElementById('auto-skip');
@@ -115,6 +114,7 @@
     let currentEpisode = null;
     let currentAnime = null;
     let currentDubbingStudio = null;
+    let currentQuality = null;
 
     // Кнопка повернення до сторінки аніме
     backToInfoBtn.onclick = () => {
@@ -139,13 +139,16 @@
       loadCurrentSettings();
     });
 
-    closeSettingsBtn.addEventListener('click', () => {
+    closeSettingsBtn.addEventListener('click', closeSettingsModal);
+    closeModalBtn.addEventListener('click', closeSettingsModal);
+
+    function closeSettingsModal() {
       settingsModal.style.display = 'none';
-    });
+    }
 
     settingsModal.addEventListener('click', (e) => {
       if (e.target === settingsModal) {
-        settingsModal.style.display = 'none';
+        closeSettingsModal();
       }
     });
 
@@ -156,7 +159,7 @@
       // Заповнення вибору озвучки
       settingsAudioSelect.innerHTML = '';
       if (currentEpisode && currentEpisode.dubbing) {
-        currentEpisode.dubbing.forEach((dub, index) => {
+        currentEpisode.dubbing.forEach((dub) => {
           const option = document.createElement('option');
           option.value = dub.studio;
           option.textContent = `${dub.studio} (${dub.language})`;
@@ -170,8 +173,8 @@
       updateQualityOptions();
       
       // Завантаження чекбоксів
-      autoSkipCheckbox.checked = prefs.autoSkip !== true; // false за замовчуванням
-      autoNextCheckbox.checked = prefs.autoNext !== true; // false за замовчуванням
+      autoSkipCheckbox.checked = prefs.autoSkip === true; // false за замовчуванням
+      autoNextCheckbox.checked = prefs.autoNext === true; // false за замовчуванням
     }
 
     // Оновлення опцій якості
@@ -186,84 +189,113 @@
           const option = document.createElement('option');
           option.value = quality.value;
           option.textContent = `${quality.value}p`;
+          // Встановлюємо обрану якість
+          option.selected = quality.value === currentQuality;
           settingsQualitySelect.appendChild(option);
         });
-        
-        // Встановлення обраної якості
-        const prefs = getAnimePreferences(animeId);
-        if (prefs && prefs.quality) {
-          settingsQualitySelect.value = prefs.quality;
-        } else if (selectedAudio.quality.length > 0) {
-          // Встановлюємо найвищу якість за замовчуванням
-          const highestQuality = selectedAudio.quality.reduce((max, q) => 
-            q.value > max.value ? q : max
-          );
-          settingsQualitySelect.value = highestQuality.value;
-        }
       }
     }
 
-    // Обробник зміни озвучки у налаштуваннях
-    settingsAudioSelect.addEventListener('change', updateQualityOptions);
-
-    // Застосування налаштувань
-    applySettingsBtn.addEventListener('click', () => {
-      applySettings();
-      settingsModal.style.display = 'none';
+    // Автоматичне збереження при зміні налаштувань
+    settingsAudioSelect.addEventListener('change', () => {
+      updateQualityOptions();
+      applyAudioChange();
     });
 
-    // Функція застосування налаштувань
-    function applySettings() {
-      const prefs = getAnimePreferences(animeId) || {};
+    settingsQualitySelect.addEventListener('change', applyQualityChange);
+
+    autoSkipCheckbox.addEventListener('change', saveSettings);
+    autoNextCheckbox.addEventListener('change', saveSettings);
+
+    // Застосування зміни озвучки
+    function applyAudioChange() {
+      if (!settingsAudioSelect.value) return;
       
-      // Оновлення озвучки та якості
-      if (settingsAudioSelect.value && settingsQualitySelect.value) {
-        const selectedAudio = currentEpisode.dubbing.find(d => d.studio === settingsAudioSelect.value);
-        const selectedQuality = selectedAudio.quality.find(q => q.value === parseInt(settingsQualitySelect.value));
+      const selectedAudio = currentEpisode.dubbing.find(d => d.studio === settingsAudioSelect.value);
+      if (selectedAudio && selectedAudio.quality.length > 0) {
+        // Автоматично вибираємо найвищу якість при зміні озвучки
+        const highestQuality = selectedAudio.quality.reduce((max, q) => 
+          parseInt(q.value) > parseInt(max.value) ? q : max
+        );
         
-        if (selectedQuality) {
-          const currentTime = player.currentTime;
-          const wasPaused = player.paused;
-          
-          // Оновлюємо поточну озвучку
-          currentDubbingStudio = settingsAudioSelect.value;
-          player.src = selectedQuality.videoUrl;
-          player.currentTime = currentTime;
-          
-          if (!wasPaused) {
-            player.play().catch(e => console.log('Auto-play prevented'));
-          }
-        }
+        currentDubbingStudio = settingsAudioSelect.value;
+        currentQuality = highestQuality.value;
         
-        prefs.dubbing = settingsAudioSelect.value;
-        prefs.quality = settingsQualitySelect.value;
+        updateVideoSource(highestQuality.videoUrl);
+        saveSettings();
       }
-      
-      // Збереження налаштувань авто-скіп та авто-продовження
-      prefs.autoSkip = autoSkipCheckbox.checked;
-      prefs.autoNext = autoNextCheckbox.checked;
-      
-      setAnimePreferences(animeId, prefs);
     }
 
-    // Оновлена функція збереження налаштувань
-    function saveAnimePreferences() {
+    // Застосування зміни якості
+    function applyQualityChange() {
+      if (!settingsQualitySelect.value || !settingsAudioSelect.value) return;
+      
+      const selectedAudio = currentEpisode.dubbing.find(d => d.studio === settingsAudioSelect.value);
+      const selectedQuality = selectedAudio.quality.find(q => q.value === settingsQualitySelect.value);
+      
+      if (selectedQuality) {
+        currentQuality = selectedQuality.value;
+        updateVideoSource(selectedQuality.videoUrl);
+        saveSettings();
+      }
+    }
+
+    // Оновлення джерела відео
+    function updateVideoSource(videoUrl) {
+      const currentTime = player.currentTime;
+      const wasPaused = player.paused;
+      
+      player.src = videoUrl;
+      player.currentTime = currentTime;
+      
+      if (!wasPaused) {
+        player.play().catch(e => console.log('Auto-play prevented'));
+      }
+    }
+
+    // Збереження всіх налаштувань
+    function saveSettings() {
       const prefs = getAnimePreferences(animeId) || {};
       
       const updatedPrefs = {
           dubbing: currentDubbingStudio,
+          quality: currentQuality,
           volume: player.volume,
-          autoSkip: prefs.autoSkip !== false,
-          autoNext: prefs.autoNext !== false,
+          autoSkip: autoSkipCheckbox.checked,
+          autoNext: autoNextCheckbox.checked,
           lastUpdated: new Date().toISOString()
       };
       
-      // Зберігаємо якість, якщо вона є
-      if (prefs.quality) {
-          updatedPrefs.quality = prefs.quality;
-      }
-      
       setAnimePreferences(animeId, updatedPrefs);
+    }
+
+    // Функція авто-скіп
+    function setupAutoSkip() {
+      const prefs = getAnimePreferences(animeId) || {};
+      if (!prefs.autoSkip || !currentEpisode) return;
+      
+      const currentDubbing = currentEpisode.dubbing.find(d => d.studio === currentDubbingStudio);
+      if (!currentDubbing || !currentDubbing.opening) return;
+      
+      const [openingStart, openingEnd] = currentDubbing.opening;
+      
+      player.addEventListener('timeupdate', () => {
+        if (player.currentTime >= openingStart && player.currentTime <= openingEnd) {
+          player.currentTime = openingEnd;
+        }
+      });
+    }
+
+    // Функція авто-продовження
+    function setupAutoNext() {
+      const prefs = getAnimePreferences(animeId) || {};
+      if (!prefs.autoNext) return;
+      
+      player.addEventListener('ended', () => {
+        if (nextBtn.style.display !== 'none') {
+          nextBtn.click();
+        }
+      });
     }
 
     async function loadPlayer() {
@@ -362,36 +394,51 @@
 
             // Визначаємо початкові налаштування
             let initialDubbingIndex = 0;
+            let initialQualityIndex = 0;
             let initialVolume = 1.0;
 
             // Використовуємо налаштування аніме, якщо вони є
             if (animePreferences) {
-                const preferredIndex = episode.dubbing.findIndex(d => d.studio === animePreferences.dubbing);
-                if (preferredIndex !== -1) initialDubbingIndex = preferredIndex;
+                const preferredDubbingIndex = episode.dubbing.findIndex(d => d.studio === animePreferences.dubbing);
+                if (preferredDubbingIndex !== -1) initialDubbingIndex = preferredDubbingIndex;
+                
                 if (animePreferences.volume !== undefined) initialVolume = animePreferences.volume;
+                
                 currentDubbingStudio = episode.dubbing[initialDubbingIndex].studio;
+                
+                // Знаходимо якість з налаштувань
+                const selectedDubbing = episode.dubbing[initialDubbingIndex];
+                const preferredQualityIndex = selectedDubbing.quality.findIndex(q => q.value === animePreferences.quality);
+                if (preferredQualityIndex !== -1) initialQualityIndex = preferredQualityIndex;
+                currentQuality = selectedDubbing.quality[initialQualityIndex].value;
             } else {
+                // Стандартні налаштування
                 currentDubbingStudio = episode.dubbing[0].studio;
+                currentQuality = episode.dubbing[0].quality[0].value;
             }
 
-            // Встановлюємо початкові значення (без автопрогравання)
+            // Встановлюємо початкові значення
             const selectedDubbing = episode.dubbing[initialDubbingIndex];
-            const selectedQuality = selectedDubbing.quality[0]; // Перша якість за замовчуванням
+            const selectedQuality = selectedDubbing.quality[initialQualityIndex];
             
             player.src = selectedQuality.videoUrl;
             player.volume = initialVolume;
 
+            // Налаштовуємо авто-скіп та авто-продовження
+            setupAutoSkip();
+            setupAutoNext();
+
             // Збереження гучності при зміні
             player.addEventListener('volumechange', () => {
-                saveAnimePreferences();
+                saveSettings();
             });
 
             // Зберігаємо налаштування при закритті
             window.addEventListener('beforeunload', () => {
-                saveAnimePreferences();
+                saveSettings();
             });
 
-            // Кнопки серії (залишаємо без змін)
+            // Кнопки серії
             if (isMovie) {
                 prevBtn.style.display = "none";
                 nextBtn.style.display = "none";
