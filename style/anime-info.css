@@ -294,16 +294,16 @@ header .logo h1 {
 }
 
 .movie-date {
-  color: #cc6096ff
+  color: #cc6096ff;  /* ВИПРАВЛЕНО - додано ; */
   white-space: nowrap;
   font-size: 0.9em;
 }
 
 .movie-duration {
-  color: rgba(255, 255, 255, 0.8);
+  color: #cc6096ff;  /* ВИПРАВЛЕНО - видалено дублювання */
   white-space: nowrap;
   font-weight: 500;
-  color: #cc6096ff;
+  font-size: 0.9em;
 }
 
 .watch-movie-btn {
