@@ -1,332 +1,442 @@
-body {
-  margin: 0;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  color: #fff;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
+        .controls-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filters-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .sort-section {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select, .view-select {
+            padding: 10px 15px;
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            border-radius: 25px;
+            background: rgba(29, 29, 32, 0.8);
+            color: #fff;
+            font-size: 0.9em;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            min-width: 150px;
+            font-family: "Poppins", "Segoe UI", sans-serif;
+        }
+        
+        /* Об'єднаний блок сортування */
+        .sort-container {
+            display: flex;
+            align-items: center;
+            background: rgba(29, 29, 32, 0.8);
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        
+        .sort-select {
+            padding: 10px 15px;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 0.9em;
+            outline: none;
+            min-width: 120px;
+            font-family: "Poppins", "Segoe UI", sans-serif;
+            cursor: pointer;
+        }
+        
+        .sort-order {
+            padding: 10px 12px;
+            background: transparent;
+            border: none;
+            border-left: 1px solid rgba(255, 105, 180, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #ff69b4;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+        }
+        
+        .sort-order:hover {
+            background: rgba(255, 105, 180, 0.1);
+        }
+        
+        .filter-select:focus, .view-select:focus, .sort-container:focus-within {
+            outline: none;
+            border-color: #943a67ff;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+        }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    url('https://kilgamer-steam.github.io/Astro-Neko/images/background.JPEG') no-repeat center center;
-  filter: brightness(0.4);
-  background-size: cover;
-  z-index: -1;
-}
+        /* Важливість для основних елементів */
+        main {
+            padding: 30px 40px !important;
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            padding-top: 80px !important;
+            position: relative !important;
+            z-index: 1 !important;
+        }
 
-/* ===== Header ===== */
-header {
-  width: 100%;
-  background: rgba(24, 24, 27, 0.56);
-  backdrop-filter: blur(2px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
-  box-sizing: border-box;
-  transition: transform 0.3s ease-in-out;
-}
+        .anime-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+            gap: 25px !important;
+            padding: 30px !important;
+            color: #cc6096ff !important;
+            justify-items: center !important;
+            align-items: start !important;
+        }
 
-/* Клас для ховання хедера */
-header.hidden {
-  transform: translateY(-100%);
-}
+        .anime-card {
+            width: 200px !important;
+            height: 320px !important;
+            perspective: 1000px !important;
+            position: relative !important;
+            margin-bottom: 10px !important;
+        }
 
-/* Додаємо відступ для контенту, щоб він не ховався під хедер */
-main {
-  padding: 30px 40px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding-top: 80px;
-  position: relative;
-  z-index: 1;
-}
+        .anime-card .front,
+        .anime-card .back {
+            position: absolute !important;
+            width: 100% !important;
+            height: 100% !important;
+            backface-visibility: hidden !important;
+            border-radius: 12px !important;
+            overflow: hidden !important;
+            color: #cc6096ff !important;
+            transition: transform 0.6s ease !important;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) !important;
+        }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
+        .anime-card .front {
+            background: #1d1d20 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            transform: rotateY(0deg) !important;
+            z-index: 2 !important;
+        }
 
-.header-left img {
-  height: 50px;
-  width: 50px;
-  border-radius: 10px;
-}
+        .anime-card .front .image-container {
+            width: 100% !important;
+            height: 85% !important;
+            overflow: hidden !important;
+        }
 
-.header-left h1 {
-  color: #cc6096ff;
-  margin: 0;
-  font-size: 2em;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
-}
+        .anime-card .front img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            filter: brightness(0.7) !important;
+            transition: transform 0.4s ease !important;
+        }
 
-/* ===== Search Container ===== */
-.search-container {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
+        .anime-card .front img:hover {
+            transform: scale(1.05) !important;
+        }
 
-#search {
-  padding: 12px 20px;
-  border: 2px solid rgba(255, 105, 180, 0.5);
-  border-radius: 25px;
-  background: rgba(29, 29, 32, 0.8);
-  color: #fff;
-  font-size: 1em;
-  width: 300px;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
-}
+        .anime-card .front .title-container {
+            text-align: center !important;
+            background: #1a1a1d !important;
+            padding: 6px !important;
+            font-weight: 600 !important;
+            font-size: 0.95em !important;
+        }
 
-#search:focus {
-  outline: none;
-  border-color: #943a67ff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
-  background: rgba(29, 29, 32, 0.9);
-}
+        .anime-card .back {
+            background: #242427 !important;
+            transform: rotateY(-180deg) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            padding: 15px !important;
+            text-align: center !important;
+            z-index: 1 !important;
+        }
 
-#search::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
+        .back-content {
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+            padding: 0 !important;
+        }
 
-#surprise {
-  padding: 12px 25px;
-  border: 2px solid #943a67ff;
-  border-radius: 25px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #943a67ff;
-  font-size: 1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
+        .back-content h4 {
+            margin: 0 0 15px 0 !important;
+            font-size: 1.1em !important;
+            text-align: center !important;
+            color: #ff69b4 !important;
+            font-weight: 600 !important;
+            line-height: 1.3 !important;
+            max-height: 2.6em !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+        }
 
-#surprise:hover {
-  background: #943a67ff;
-  color: #fff;
-  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
-}
+        .back-info {
+            flex-grow: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            margin-bottom: 15px !important;
+        }
 
-/* ====== Сітка аніме ====== */
-.anime-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 25px;
-  padding: 30px;
-  color: #cc6096ff;
-  justify-items: center;
-  align-items: start;
-}
+        .back-info p {
+            margin: 0 !important;
+            font-size: 0.85em !important;
+            line-height: 1.3 !important;
+            color: #cc6096ff !important;
+        }
 
-/* ====== Картка аніме ====== */
-.anime-card {
-  width: 200px;
-  height: 320px;
-  perspective: 1000px;
-  position: relative;
-  margin-bottom: 10px;
-}
+        .back-info strong {
+            color: #ff69b4 !important;
+            font-weight: 600 !important;
+        }
 
-.anime-card .front,
-.anime-card .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 12px;
-  overflow: hidden;
-  color: #cc6096ff;
-  transition: transform 0.6s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-}
+        .back-content .details-btn {
+            background: #943a67ff !important;
+            border: none !important;
+            color: #fff !important;
+            padding: 10px !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            font-weight: 600 !important;
+            transition: background 0.3s ease !important;
+            width: 100% !important;
+            font-family: "Poppins", "Segoe UI", sans-serif !important;
+        }
 
-.anime-card .front {
-  background: #1d1d20;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transform: rotateY(0deg);
-  z-index: 2;
-}
+        .back-content .details-btn:hover {
+            background: #ff82c1 !important;
+            transform: translateY(-1px) !important;
+        }
 
-.anime-card .front .image-container {
-  width: 100%;
-  height: 85%;
-  overflow: hidden;
-}
+        .anime-card.flipped .front {
+            transform: rotateY(180deg) !important;
+        }
 
-.anime-card .front img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.7);
-  transition: transform 0.4s ease;
-}
+        .anime-card.flipped .back {
+            transform: rotateY(0deg) !important;
+            z-index: 11 !important;
+        }
+        
+        /* Компактний вигляд сітки */
+        .anime-grid.compact {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+            gap: 15px !important;
+        }
+        
+        .anime-grid.compact .anime-card {
+            width: 150px !important;
+            height: 240px !important;
+        }
+        
+        .anime-grid.compact .back-content h4 {
+            font-size: 0.95em !important;
+        }
+        
+        .anime-grid.compact .back-info p {
+            font-size: 0.75em !important;
+        }
+        
+        /* Стилі для списку */
+        .anime-list {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .anime-list-item {
+            display: flex;
+            background: rgba(29, 29, 32, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .anime-list-item:hover {
+            background: rgba(29, 29, 32, 0.9);
+            border-left-color: #943a67ff;
+            transform: translateX(5px);
+        }
+        
+        .list-item-image {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        
+        .list-item-content {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .list-item-title {
+            font-size: 1.1em;
+            color: #ff69b4;
+            margin: 0 0 10px 0;
+        }
+        
+        .list-item-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: #cc6096ff;
+            margin-bottom: 10px;
+        }
+        
+        .list-item-tags {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+        
+        .list-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .list-details-btn {
+            padding: 6px 12px;
+            background: #943a67ff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background 0.3s ease;
+            font-family: "Poppins", "Segoe UI", sans-serif;
+        }
+        
+        .list-details-btn:hover {
+            background: #ff82c1;
+        }
+        
+        /* Індикатор завантаження */
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: #ff69b4;
+            font-family: "Poppins", "Segoe UI", sans-serif;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 105, 180, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff69b4;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Стилі для повідомлення про відсутність результатів */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #cc6096ff;
+            font-size: 1.1em;
+            grid-column: 1 / -1;
+            font-family: "Poppins", "Segoe UI", sans-serif;
+        }
+        
+        /* Мобільна версія */
+        @media (max-width: 768px) {
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filters-section, .sort-section {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .filter-select, .view-select {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .sort-container {
+                flex: 1;
+            }
+            
+            .sort-select {
+                flex: 1;
+            }
+            
+            .anime-list-item {
+                flex-direction: column;
+            }
+            
+            .list-item-image {
+                width: 100%;
+                height: 200px;
+            }
 
-.anime-card .front img:hover {
-  transform: scale(1.05);
-}
+            /* Мобільні стилі з CSS */
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+            }
 
-.anime-card .front .title-container {
-  text-align: center;
-  background: #1a1a1d;
-  padding: 6px;
-  font-weight: 600;
-  font-size: 0.95em;
-}
+            .anime-card {
+                width: 180px !important;
+                height: 290px !important;
+            }
 
-/* ====== Задня сторона ====== */
-.anime-card .back {
-  background: #242427;
-  transform: rotateY(-180deg);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 15px;
-  text-align: center;
-  z-index: 1;
-}
+            .back-content h4 {
+                font-size: 1em !important;
+            }
 
-/* Стилі для задньої сторони картки */
-.back-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0;
-}
+            .back-info p {
+                font-size: 0.8em !important;
+            }
+        }
 
-.back-content h4 {
-  margin: 0 0 15px 0;
-  font-size: 1.1em;
-  text-align: center;
-  color: #ff69b4;
-  font-weight: 600;
-  line-height: 1.3;
-  max-height: 2.6em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
+        @media (max-width: 480px) {
+            .anime-card {
+                width: 160px !important;
+                height: 260px !important;
+            }
 
-.back-info {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 15px;
-}
+            .back-content h4 {
+                font-size: 0.95em !important;
+            }
 
-.back-info p {
-  margin: 0;
-  font-size: 0.85em;
-  line-height: 1.3;
-  color: #cc6096ff;
-}
-
-.back-info strong {
-  color: #ff69b4;
-  font-weight: 600;
-}
-
-.back-content .details-btn {
-  background: #943a67ff;
-  border: none;
-  color: #fff;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s ease;
-  width: 100%;
-}
-
-.back-content .details-btn:hover {
-  background: #ff82c1;
-  transform: translateY(-1px);
-}
-
-/* ====== Ефект перевороту ====== */
-.anime-card.flipped {
-  z-index: 10;
-}
-
-.anime-card:not(.flipped) {
-  z-index: 1;
-}
-
-.anime-card.flipped .front {
-  transform: rotateY(180deg);
-}
-
-.anime-card.flipped .back {
-  transform: rotateY(0deg);
-  z-index: 11;
-}
-
-/* ====== Адаптивність ====== */
-@media (max-width: 800px) {
-  header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
-
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-
-  .anime-card {
-    width: 180px;
-    height: 290px;
-  }
-
-  #search {
-    width: 180px;
-  }
-
-  .back-content h4 {
-    font-size: 1em;
-  }
-
-  .back-info p {
-    font-size: 0.8em;
-  }
-}
-
-@media (max-width: 480px) {
-  #search {
-    width: 140px;
-  }
-
-  .anime-card {
-    width: 160px;
-    height: 260px;
-  }
-
-  .back-content h4 {
-    font-size: 0.95em;
-  }
-
-  .back-info p {
-    font-size: 0.75em;
-  }
-}
+            .back-info p {
+                font-size: 0.75em !important;
+            }
+        }
