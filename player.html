@@ -37,7 +37,6 @@
   </div>
 
   <script>
-    document.title = `Дивитися — ${anime.title}`;
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
     const seasonNumber = parseInt(params.get("season"));
@@ -81,6 +80,7 @@ async function loadPlayer() {
         if (!resp.ok) throw new Error("Не вдалося завантажити аніме");
         const anime = await resp.json();
         document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
+        document.title = `Дивитися — ${anime.title}`;
         let isMovie = false;
         let season = null;
         let episode = null;
