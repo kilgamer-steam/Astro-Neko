@@ -16,142 +16,24 @@
   "seasons": [
     {
       "seasonNumber": 1,
+      "title": "season name",
       "episodes": [
         {
           "title": "Епізод 1",
           "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
-          "dubbing": [
-            {
+          "dubbing":[         
+          {
               "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              "language":"language",
+              "subtitle": "subtitleurl",
+              "opening": [0,0],
+              "ending": [1282,1372],
+              "quality": [
+                {"value":"1080", "videoUrl":"url1080"},
+                {"value":"720", "videoUrl":"url720"}, 
+                {"value":"480", "videoUrl":"url480"}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            1282,
-            1372
-          ]
-        },
-        {
-          "title": "Епізод 2",
-          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
-          "dubbing": [
-            {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-            }
-          ],
-          "opening": [
-            63,
-            150
-          ],
-          "ending": [
-            1350,
-            1456
-          ]
-        },
-        {
-          "title": "Епізод 3",
-          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
-          "dubbing": [
-            {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-            }
-          ],
-          "opening": [
-            147,
-            235
-          ],
-          "ending": [
-            1329,
-            1418
-          ]
-        }
-      ]
-    },
-    {
-      "seasonNumber": 2,
-      "episodes": [
-        {
-          "title": "Епізод 1",
-          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
-          "dubbing": [
-            {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
-            }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
-          ]
-        },
-        {
-          "title": "Епізод 2",
-          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 2",
-          "dubbing": [
-            {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-            }
-          ],
-          "opening": [
-            123,
-            210
-          ],
-          "ending": [
-            1246,
-            1452
-          ]
-        },
-        {
-          "title": "Епізод 3",
-          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 3",
-          "dubbing": [
-            {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
-            }
-          ],
-          "opening": [
-            57,
-            144
-          ],
-          "ending": [
-            1301,
-            1452
           ]
         }
       ]
@@ -162,46 +44,19 @@
       "movieNumber": 1,
       "title": "Фільм 1",
       "name": "ТЕСТОВА НАЗВА ФІЛЬМ 1",
-      "dubbing": [
+      "dubbing":[
         {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-            }
-      ],
-      "opening": [
-        0,
-        0
-      ],
-      "ending": [
-        0,
-        0
-      ]
-    },
-    {
-      "movieNumber": 2,
-      "title": "Фільм 2",
-      "name": "ТЕСТОВА НАЗВА ФІЛЬМ 2",
-      "dubbing": [
-        {
-              "studio": "СТУДІЯ 1",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            },
-            {
-              "studio": "СТУДІЯ 2",
-              "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-            }
-      ],
-      "opening": [
-        0,
-        0
-      ],
-      "ending": [
-        0,
-        0
+          "studio": "СТУДІЯ 1",
+          "language":"language",
+          "subtitle": "subtitleurl",
+          "opening": [0,0],
+          "ending": [1282,1372],
+          "quality": [
+            {"value":"1080", "videoUrl":"url1080"},
+            {"value":"720", "videoUrl":"url720"}, 
+            {"value":"480", "videoUrl":"url480"}
+          ]
+        }
       ]
     }
   ]
