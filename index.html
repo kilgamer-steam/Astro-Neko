@@ -33,6 +33,35 @@
         const batchSize = 20;
         let currentFlippedCard = null;
 
+        // Функція для підрахунку загальної кількості серій
+        function calculateTotalEpisodes(anime) {
+            let total = 0;
+            
+            // Підраховуємо серії з сезонів
+            if (anime.seasons && Array.isArray(anime.seasons)) {
+                anime.seasons.forEach(season => {
+                    if (season.episodes && Array.isArray(season.episodes)) {
+                        total += season.episodes.length;
+                    }
+                });
+            }
+            
+            // Додаємо фільми
+            if (anime.movies && Array.isArray(anime.movies)) {
+                total += anime.movies.length;
+            }
+            
+            return total > 0 ? total : 'N/A';
+        }
+
+        // Функція для підрахунку загальної кількості сезонів
+        function calculateTotalSeasons(anime) {
+            if (anime.seasons && Array.isArray(anime.seasons)) {
+                return anime.seasons.length;
+            }
+            return 'N/A';
+        }
+
         // Створюємо картку аніме
         function createAnimeCard(anime) {
             const card = document.createElement('div');
@@ -42,19 +71,29 @@
             front.classList.add('front');
             front.innerHTML = `
               <div class="image-container">
-                <img src="${anime.img}" alt="${anime.title}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
+                <img src="${anime.img || 'N/A'}" alt="${anime.title || 'N/A'}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
               </div>
               <div class="title-container">
-                <h3>${anime.title}</h3>
+                <h3>${anime.title || 'N/A'}</h3>
               </div>`;
 
+            // Розраховуємо загальну кількість серій та сезонів
+            const totalEpisodes = calculateTotalEpisodes(anime);
+            const totalSeasons = calculateTotalSeasons(anime);
+            
             const back = document.createElement('div');
             back.classList.add('back');
             back.innerHTML = `
-                <p>Жанри: ${anime.tags.join(', ')}</p>
-                <p>Оцінка: ${anime.rating || 'N/A'}</p>
-                <p>Статус: ${anime.status}</p>
-                <button class="details-btn">Детальніше</button>
+                <div class="back-content">
+                    <h4>${anime.title || 'N/A'}</h4>
+                    <div class="back-info">
+                        <p><strong>Серії:</strong> ${totalEpisodes}</p>
+                        <p><strong>Сезони:</strong> ${totalSeasons}</p>
+                        <p><strong>Рейтинг:</strong> ${anime.rating || 'N/A'}</p>
+                        <p><strong>Жанри:</strong> ${anime.tags && anime.tags.length > 0 ? anime.tags.join(', ') : 'N/A'}</p>
+                    </div>
+                    <button class="details-btn">Детальніше</button>
+                </div>
             `;
             
             // Обробник кліку на кнопку "Детальніше"
