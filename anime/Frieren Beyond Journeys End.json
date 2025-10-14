@@ -16,509 +16,494 @@
   "seasons": [
     {
       "seasonNumber": 1,
+      "title": "season name",
+      "year": "2024",
+      "episodeCount": "12",
       "episodes": [
         {
           "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep1.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 2",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep2.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 3",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep3.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 4",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep4.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 5",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep5.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 6",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep6.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 7",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep7.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 8",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep8.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 9",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep9.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 10",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep10.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 11",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep11.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 12",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep12.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 13",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep13.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 14",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep14.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 15",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep15.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 16",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep16.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 17",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep17.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 18",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep18.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 19",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep19.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 20",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep20.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 21",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep21.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 22",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep22.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 23",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep23.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 24",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep24.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 25",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep25.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 26",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep26.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         },
         {
-          "title": "Епізод 27",
+          "title": "Епізод 1",
           "name": "",
-          "dubbing": [
+          "dubbing":[         
             {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep27.mp4"
+              "studio": "Amanogava",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
-          ]
-        },
-        {
-          "title": "Епізод 28",
-          "name": "",
-          "dubbing": [
-            {
-              "studio": "Amanogawa",
-              "videoUrl": "/anime/videos/Frieren Beyond Journeys End/seson1/Amanogawa/ep28.mp4"
-            }
-          ],
-          "opening": [
-            0,
-            0
-          ],
-          "ending": [
-            0,
-            0
           ]
         }
       ]
