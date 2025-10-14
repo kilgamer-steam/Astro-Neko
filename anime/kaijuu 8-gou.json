@@ -16,7 +16,7 @@
   "seasons": [
     {
       "seasonNumber": 1,
-      "title": "Перший сезон",
+      "title": " ",
       "year": "2024",
       "episodeCount": "12",
       "episodes": [
@@ -27,41 +27,15 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "",
               "opening": [0, 0],
               "ending": [1282, 1372],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_30MB.mp4"
-                },
-                {
-                  "value": "720", 
-                  "videoUrl": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_30MB.mp4"
-                },
-                {
-                  "value": "480",
-                  "videoUrl": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/480/Big_Buck_Bunny_480_10s_30MB.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             },
-            {
-              "studio": "Amanogava",
-              "language": "японська",
-              "subtitle": "українська",
-              "opening": [0, 0],
-              "ending": [1282, 1372],
-              "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_30MB.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_30MB.mp4"
-                }
-              ]
-            }
           ]
         },
         {
@@ -71,18 +45,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [63, 150],
               "ending": [1350, 1456],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep2-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep2-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -94,18 +63,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [147, 235],
               "ending": [1329, 1418],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep3-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep3-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -117,18 +81,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [15, 104],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep4-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep4-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -140,18 +99,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [105, 170],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep5-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep5-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -163,18 +117,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [171, 257],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep6-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep6-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -186,18 +135,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [92, 180],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep7-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep7-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -209,18 +153,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [16, 104],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep8-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep8-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -232,18 +171,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [103, 192],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep9-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep9-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -255,18 +189,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [86, 174],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep10-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep10-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -278,18 +207,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [60, 148],
               "ending": [1346, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep11-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep11-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -301,18 +225,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [16, 104],
               "ending": [0, 0],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep12-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season1/Didko-studio/ep12-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -321,7 +240,7 @@
     },
     {
       "seasonNumber": 2,
-      "title": "Другий сезон",
+      "title": " ",
       "year": "2025",
       "episodeCount": "6",
       "episodes": [
@@ -332,18 +251,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [0, 0],
               "ending": [0, 0],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep1-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep1-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -355,18 +269,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [123, 210],
               "ending": [1246, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep2-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep2-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -378,18 +287,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [57, 144],
               "ending": [1301, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep3-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep3-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -401,18 +305,13 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [235, 322],
               "ending": [1286, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep4-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep4-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
@@ -424,70 +323,140 @@
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
+              "subtitle": "subtitleurl",
               "opening": [85, 172],
               "ending": [1286, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep5-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep5-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
         },
         {
           "title": "Епізод 6",
-          "name": "N/A",
+          "name": "Початок",
           "dubbing": [
             {
               "studio": "Didko studio",
               "language": "українська",
-              "subtitle": "N/A",
-              "opening": [98, 185],
-              "ending": [1306, 1452],
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
               "quality": [
-                {
-                  "value": "1080",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep6-1080.mp4"
-                },
-                {
-                  "value": "720",
-                  "videoUrl": "/anime/videos/kaijuu-8-gou/season2/Didko-studio/ep6-720.mp4"
-                }
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
               ]
             }
           ]
-        }
-      ]
-    }
-  ],
-  "movies": [
-    {
-      "movieNumber": 1,
-      "title": "Кайджю №8: Фільм",
-      "name": "Спеціальний фільм",
-      "releaseDate": "2024-12-01",
-      "duration": "3600",
-      "dubbing": [
+        },
         {
-          "studio": "Didko studio",
-          "language": "українська",
-          "subtitle": "N/A",
-          "opening": [0, 120],
-          "ending": [3480, 3600],
-          "quality": [
+          "title": "Епізод 7",
+          "name": "Початок",
+          "dubbing": [
             {
-              "value": "1080",
-              "videoUrl": "/anime/videos/kaijuu-8-gou/movies/movie1-1080.mp4"
-            },
+              "studio": "Didko studio",
+              "language": "українська",
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 8",
+          "name": "Початок",
+          "dubbing": [
             {
-              "value": "720",
-              "videoUrl": "/anime/videos/kaijuu-8-gou/movies/movie1-720.mp4"
+              "studio": "Didko studio",
+              "language": "українська",
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 9",
+          "name": "Початок",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "language": "українська",
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 10",
+          "name": "Початок",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "language": "українська",
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 11",
+          "name": "Початок",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "language": "українська",
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 12",
+          "name": "Початок",
+          "dubbing": [
+            {
+              "studio": "Didko studio",
+              "language": "українська",
+              "subtitle": "subtitleurl",
+              "opening": [85, 172],
+              "ending": [1286, 1452],
+              "quality": [
+                {"value":"1080", "videoUrl":""},
+                {"value":"720", "videoUrl":""},
+                {"value":"360", "videoUrl":""}
+              ]
             }
           ]
         }
