@@ -1,0 +1,315 @@
+{
+  "id": "test7",
+  "title": "ТЕСТОВА НАЗВА",
+  "description": "ТЕСТОВИЙ ОПИС ДЛЯ ТЕСТОВОЇ КАРТКИ",
+  "tags": [
+    "ТЕСТОВИЙ ТЕГ 1",
+    "ТЕСТОВИЙ ТЕГ 2",
+    "ТЕСТОВИЙ ТЕГ 3"
+  ],
+  "rating": "5",
+  "status": "ТЕСТОВИЙ СТАТУС",
+  "age": "ТЕСТОВИЙ ВІК",
+  "img": "anime/image/test.jpg",
+  "background": "anime/background/test_bg.jpg",
+  "preview": "anime/preview/test_preview.jpg",
+  "seasons": [
+    {
+      "seasonNumber": 1,
+      "title": "season name",
+      "year": "2024",
+      "episodeCount": "12",
+      "episodes": [
+        {
+          "title": "Епізод 1",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
+          "dubbing":[         
+            {
+              "studio": "СТУДІЯ 1",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            },
+            {
+              "studio": "СТУДІЯ 2",
+              "language":"Англійська",
+              "subtitle": "subtitleurl",
+              "opening": [0,244],
+              "ending": [488,734],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+                {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 2",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
+          "dubbing":[         
+            {
+              "studio": "СТУДІЯ 1",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            },
+            {
+              "studio": "СТУДІЯ 2",
+              "language":"Англійська",
+              "subtitle": "subtitleurl",
+              "opening": [0,244],
+              "ending": [488,734],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+                {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 3",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
+          "dubbing":[         
+            {
+              "studio": "СТУДІЯ 1",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            },
+            {
+              "studio": "СТУДІЯ 2",
+              "language":"Англійська",
+              "subtitle": "subtitleurl",
+              "opening": [0,244],
+              "ending": [488,734],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+                {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seasonNumber": 2,
+      "title": "sea name",
+      "year": "2025",
+      "episodeCount": "12",
+      "episodes": [
+        {
+          "title": "Епізод 1",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
+          "dubbing":[         
+            {
+              "studio": "СТУДІЯ 1",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            },
+            {
+              "studio": "СТУДІЯ 2",
+              "language":"Англійська",
+              "subtitle": "subtitleurl",
+              "opening": [0,244],
+              "ending": [488,734],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+                {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 2",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
+          "dubbing":[         
+            {
+              "studio": "СТУДІЯ 1",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            },
+            {
+              "studio": "СТУДІЯ 2",
+              "language":"Англійська",
+              "subtitle": "subtitleurl",
+              "opening": [0,244],
+              "ending": [488,734],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+                {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Епізод 3",
+          "name": "ТЕСТОВА НАЗВА ЕПІЗОД 1",
+          "dubbing":[         
+            {
+              "studio": "СТУДІЯ 1",
+              "language":"українська",
+              "subtitle": "subtitleurl",
+              "opening": [0,5],
+              "ending": [10,15],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+                {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+              ]
+            },
+            {
+              "studio": "СТУДІЯ 2",
+              "language":"Англійська",
+              "subtitle": "subtitleurl",
+              "opening": [0,244],
+              "ending": [488,734],
+              "quality": [
+                {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+                {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+                {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "movies": [
+    {
+      "movieNumber": 1,
+      "title": "Фільм 1",
+      "name": "ТЕСТОВА НАЗВА ФІЛЬМ 1",
+      "releaseDate": "2023-12-01",
+      "duration":"3000",
+      "dubbing":[
+        {
+          "studio": "СТУДІЯ 1",
+          "language":"Англійська",
+          "subtitle": "subtitleurl",
+          "opening": [0,244],
+          "ending": [488,734],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+            {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+          ]
+        },
+        {
+          "studio": "СТУДІЯ 2",
+          "language":"українська",
+          "subtitle": "subtitleurl",
+          "opening": [0,5],
+          "ending": [10,15],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+            {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+          ]
+        }
+      ]
+    },
+    {
+      "movieNumber": 2,
+      "title": "Фільм 2",
+      "name": "ТЕСТОВА НАЗВА ФІЛЬМ 1",
+      "releaseDate": "2023-12-01",
+      "duration":"3000",
+      "dubbing":[
+        {
+          "studio": "СТУДІЯ 1",
+          "language":"Англійська",
+          "subtitle": "subtitleurl",
+          "opening": [0,244],
+          "ending": [488,734],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+            {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+          ]
+        },
+        {
+          "studio": "СТУДІЯ 2",
+          "language":"українська",
+          "subtitle": "subtitleurl",
+          "opening": [0,5],
+          "ending": [10,15],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+            {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+          ]
+        }
+      ]
+    },
+    {
+      "movieNumber": 3,
+      "title": "Фільм 3",
+      "name": "ТЕСТОВА НАЗВА ФІЛЬМ 1",
+      "releaseDate": "2023-12-01",
+      "duration":"3000",
+      "dubbing":[
+        {
+          "studio": "СТУДІЯ 1",
+          "language":"Англійська",
+          "subtitle": "subtitleurl",
+          "opening": [0,244],
+          "ending": [488,734],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}, 
+            {"value":"480", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"}
+          ]
+        },
+        {
+          "studio": "СТУДІЯ 2",
+          "language":"українська",
+          "subtitle": "subtitleurl",
+          "opening": [0,5],
+          "ending": [10,15],
+          "quality": [
+            {"value":"1080", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"},
+            {"value":"720", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"}, 
+            {"value":"360", "videoUrl":"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"}
+          ]
+        }
+      ]
+    }
+  ]
+}
