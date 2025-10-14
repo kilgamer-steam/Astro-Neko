@@ -197,10 +197,6 @@
       // Оновлення вибору якості
       updateQualityOptions();
       
-      // ВИПРАВЛЕНА ЛОГІКА: Завантаження чекбоксів
-      autoSkipCheckbox.checked = prefs.autoSkip === true; // Тільки якщо явно true
-      autoNextCheckbox.checked = prefs.autoNext === true; // Тільки якщо явно true
-      
       console.log('Завантажені налаштування:', {
         autoSkip: autoSkipCheckbox.checked,
         autoNext: autoNextCheckbox.checked,
