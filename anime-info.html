@@ -55,17 +55,34 @@
     }
 
     async function loadAnime(id) {
-      try {
-        const response = await fetch(`anime/${encodeURIComponent(id)}.json`);
-        if (!response.ok) throw new Error("Не вдалося знайти JSON для цього аніме");
-
-        const anime = await response.json();
-        displayAnimeInfo(anime);
-      } catch (error) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:50px;'>Помилка при завантаженні аніме 😿</h2>";
-        console.error(error);
-      }
+  try {
+    console.log("Завантажую аніме з ID:", id);
+    const response = await fetch(`anime/${encodeURIComponent(id)}.json`);
+    console.log("Статус відповіді:", response.status);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const anime = await response.json();
+    console.log("Аніме успішно завантажено:", anime.title);
+    displayAnimeInfo(anime);
+    
+  } catch (error) {
+    console.error("Деталі помилки:", error);
+    document.body.innerHTML = `
+      <h2 style='text-align:center; margin-top:50px;'>
+        Помилка при завантаженні аніме 😿
+      </h2>
+      <p style='text-align:center; color: #ff69b4;'>
+        ${error.message}
+      </p>
+      <p style='text-align:center;'>
+        <a href="index.html" style="color: #ff69b4;">Повернутися на головну</a>
+      </p>
+    `;
+  }
+}
 
     // Функція для форматування тривалості
     function formatDuration(seconds) {
