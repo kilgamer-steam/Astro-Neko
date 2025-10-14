@@ -1,4 +1,4 @@
- body {
+body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
   background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
@@ -18,13 +18,13 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(0.3); /* Хороше затемнення */
+  filter: brightness(0.3);
   z-index: -1;
 }
 header .logo {
   display: flex;
   align-items: center;
-  gap: 10px; /* відстань між логотипом та назвою */
+  gap: 10px;
   text-decoration: none;
 }
 
@@ -47,7 +47,7 @@ header {
   align-items: center;
   padding: 15px 40px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: fixed; /* Змінив з sticky на fixed */
+  position: fixed;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(255, 105, 180, 0.3);
@@ -55,11 +55,9 @@ header {
   transition: transform 0.3s ease-in-out;
 }
 
-/* Клас для ховання хедера */
 header.hidden {
   transform: translateY(-100%);
 }
-
 
 .header-nav {
   display: flex;
@@ -77,7 +75,7 @@ header.hidden {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  order: 2; /* Кнопка повернення останньою */
+  order: 2;
 }
 
 .header-nav a {
@@ -90,7 +88,7 @@ header.hidden {
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  order: 1; /* Головна першою */
+  order: 1;
 }
 
 #backToInfo:hover,
@@ -109,13 +107,13 @@ header.hidden {
   max-width: 900px;
   width: 90%;
   margin-top: 70px;
-  background: rgba(29, 29, 32, 0.2); /* 40% непрозорості */
+  background: rgba(29, 29, 32, 0.2);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   overflow: hidden;
   backdrop-filter: blur(2px);
-  border: 1px solid rgba(255, 105, 180, 0.2); /* Додаємо обводку */
+  border: 1px solid rgba(255, 105, 180, 0.2);
 }
 
 .player-bg {
@@ -140,6 +138,7 @@ video {
   position: relative;
   z-index: 1;
 }
+
 #episode-title {
   max-width: 200px;
   overflow: hidden;
@@ -149,75 +148,56 @@ video {
   cursor: help;
   position: relative;
 }
-.custom-tooltip {
-    position: fixed;
-    background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-    color: #ff82c1;
-    padding: 12px 16px;
-    border-radius: 10px;
-    border: 2px solid #943a67ff;
-    white-space: nowrap;
-    z-index: 10000;
-    font-size: 0.9em;
-    font-weight: 500;
-    box-shadow: 0 8px 25px rgba(148, 58, 103, 0.4);
-    backdrop-filter: blur(15px);
-    pointer-events: none;
-    display: none;
-}
-
-.custom-tooltip::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-bottom-color: #943a67ff;
-}
-
 
 .controls-row {
   display: flex;
-  flex-wrap: nowrap; /* Забороняємо перенесення на новий рядок */
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
   position: relative;
   z-index: 1;
   width: 100%;
-  white-space: nowrap; /* Забороняємо перенесення тексту */
-  padding: 10px 0; /* Додаємо відступи для кращого вигляду */
+  white-space: nowrap;
+  padding: 10px 0;
 }
 
-.controls-row label,
-.controls-row select,
 .controls-row button,
 .controls-row span {
   color: #cc6096ff;
 }
 
-
 .controls-row span {
   font-weight: bold;
   color: #cc6096ff;
   font-size: 1em;
-  flex-shrink: 0; /* Забороняємо стискання */
+  flex-shrink: 0;
 }
 
-.controls-row label {
-  font-size: 0.95em;
+/* Кнопка налаштувань у рядку контролів */
+.controls-row .settings-btn {
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
   color: #cc6096ff;
-  flex-shrink: 0;
-}
-.controls-row select {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #943a67ff;
-  background: #1d1d20;
-  color: #cc6096ff;
+  font-size: 1em;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  white-space: nowrap;
   flex-shrink: 0;
+  position: static;
+  top: auto;
+  right: auto;
+  backdrop-filter: blur(2px);
+}
+
+.controls-row .settings-btn:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
 }
 
 .controls-row button {
@@ -230,7 +210,8 @@ video {
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  white-space: nowrap; /* Забороняємо перенесення тексту в кнопках */
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .controls-row button:hover {
@@ -238,32 +219,6 @@ video {
   color: #fff;
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
   transform: translateY(-2px);
-}
-/* Стилі для спливаючого вікна налаштувань */
-
-/* Кнопка відкриття налаштувань */
-.settings-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(148, 58, 103, 0.3);
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  color: #cc6096ff;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 1.2em;
-  transition: all 0.3s ease;
-  z-index: 10;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  backdrop-filter: blur(2px);
-}
-
-.settings-btn:hover {
-  background: #ff69b4;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
 }
 
 /* Спливаюче вікно налаштувань */
@@ -460,8 +415,61 @@ video {
   transform: translateY(0);
 }
 
+/* Стилі для кастомної підказки */
+.custom-tooltip {
+  position: fixed;
+  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
+  color: #ff82c1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 2px solid #943a67ff;
+  white-space: nowrap;
+  z-index: 10000;
+  font-size: 0.9em;
+  font-weight: 500;
+  box-shadow: 0 8px 25px rgba(148, 58, 103, 0.4);
+  backdrop-filter: blur(15px);
+  pointer-events: none;
+  display: none;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.custom-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: #943a67ff;
+}
+
 /* Адаптивність для мобільних пристроїв */
 @media (max-width: 700px) {
+  video { 
+    max-height: 300px; 
+  }
+  
+  .controls-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .controls-row button {
+    font-size: 0.9em;
+    padding: 8px 12px;
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .controls-row span {
+    font-size: 0.95em;
+  }
+  
+  #episode-title {
+    max-width: 150px;
+  }
+  
   .settings-content {
     width: 95%;
     margin: 20px;
@@ -500,65 +508,5 @@ video {
     padding: 10px 20px;
     font-size: 0.9em;
     width: 100%;
-  }
-  
-  .settings-btn {
-    top: 15px;
-    right: 15px;
-    padding: 8px 12px;
-    font-size: 1.1em;
-  }
-}
-
-/* Стилі для кастомної підказки (якщо ще не додано) */
-.custom-tooltip {
-  position: fixed;
-  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-  color: #ff82c1;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 2px solid #943a67ff;
-  white-space: nowrap;
-  z-index: 10000;
-  font-size: 0.9em;
-  font-weight: 500;
-  box-shadow: 0 8px 25px rgba(148, 58, 103, 0.4);
-  backdrop-filter: blur(15px);
-  pointer-events: none;
-  display: none;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-}
-
-.custom-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-bottom-color: #943a67ff;
-}
-@media(max-width: 700px){
-  video { max-height: 300px; }
-  .controls-row {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .controls-row button, .controls-row select {
-    font-size: 0.9em;
-    padding: 6px 10px;
-  }
-  .controls-row span {
-    font-size: 0.95em;
-  }
-  #episode-title {
-    max-width: 150px; /* Менша ширина на мобільних */
-  }
-  
-  #episode-title[title]:hover::after {
-    top: calc(100% + 10px);
-    white-space: normal;
-    max-width: 250px;
-    text-align: center;
   }
 }
