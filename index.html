@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="uk"><head>
+<html lang="uk">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astro Neko</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="stylesheet" href="style/index.css">
-<style type="text/css"></style><style type="text/css" id="operaUserStyle"></style></head>
+</head>
 <body>
     <header>
         <div class="header-left">
@@ -19,13 +20,13 @@
         </div>
     </header>
 
-    <main style="padding-top: 81px;">
+    <main>
         <!-- Контейнер для всіх контролів -->
         <div class="controls-container">
             <div class="filters-section">
                 <select class="filter-select" id="genre-filter">
                     <option value="">Всі жанри</option>
-                <option value="ТЕСТОВИЙ ТЕГ 1">ТЕСТОВИЙ ТЕГ 1</option><option value="ТЕСТОВИЙ ТЕГ 2">ТЕСТОВИЙ ТЕГ 2</option><option value="ТЕСТОВИЙ ТЕГ 3">ТЕСТОВИЙ ТЕГ 3</option><option value="Пригоди">Пригоди</option><option value="Фантастика">Фантастика</option><option value="Драма">Драма</option><option value="Бойовик">Бойовик</option><option value="Екшн">Екшн</option></select>
+                </select>
                 
                 <select class="filter-select" id="status-filter">
                     <option value="">Всі статуси</option>
@@ -36,12 +37,12 @@
                 
                 <select class="filter-select" id="year-filter">
                     <option value="">Всі роки</option>
-                <option value="2024">2024</option><option value="2023">2023</option></select>
+                </select>
             </div>
             
             <div class="sort-section">
                 <div class="sort-container">
-                    <button class="sort-order" id="sort-order" data-order="desc">↓</button>
+                  <button class="sort-order" id="sort-order" data-order="asc">↑</button>
                     <select class="sort-select" id="sort-by">
                         <option value="title">Назва</option>
                         <option value="rating">Рейтинг</option>
@@ -59,114 +60,16 @@
         </div>
         
         <!-- Сітка аніме -->
-        <div class="anime-grid" id="anime-grid" style="display: grid;"><div class="anime-card"><div class="front">
-              <div class="image-container">
-                <img src="anime/image/Frieren%20Beyond%20Journeys%20End.jpg" alt="Фрірен: після кінця пригоди" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-              </div>
-              <div class="title-container">
-                <h3>Фрірен: після кінця пригоди</h3>
-              </div></div><div class="back">
-                <div class="back-content">
-                    <h4>Фрірен: після кінця пригоди</h4>
-                    <div class="back-info">
-                        <p><strong>Серії:</strong> 28</p>
-                        <p><strong>Сезони:</strong> 1</p>
-                        <p><strong>Рейтинг:</strong> 9</p>
-                        <p><strong>Жанри:</strong> Пригоди, Фантастика, Драма</p>
-                    </div>
-                    <button class="details-btn">Детальніше</button>
-                </div>
-            </div></div><div class="anime-card"><div class="front">
-              <div class="image-container">
-                <img src="anime/image/kaijuu 8-gou.jpg" alt="Кайджю №8" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-              </div>
-              <div class="title-container">
-                <h3>Кайджю №8</h3>
-              </div></div><div class="back">
-                <div class="back-content">
-                    <h4>Кайджю №8</h4>
-                    <div class="back-info">
-                        <p><strong>Серії:</strong> 24</p>
-                        <p><strong>Сезони:</strong> 2</p>
-                        <p><strong>Рейтинг:</strong> 8.5</p>
-                        <p><strong>Жанри:</strong> Бойовик, Фантастика, Екшн</p>
-                    </div>
-                    <button class="details-btn">Детальніше</button>
-                </div>
-            </div></div><div class="anime-card"><div class="front">
-              <div class="image-container">
-                <img src="anime/image/test.jpg" alt="ТЕСТОВА1 НАЗВА" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-              </div>
-              <div class="title-container">
-                <h3>ТЕСТОВА1 НАЗВА</h3>
-              </div></div><div class="back">
-                <div class="back-content">
-                    <h4>ТЕСТОВА1 НАЗВА</h4>
-                    <div class="back-info">
-                        <p><strong>Серії:</strong> 9</p>
-                        <p><strong>Сезони:</strong> 2</p>
-                        <p><strong>Рейтинг:</strong> 5</p>
-                        <p><strong>Жанри:</strong> ТЕСТОВИЙ ТЕГ 1, ТЕСТОВИЙ ТЕГ 2, ТЕСТОВИЙ ТЕГ 3</p>
-                    </div>
-                    <button class="details-btn">Детальніше</button>
-                </div>
-            </div></div></div>
+        <div class="anime-grid" id="anime-grid">
+            <!-- Картки аніме будуть згенеровані тут -->
+        </div>
         
         <!-- Список аніме -->
-        <div class="anime-list" id="anime-list" style="display: none;"><div class="anime-list-item">
-                <img class="list-item-image" src="anime/image/Frieren%20Beyond%20Journeys%20End.jpg" alt="Фрірен: після кінця пригоди" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-                <div class="list-item-content">
-                    <h3 class="list-item-title">Фрірен: після кінця пригоди</h3>
-                    <div class="list-item-meta">
-                        <span><strong>Серії:</strong> 28</span>
-                        <span><strong>Сезони:</strong> 1</span>
-                        <span><strong>Рейтинг:</strong> 9</span>
-                        <span><strong>Рік:</strong> 2023</span>
-                    </div>
-                    <div class="list-item-tags">
-                        Пригоди, Фантастика, Драма
-                    </div>
-                    <div class="list-item-actions">
-                        <button class="list-details-btn">Детальніше</button>
-                    </div>
-                </div>
-            </div><div class="anime-list-item">
-                <img class="list-item-image" src="anime/image/kaijuu 8-gou.jpg" alt="Кайджю №8" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-                <div class="list-item-content">
-                    <h3 class="list-item-title">Кайджю №8</h3>
-                    <div class="list-item-meta">
-                        <span><strong>Серії:</strong> 24</span>
-                        <span><strong>Сезони:</strong> 2</span>
-                        <span><strong>Рейтинг:</strong> 8.5</span>
-                        <span><strong>Рік:</strong> 2024</span>
-                    </div>
-                    <div class="list-item-tags">
-                        Бойовик, Фантастика, Екшн
-                    </div>
-                    <div class="list-item-actions">
-                        <button class="list-details-btn">Детальніше</button>
-                    </div>
-                </div>
-            </div><div class="anime-list-item">
-                <img class="list-item-image" src="anime/image/test.jpg" alt="ТЕСТОВА1 НАЗВА" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-                <div class="list-item-content">
-                    <h3 class="list-item-title">ТЕСТОВА1 НАЗВА</h3>
-                    <div class="list-item-meta">
-                        <span><strong>Серії:</strong> 9</span>
-                        <span><strong>Сезони:</strong> 2</span>
-                        <span><strong>Рейтинг:</strong> 5</span>
-                        <span><strong>Рік:</strong> 2024</span>
-                    </div>
-                    <div class="list-item-tags">
-                        ТЕСТОВИЙ ТЕГ 1, ТЕСТОВИЙ ТЕГ 2, ТЕСТОВИЙ ТЕГ 3
-                    </div>
-                    <div class="list-item-actions">
-                        <button class="list-details-btn">Детальніше</button>
-                    </div>
-                </div>
-            </div></div>
+        <div class="anime-list" id="anime-list">
+            <!-- Елементи списку будуть згенеровані тут -->
+        </div>
         
-        <div class="loading-indicator" id="loading" style="display: none;">
+        <div class="loading-indicator" id="loading" style="display:none;">
             <div class="loading-spinner"></div> Завантаження...
         </div>
     </main>
@@ -613,5 +516,5 @@
         loadAnimeList();
         initializeUI();
     </script>
-
-</body></html>
+</body>
+</html>
