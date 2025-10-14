@@ -37,6 +37,7 @@
   </div>
 
   <script>
+    document.title = `Дивитися — ${anime.title}`;
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
     const seasonNumber = parseInt(params.get("season"));
