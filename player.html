@@ -178,7 +178,7 @@
       }
     });
 
-    // Завантаження поточних налаштувань у вікно
+    // Завантаження поточних налаштувань у вікно - ВИПРАВЛЕНО
     function loadCurrentSettings() {
       const prefs = getAnimePreferences(animeId);
       
@@ -197,9 +197,9 @@
       // Оновлення вибору якості
       updateQualityOptions();
       
-      // Завантаження чекбоксів - ВИПРАВЛЕНО
-      autoSkipCheckbox.checked = Boolean(prefs.autoSkip);
-      autoNextCheckbox.checked = Boolean(prefs.autoNext);
+      // ВИПРАВЛЕНА ЛОГІКА: Завантаження чекбоксів
+      autoSkipCheckbox.checked = prefs.autoSkip === true; // Тільки якщо явно true
+      autoNextCheckbox.checked = prefs.autoNext === true; // Тільки якщо явно true
       
       console.log('Завантажені налаштування:', {
         autoSkip: autoSkipCheckbox.checked,
@@ -298,7 +298,7 @@
       }, { once: true });
     }
 
-    // Збереження всіх налаштувань - ВИПРАВЛЕНО
+    // Збереження всіх налаштувань
     function saveSettings() {
       const prefs = getAnimePreferences(animeId);
       
@@ -315,7 +315,7 @@
       console.log('Налаштування збережено:', updatedPrefs);
     }
 
-    // Функція авто-скіп - ВИПРАВЛЕНО
+    // Функція авто-скіп
     function setupAutoSkip() {
       // Очищаємо попередній інтервал
       if (autoSkipInterval) {
@@ -363,7 +363,7 @@
       }, 500);
     }
 
-    // Функція авто-продовження - ВИПРАВЛЕНО
+    // Функція авто-продовження
     function setupAutoNext() {
       const prefs = getAnimePreferences(animeId);
       console.log('Налаштування авто-продовження:', prefs.autoNext);
