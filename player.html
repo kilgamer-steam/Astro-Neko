@@ -85,7 +85,7 @@
     </div>
   </div>
 
-<script>
+  <script>
 class AnimePlayer {
   constructor() {
     this.params = new URLSearchParams(window.location.search);
@@ -125,6 +125,7 @@ class AnimePlayer {
     this.autoSkipEnabled = false;
     this.autoNextEnabled = false;
     this.isLoading = true;
+    this.videoLoadAttempted = false;
 
     this.init();
   }
@@ -234,12 +235,18 @@ class AnimePlayer {
     });
     
     this.player.addEventListener('canplay', () => {
-      this.updateLoadingProgress(80, 'Можна відтворювати...');
+      this.updateLoadingProgress(90, 'Можна відтворювати...');
     });
     
     this.player.addEventListener('playing', () => {
       this.updateLoadingProgress(100, 'Готово!');
       setTimeout(() => this.hideLoading(), 500);
+    });
+
+    this.player.addEventListener('error', (e) => {
+      console.warn('Помилка відео:', e);
+      // Не ховаємо завантаження при помилці, даємо шанс відео завантажитись
+      this.updateLoadingProgress(70, 'Перепідключення...');
     });
 
     window.addEventListener('beforeunload', () => {
@@ -270,11 +277,21 @@ class AnimePlayer {
       this.setupNavigation();
       this.setupTooltip();
 
-    } catch (err) {
-      console.error(err);
-      this.updateLoadingProgress(0, 'Помилка завантаження');
+      // Автоматично ховаємо завантаження через 5 секунд, навіть якщо відео не завантажилось
       setTimeout(() => {
-        alert("Помилка при завантаженні плеєра");
+        if (this.isLoading) {
+          console.log('Автоматичне приховування завантаження через таймаут');
+          this.hideLoading();
+        }
+      }, 5000);
+
+    } catch (err) {
+      console.error('Критична помилка:', err);
+      this.updateLoadingProgress(0, 'Помилка завантаження');
+      
+      // Показуємо помилку, але все одно ховаємо індикатор
+      setTimeout(() => {
+        alert("Помилка при завантаженні плеєра: " + err.message);
         this.hideLoading();
       }, 1000);
     }
@@ -301,9 +318,14 @@ class AnimePlayer {
     const preferences = this.getAnimePreferences();
     this.applyPreferences(preferences);
     
-    await this.loadVideo();
-    this.restoreProgress();
-    this.setupAutoFeatures();
+    try {
+      await this.loadVideo();
+      this.restoreProgress();
+      this.setupAutoFeatures();
+    } catch (err) {
+      console.warn('Попередження при завантаженні відео:', err);
+      // Продовжуємо навіть якщо є помилки - можливо відео все одно працюватиме
+    }
   }
 
   findCurrentEpisode() {
@@ -360,16 +382,52 @@ class AnimePlayer {
     const selectedQuality = selectedDubbing.quality.find(q => q.value === this.currentQuality);
     
     this.player.src = selectedQuality.videoUrl;
+    this.videoLoadAttempted = true;
     
     return new Promise((resolve) => {
-      this.player.addEventListener('loadedmetadata', () => resolve(), { once: true });
+      // Використовуємо canplaythrough для більш надійного визначення готовності
+      const onCanPlayThrough = () => {
+        this.player.removeEventListener('canplaythrough', onCanPlayThrough);
+        this.player.removeEventListener('error', onError);
+        resolve();
+      };
+      
+      const onError = () => {
+        this.player.removeEventListener('canplaythrough', onCanPlayThrough);
+        this.player.removeEventListener('error', onError);
+        // Все одно резолвимо, щоб не блокувати процес
+        resolve();
+      };
+      
+      // Якщо відео вже готове
+      if (this.player.readyState >= 3) {
+        resolve();
+        return;
+      }
+      
+      this.player.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
+      this.player.addEventListener('error', onError, { once: true });
+      
+      // Резервний таймаут
+      setTimeout(() => {
+        this.player.removeEventListener('canplaythrough', onCanPlayThrough);
+        this.player.removeEventListener('error', onError);
+        resolve();
+      }, 3000);
     });
   }
 
   restoreProgress() {
     const progress = this.getEpisodeProgress();
     if (progress && progress.time) {
-      this.player.currentTime = Math.min(progress.time, this.player.duration - 1);
+      // Чекаємо, поки відео буде готове перед відновленням прогресу
+      if (this.player.readyState > 0) {
+        this.player.currentTime = Math.min(progress.time, this.player.duration - 1);
+      } else {
+        this.player.addEventListener('loadedmetadata', () => {
+          this.player.currentTime = Math.min(progress.time, this.player.duration - 1);
+        }, { once: true });
+      }
     }
   }
 
@@ -394,7 +452,6 @@ class AnimePlayer {
     }, 300);
   }
 
-  // Інші методи (goBackToInfo, goToPreviousEpisode, goToNextEpisode, тощо)...
   goBackToInfo() {
     this.saveProgress();
     window.location.href = `anime-info.html?id=${encodeURIComponent(this.animeId)}`;
