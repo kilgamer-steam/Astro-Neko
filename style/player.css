@@ -221,21 +221,23 @@ video {
 }
 
 .controls-row button {
-  padding: 8px 12px;
-  font-size: 0.95em;
-  border: none;
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
   border-radius: 8px;
-  cursor: pointer;
-  background: #943a67ff;
-  color: #ff69b4;
-  transition: all 0.3s;
-  flex-shrink: 0;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
   white-space: nowrap; /* Забороняємо перенесення тексту в кнопках */
 }
 
 .controls-row button:hover {
-  background: #ff82c1;
+  background: #ff69b4;
   color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
 }
 
 @media(max-width: 700px){

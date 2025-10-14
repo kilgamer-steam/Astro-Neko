@@ -379,6 +379,7 @@ header .logo h1 {
   
   .movie-date {
     display: none;
+    color: #cc6096ff;
   }
   
   .watch-movie-btn {
