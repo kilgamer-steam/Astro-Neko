@@ -28,8 +28,8 @@
       <span id="episode-number">?</span>
       <span id="episode-title">?</span>
       
-      <label for="audio-select">Зміна озвучки:</label>
-      <select id="audio-select"></select>
+      <!-- Замінено вибір озвучки на кнопку налаштувань -->
+      <button id="open-settings" class="settings-btn">⚙️ Налаштування</button>
 
       <button id="prev-episode">Попередня серія</button>
       <button id="next-episode">Наступна серія</button>
@@ -86,9 +86,6 @@
     </div>
   </div>
 
-  <!-- Кнопка відкриття налаштувань -->
-  <button id="open-settings" class="settings-btn">⚙️ Налаштування</button>
-
   <script>
     const params = new URLSearchParams(window.location.search);
     const animeId = params.get("id");
@@ -97,7 +94,6 @@
     const movieNumber = parseInt(params.get("movie"));
     
     const player = document.getElementById("anime-player");
-    const audioSelect = document.getElementById("audio-select");
     const seasonOrMovieSpan = document.getElementById("season-or-movie");
     const episodeNumSpan = document.getElementById("episode-number");
     const titleSpan = document.getElementById("episode-title");
@@ -118,6 +114,7 @@
     // Змінні для поточного епізоду
     let currentEpisode = null;
     let currentAnime = null;
+    let currentDubbingStudio = null;
 
     // Кнопка повернення до сторінки аніме
     backToInfoBtn.onclick = () => {
@@ -163,7 +160,8 @@
           const option = document.createElement('option');
           option.value = dub.studio;
           option.textContent = `${dub.studio} (${dub.language})`;
-          option.selected = dub.studio === audioSelect.value;
+          // Встановлюємо обрану озвучку
+          option.selected = dub.studio === currentDubbingStudio;
           settingsAudioSelect.appendChild(option);
         });
       }
@@ -196,7 +194,11 @@
         if (prefs && prefs.quality) {
           settingsQualitySelect.value = prefs.quality;
         } else if (selectedAudio.quality.length > 0) {
-          settingsQualitySelect.value = selectedAudio.quality[0].value;
+          // Встановлюємо найвищу якість за замовчуванням
+          const highestQuality = selectedAudio.quality.reduce((max, q) => 
+            q.value > max.value ? q : max
+          );
+          settingsQualitySelect.value = highestQuality.value;
         }
       }
     }
@@ -216,13 +218,6 @@
       
       // Оновлення озвучки та якості
       if (settingsAudioSelect.value && settingsQualitySelect.value) {
-        // Оновлюємо основний вибір озвучки
-        const mainAudioOption = Array.from(audioSelect.options).find(opt => opt.dataset.studio === settingsAudioSelect.value);
-        if (mainAudioOption) {
-          audioSelect.value = mainAudioOption.value;
-        }
-        
-        // Зміна відео з обраною якістю
         const selectedAudio = currentEpisode.dubbing.find(d => d.studio === settingsAudioSelect.value);
         const selectedQuality = selectedAudio.quality.find(q => q.value === parseInt(settingsQualitySelect.value));
         
@@ -230,6 +225,8 @@
           const currentTime = player.currentTime;
           const wasPaused = player.paused;
           
+          // Оновлюємо поточну озвучку
+          currentDubbingStudio = settingsAudioSelect.value;
           player.src = selectedQuality.videoUrl;
           player.currentTime = currentTime;
           
@@ -250,12 +247,11 @@
     }
 
     // Оновлена функція збереження налаштувань
-    function saveAnimePreferences(dubbingStudio = null) {
-      const currentDubbing = dubbingStudio || audioSelect.options[audioSelect.selectedIndex].dataset.studio;
+    function saveAnimePreferences() {
       const prefs = getAnimePreferences(animeId) || {};
       
       const updatedPrefs = {
-          dubbing: currentDubbing,
+          dubbing: currentDubbingStudio,
           volume: player.volume,
           autoSkip: prefs.autoSkip !== false,
           autoNext: prefs.autoNext !== false,
@@ -364,16 +360,6 @@
             // Завантажуємо налаштування аніме
             const animePreferences = getAnimePreferences(animeId);
 
-            // Заповнюємо select для озвучки
-            audioSelect.innerHTML = "";
-            episode.dubbing.forEach(d => {
-                const option = document.createElement("option");
-                option.value = d.videoUrl;
-                option.textContent = d.studio;
-                option.dataset.studio = d.studio;
-                audioSelect.appendChild(option);
-            });
-
             // Визначаємо початкові налаштування
             let initialDubbingIndex = 0;
             let initialVolume = 1.0;
@@ -383,26 +369,17 @@
                 const preferredIndex = episode.dubbing.findIndex(d => d.studio === animePreferences.dubbing);
                 if (preferredIndex !== -1) initialDubbingIndex = preferredIndex;
                 if (animePreferences.volume !== undefined) initialVolume = animePreferences.volume;
+                currentDubbingStudio = episode.dubbing[initialDubbingIndex].studio;
+            } else {
+                currentDubbingStudio = episode.dubbing[0].studio;
             }
 
             // Встановлюємо початкові значення (без автопрогравання)
-            audioSelect.selectedIndex = initialDubbingIndex;
-            player.src = episode.dubbing[initialDubbingIndex].videoUrl;
+            const selectedDubbing = episode.dubbing[initialDubbingIndex];
+            const selectedQuality = selectedDubbing.quality[0]; // Перша якість за замовчуванням
+            
+            player.src = selectedQuality.videoUrl;
             player.volume = initialVolume;
-            // Автоправання вимкнено - користувач сам натисне play
-
-            // Обробник зміни озвучки (також без автопрогравання)
-            audioSelect.onchange = () => {
-                const selectedStudio = audioSelect.options[audioSelect.selectedIndex].dataset.studio;
-                const currentTime = player.currentTime;
-                player.src = audioSelect.value;
-                player.currentTime = currentTime;
-                // Не запускаємо програвання автоматично
-                // player.play(); - видано
-                
-                // Оновлюємо налаштування аніме
-                saveAnimePreferences(selectedStudio);
-            };
 
             // Збереження гучності при зміні
             player.addEventListener('volumechange', () => {
