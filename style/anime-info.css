@@ -213,13 +213,13 @@ header .logo h1 {
 
 /* Кнопки епізодів */
 .episode-btn {
-  background: #943a67ff;
-  color: #ff69b4;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9em;
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 1em;
+  text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
 }
@@ -227,8 +227,8 @@ header .logo h1 {
 .episode-btn:hover {
   background: #ff69b4;
   color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
 }
 
 /* ===== Movies block ===== */
@@ -289,12 +289,12 @@ header .logo h1 {
 
 .movie-title {
   font-weight: 500;
-  color: #fff;
+  color: #cc6096ff;
   font-size: 1em;
 }
 
 .movie-date {
-  color: rgba(255, 255, 255, 0.8);
+  color: #cc6096ff
   white-space: nowrap;
   font-size: 0.9em;
 }
@@ -462,6 +462,7 @@ header .logo h1 {
   .movie-date {
     display: block;
     margin-bottom: 5px;
+    color:;
   }
   
   .movie-date::before {
