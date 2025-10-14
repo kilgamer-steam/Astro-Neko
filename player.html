@@ -134,7 +134,6 @@ class AnimePlayer {
     const overlay = document.createElement('div');
     overlay.className = 'loading-overlay';
     overlay.innerHTML = `
-      <div class="loading-spinner-large"></div>
       <div class="wave-loader">
         <div class="wave-dot"></div>
         <div class="wave-dot"></div>
@@ -142,7 +141,7 @@ class AnimePlayer {
         <div class="wave-dot"></div>
         <div class="wave-dot"></div>
       </div>
-      <div class="loading-text">Завантаження аніме...</div>
+      <div class="loading-text">Триває Astro завантаження</div>
       <div class="loading-subtext" id="loading-status">Підготовка плеєра</div>
       <div class="loading-progress">
         <div class="loading-progress-bar" id="loading-progress-bar"></div>
@@ -228,7 +227,7 @@ class AnimePlayer {
     });
     
     this.player.addEventListener('progress', () => {
-      if (this.player.buffered.length > 0) {
+      if (this.player.buffered.length > 0 && this.player.duration > 0) {
         const progress = (this.player.buffered.end(0) / this.player.duration) * 40 + 30;
         this.updateLoadingProgress(progress, 'Буферизація відео...');
       }
@@ -245,7 +244,6 @@ class AnimePlayer {
 
     this.player.addEventListener('error', (e) => {
       console.warn('Помилка відео:', e);
-      // Не ховаємо завантаження при помилці, даємо шанс відео завантажитись
       this.updateLoadingProgress(70, 'Перепідключення...');
     });
 
@@ -274,10 +272,10 @@ class AnimePlayer {
       await this.setupEpisode();
       
       this.updateLoadingProgress(60, 'Налаштування навігації...');
-      this.setupNavigation();
+      this.setupNavigationButtons(); // Змінено з setupNavigation
       this.setupTooltip();
 
-      // Автоматично ховаємо завантаження через 5 секунд, навіть якщо відео не завантажилось
+      // Автоматично ховаємо завантаження через 5 секунд
       setTimeout(() => {
         if (this.isLoading) {
           console.log('Автоматичне приховування завантаження через таймаут');
@@ -289,7 +287,6 @@ class AnimePlayer {
       console.error('Критична помилка:', err);
       this.updateLoadingProgress(0, 'Помилка завантаження');
       
-      // Показуємо помилку, але все одно ховаємо індикатор
       setTimeout(() => {
         alert("Помилка при завантаженні плеєра: " + err.message);
         this.hideLoading();
@@ -324,7 +321,6 @@ class AnimePlayer {
       this.setupAutoFeatures();
     } catch (err) {
       console.warn('Попередження при завантаженні відео:', err);
-      // Продовжуємо навіть якщо є помилки - можливо відео все одно працюватиме
     }
   }
 
@@ -344,11 +340,44 @@ class AnimePlayer {
     if (isMovie) {
       this.seasonOrMovieSpan.textContent = `Фільм ${this.movieNumber}`;
       this.episodeNumSpan.textContent = "";
+      this.prevBtn.style.display = "none";
+      this.nextBtn.style.display = "none";
     } else {
       this.seasonOrMovieSpan.textContent = `Сезон ${this.seasonNumber}`;
       this.episodeNumSpan.textContent = `Серія ${this.episodeNumber}`;
+      this.prevBtn.style.display = "inline";
+      this.nextBtn.style.display = "inline";
     }
     this.titleSpan.textContent = this.currentEpisode.name;
+  }
+
+  // НОВИЙ МЕТОД: Налаштування кнопок навігації
+  setupNavigationButtons() {
+    if (this.movieNumber) {
+      // Для фільмів кнопки навігації не потрібні
+      return;
+    }
+
+    // Перевірка для кнопки "Попередня серія"
+    if (this.episodeNumber === 1 && this.seasonNumber === 1) {
+      this.prevBtn.disabled = true;
+      this.prevBtn.style.opacity = "0.5";
+    } else {
+      this.prevBtn.disabled = false;
+      this.prevBtn.style.opacity = "1";
+    }
+
+    // Перевірка для кнопки "Наступна серія"
+    const currentSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber);
+    const nextSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber + 1);
+    
+    if (this.episodeNumber >= currentSeason.episodes.length && !nextSeason) {
+      this.nextBtn.disabled = true;
+      this.nextBtn.style.opacity = "0.5";
+    } else {
+      this.nextBtn.disabled = false;
+      this.nextBtn.style.opacity = "1";
+    }
   }
 
   applyPreferences(preferences) {
@@ -385,7 +414,6 @@ class AnimePlayer {
     this.videoLoadAttempted = true;
     
     return new Promise((resolve) => {
-      // Використовуємо canplaythrough для більш надійного визначення готовності
       const onCanPlayThrough = () => {
         this.player.removeEventListener('canplaythrough', onCanPlayThrough);
         this.player.removeEventListener('error', onError);
@@ -395,11 +423,9 @@ class AnimePlayer {
       const onError = () => {
         this.player.removeEventListener('canplaythrough', onCanPlayThrough);
         this.player.removeEventListener('error', onError);
-        // Все одно резолвимо, щоб не блокувати процес
         resolve();
       };
       
-      // Якщо відео вже готове
       if (this.player.readyState >= 3) {
         resolve();
         return;
@@ -408,7 +434,6 @@ class AnimePlayer {
       this.player.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
       this.player.addEventListener('error', onError, { once: true });
       
-      // Резервний таймаут
       setTimeout(() => {
         this.player.removeEventListener('canplaythrough', onCanPlayThrough);
         this.player.removeEventListener('error', onError);
@@ -420,7 +445,6 @@ class AnimePlayer {
   restoreProgress() {
     const progress = this.getEpisodeProgress();
     if (progress && progress.time) {
-      // Чекаємо, поки відео буде готове перед відновленням прогресу
       if (this.player.readyState > 0) {
         this.player.currentTime = Math.min(progress.time, this.player.duration - 1);
       } else {
@@ -578,7 +602,6 @@ class AnimePlayer {
   loadCurrentSettings() {
     const prefs = this.getAnimePreferences();
     
-    // Заповнення вибору озвучки
     this.settingsAudioSelect.innerHTML = '';
     if (this.currentEpisode && this.currentEpisode.dubbing) {
       this.currentEpisode.dubbing.forEach((dub) => {
