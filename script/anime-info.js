@@ -1,6 +1,12 @@
 // Отримуємо ID аніме з URL
-    const params = new URLSearchParams(window.location.search);
-    const animeId = params.get("id");
+    // На цей:
+const urlParams = new URLSearchParams(window.location.search);
+let animeId = urlParams.get('id');
+
+// Декодуємо ID, якщо він був закодований
+if (animeId) {
+    animeId = decodeURIComponent(animeId);
+}
     
     // Елементи для управління станом завантаження
     const loadingOverlay = document.getElementById('loading-overlay');
