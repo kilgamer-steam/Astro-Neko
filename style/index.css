@@ -87,132 +87,85 @@ main {
     align-items: center;
     margin-bottom: 25px;
     padding: 20px 30px;
-    flex-wrap: wrap; /* Перенесення на малих екранах */
+    flex-wrap: nowrap;
     gap: 20px;
-    background: rgba(24, 24, 27, 0.36); /* Напівпрозорий фон */
+    background: rgba(24, 24, 27, 0.36);
     backdrop-filter: blur(2px);
     border-radius: 15px;
     border: 1px solid rgba(255, 105, 180, 0.2);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Ліва частина - Фільтри */
+/* Ліва частина - Фільтр + Пошук */
 .controls-left {
     display: flex;
-    gap: 15px;
     align-items: center;
-    flex-wrap: wrap;
-    flex: 1; /* Займає доступний простір */
-    justify-content: flex-start; /* Вирівнювання по лівому краю */
-    min-width: 0; /* Дозвіл на зменшення */
-}
-
-/* Центральна частина - Пошук */
-.controls-center {
-    display: flex;
     gap: 15px;
-    align-items: center;
-    justify-content: center; /* Центрування */
     flex: 1;
     min-width: 0;
 }
 
-/* Права частина - Сортування */
-.controls-right {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap;
-    flex: 1;
-    justify-content: flex-end; /* Вирівнювання по правому краю */
-    min-width: 0;
-}
-
-/* Секції всередині контролів */
-.search-section {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
-}
-
-.sort-section {
-    display: flex;
-    align-items: center;
-}
-
-/* ===== КНОПКА ФІЛЬТРІВ ===== */
+/* Кнопка фільтрів */
 .filters-btn {
     padding: 10px 20px;
     border: 2px solid #943a67ff;
-    border-radius: 25px; /* Овальна форма */
-    background: rgba(255, 105, 180, 0.1); /* Світлорожевий фон */
+    border-radius: 25px;
+    background: rgba(255, 105, 180, 0.1);
     color: #943a67ff;
     font-size: 0.9em;
     cursor: pointer;
-    transition: all 0.3s ease; /* Плавні анімації */
+    transition: all 0.3s ease;
     backdrop-filter: blur(5px);
-    white-space: nowrap; /* Заборона переносу тексту */
+    white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 8px;
-    position: relative;
     font-family: "Poppins", "Segoe UI", sans-serif;
+    flex-shrink: 0;
 }
 
 .filters-btn:hover {
     background: rgba(255, 105, 180, 0.2);
-    transform: translateY(-2px); /* Ефект підйому */
+    transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
 }
 
-.filters-icon {
-    font-size: 1.1em;
-}
-
-/* Лічильник активних фільтрів */
-.filters-count {
-    background: #ff69b4;
-    color: white;
-    border-radius: 50%; /* Кругла форма */
-    width: 20px;
-    height: 20px;
+/* Пошук */
+.search-section {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 0.8em;
-    font-weight: bold;
-}
-
-/* ===== ЕЛЕМЕНТИ УПРАВЛІННЯ (SELECT, INPUT) ===== */
-.sort-select, .view-select, .search-input {
-    padding: 10px 15px;
-    border: 2px solid rgba(255, 105, 180, 0.5);
-    border-radius: 25px;
-    background: rgba(29, 29, 32, 0.8);
-    color: #ff69b4;
-    font-size: 0.9em;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-    max-width: 110px;
+    flex: 1;
+    min-width: 0;
 }
 
 .search-input {
     width: 100%;
-    flex: 1; /* Займає доступний простір */
-    max-width: 250px;
-    min-width: 100px;
+    padding: 12px 18px;
+    border: 2px solid rgba(255, 105, 180, 0.5);
+    border-radius: 25px;
+    background: rgba(29, 29, 32, 0.8);
+    color: #ff69b4;
+    font-size: 0.95em;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
 }
 
-.sort-select:focus, 
-.view-select:focus, 
 .search-input:focus {
     outline: none;
-    border-color: #943a67ff; /* Зміна кольору при фокусі */
-    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3); /* Світіння */
+    border-color: #943a67ff;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
 }
 
-/* ===== КНОПКА "ЗДИВУЙ МЕНЕ" ===== */
+/* Права частина - Сюрприз + Сортування */
+.controls-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+/* Кнопка "Здивуй мене" */
 .surprise-btn {
     padding: 10px 20px;
     border: 2px solid #943a67ff;
@@ -224,6 +177,8 @@ main {
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
     white-space: nowrap;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    flex-shrink: 0;
 }
 
 .surprise-btn:hover {
@@ -233,7 +188,14 @@ main {
     transform: translateY(-2px);
 }
 
-/* ===== КОНТЕЙНЕР СОРТУВАННЯ ЗІ СТРІЛКОЮ ===== */
+/* Секція сортування */
+.sort-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Контейнер сортування зі стрілкою */
 .sort-container {
     display: flex;
     align-items: center;
@@ -249,7 +211,8 @@ main {
 }
 
 .sort-select {
-    border: none; /* Видалення рамки для інтеграції в контейнер */
+    border: none;
+    background: transparent;
 }
 
 .sort-select:focus {
@@ -274,20 +237,44 @@ main {
 
 .sort-order:hover {
     background: rgba(255, 105, 180, 0.1);
-    transform: scale(1.1); /* Ефект збільшення */
+    transform: scale(1.1);
+}
+
+/* Елементи вибору */
+.sort-select, .view-select {
+    padding: 10px 15px;
+    border-radius: 25px;
+    background: rgba(29, 29, 32, 0.8);
+    color: #ff69b4;
+    font-size: 0.9em;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    cursor: pointer;
+}
+
+.sort-select:focus, 
+.view-select:focus {
+    outline: none;
+    border-color: #943a67ff;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+}
+
+.view-select {
+    max-width: 80px;
 }
 
 /* ===== МОДАЛЬНЕ ВІКНО ФІЛЬТРІВ ===== */
 .filters-modal {
-    display: none; /* Приховане за замовчуванням */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(15, 15, 16, 0.8); /* Напівпрозорий темний фон */
+    background: rgba(15, 15, 16, 0.8);
     backdrop-filter: blur(4px);
-    z-index: 1000; /* Найвищий рівень */
+    z-index: 1000;
     justify-content: center;
     align-items: center;
 }
@@ -298,9 +285,9 @@ main {
     border-radius: 15px;
     width: 90%;
     max-width: 800px;
-    max-height: 80vh; /* Максимальна висота 80% екрану */
+    max-height: 80vh;
     box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4);
-    animation: modalAppear 0.3s ease; /* Анімація появи */
+    animation: modalAppear 0.3s ease;
     backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
@@ -348,7 +335,7 @@ main {
 /* Тіло модального вікна з фільтрами */
 .filters-body {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Три колонки */
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 0;
     flex: 1;
     overflow: hidden;
@@ -358,12 +345,12 @@ main {
 .filter-group {
     padding: 20px;
     border-right: 1px solid rgba(255, 105, 180, 0.2);
-    overflow-y: auto; /* Вертикальний скрол при необхідності */
+    overflow-y: auto;
     max-height: 400px;
 }
 
 .filter-group:last-child {
-    border-right: none; /* Видалення рамки для останньої групи */
+    border-right: none;
 }
 
 .filter-title {
@@ -448,8 +435,6 @@ main {
 }
 
 /* ===== СТИЛІЗАЦІЯ СКРОЛБАРІВ ===== */
-
-/* Для WebKit браузерів (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -468,7 +453,6 @@ main {
     background: #ff69b4;
 }
 
-/* Для Firefox */
 .filter-group {
     scrollbar-width: thin;
     scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
@@ -489,11 +473,11 @@ main {
 
 .checkbox-label:hover {
     background: rgba(255, 105, 180, 0.1);
-    transform: translateX(5px); /* Ефект зсуву */
+    transform: translateX(5px);
 }
 
 .filter-checkbox {
-    display: none; /* Приховуємо стандартний чекбокс */
+    display: none;
 }
 
 .checkmark {
@@ -505,10 +489,9 @@ main {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    flex-shrink: 0; /* Заборона стискання */
+    flex-shrink: 0;
 }
 
-/* Стилі для вибраного чекбоксу */
 .filter-checkbox:checked + .checkmark {
     background: #ff69b4;
     border-color: #ff69b4;
@@ -536,7 +519,7 @@ main {
 /* ===== СІТКА АНІМЕ (КАРТОЧКИ) ===== */
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Адаптивна сітка */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 25px;
   padding: 30px;
   color: #cc6096ff;
@@ -544,7 +527,6 @@ main {
   align-items: start;
 }
 
-/* Компактний вигляд сітки */
 .anime-grid.compact {
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
@@ -554,24 +536,22 @@ main {
 .anime-card {
   width: 200px;
   height: 320px;
-  perspective: 1000px; /* Для 3D ефекту перевороту */
+  perspective: 1000px;
   position: relative;
   margin-bottom: 10px;
 }
 
-/* Компактна версія картки */
 .anime-grid.compact .anime-card {
   width: 150px;
   height: 240px;
 }
 
-/* Передня і задня сторони картки */
 .anime-card .front,
 .anime-card .back {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; /* Приховує задню сторону при перевороті */
+  backface-visibility: hidden;
   border-radius: 12px;
   overflow: hidden;
   color: #cc6096ff;
@@ -579,7 +559,6 @@ main {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
-/* Передня сторона картки */
 .anime-card .front {
   background: #1d1d20;
   display: flex;
@@ -599,12 +578,12 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.7); /* Затемнення зображення */
+  filter: brightness(0.7);
   transition: transform 0.4s ease;
 }
 
 .anime-card .front img:hover {
-  transform: scale(1.05); /* Ефект збільшення */
+  transform: scale(1.05);
 }
 
 .anime-card .front .title-container {
@@ -615,10 +594,9 @@ main {
   font-size: 0.95em;
 }
 
-/* ===== ЗАДНЯ СТОРОНА КАРТКИ ===== */
 .anime-card .back {
   background: #242427;
-  transform: rotateY(-180deg); /* Початково перевернута */
+  transform: rotateY(-180deg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -646,7 +624,7 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Обмеження до 2 рядків */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -679,7 +657,6 @@ main {
   font-weight: 600;
 }
 
-/* Кнопка деталей на задній стороні */
 .back-content .details-btn {
   background: #943a67ff;
   border: none;
@@ -697,9 +674,8 @@ main {
   transform: translateY(-1px);
 }
 
-/* ===== ЕФЕКТ ПЕРЕВОРОТУ КАРТКИ ===== */
 .anime-card.flipped {
-  z-index: 10; /* Вищий рівень для перевернутої картки */
+  z-index: 10;
 }
 
 .anime-card:not(.flipped) {
@@ -715,9 +691,9 @@ main {
   z-index: 11;
 }
 
-/* ===== СПИСОК АНІМЕ (АЛЬТЕРНАТИВНИЙ ВИГЛЯД) ===== */
+/* ===== СПИСОК АНІМЕ ===== */
 .anime-list {
-  display: none; /* Прихований за замовчуванням */
+  display: none;
   flex-direction: column;
   gap: 10px;
   padding: 0 30px;
@@ -732,21 +708,21 @@ main {
   overflow: hidden;
   transition: all 0.3s ease;
   border-left: 4px solid transparent;
-  min-height: 144px; /* Збільшена мінімальна висота */
+  min-height: 144px;
 }
 
 .anime-list-item:hover {
   background: rgba(29, 29, 32, 0.9);
-  border-left-color: #943a67ff; /* Рожева рамка при наведенні */
-  transform: translateX(5px); /* Ефект зсуву */
+  border-left-color: #943a67ff;
+  transform: translateX(5px);
 }
 
 .list-item-image {
   width: 120px;
-  height: 200x;
+  height: 200px;
   object-fit: cover;
   filter: brightness(0.7);
-  flex-shrink: 0; /* Запобігає стисканню */
+  flex-shrink: 0;
 }
 
 .list-item-content {
@@ -797,7 +773,6 @@ main {
   background: #ff82c1;
 }
 
-/* ===== ІНДИКАТОР ЗАВАНТАЖЕННЯ ===== */
 .loading-indicator {
   text-align: center;
   padding: 20px;
@@ -819,11 +794,96 @@ main {
   to { transform: rotate(360deg); }
 }
 
-/* ===== ПОВІДОМЛЕННЯ ПРО ВІДСУТНІСТЬ РЕЗУЛЬТАТІВ ===== */
 .no-results {
   text-align: center;
   padding: 40px;
   color: #cc6096ff;
   font-size: 1.1em;
-  grid-column: 1 / -1; /* Займає всі колонки сітки */
+  grid-column: 1 / -1;
+}
+
+/* ===== АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ ===== */
+@media (max-width: 702px) {
+    .controls-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    /* Ліва частина - Фільтр + Пошук (перший рядок) */
+    .controls-left {
+        order: 1;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .filters-btn {
+        flex-shrink: 0;
+        max-width: 120px;
+    }
+
+    .search-section {
+        flex: 1;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    /* Права частина - Сюрприз + Сортування (другий рядок) */
+    .controls-right {
+        order: 2;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .surprise-btn {
+        flex-shrink: 0;
+        max-width: 120px;
+    }
+
+    .sort-section {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 1;
+    }
+
+    .sort-select, 
+    .view-select {
+        max-width: 100px;
+        flex: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls-left,
+    .controls-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filters-btn,
+    .surprise-btn {
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+    }
+    
+    .sort-section {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .sort-select,
+    .view-select {
+        max-width: 48%;
+    }
 }

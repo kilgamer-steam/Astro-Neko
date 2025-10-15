@@ -18,43 +18,42 @@
     <main>
         <!-- Контейнер для всіх контролів -->
 <div class="controls-container">
-    <!-- Ліва частина - Фільтри -->
-    <div class="controls-left">
-        <button class="filters-btn" id="filters-btn">
-            <span class="filters-icon">⚙️</span>
-            <span class="filters-count" id="filters-count">0</span>
-        </button>
-    </div>
+  <!-- Ліва частина - Фільтр + Пошук -->
+  <div class="controls-left">
+    <button class="filters-btn" id="filters-btn">
+      <span class="filters-icon">⚙️</span>
+      <span class="filters-count" id="filters-count">0</span>
+    </button>
     
-    <!-- Центральна частина - Пошук -->
-    <div class="controls-center">
-        <div class="search-section">
-            <input type="text" class="search-input" id="search" placeholder="Пошук аніме...">
-            <button class="surprise-btn" id="surprise">🎲</button>
-        </div>
+    <div class="search-section">
+      <input type="text" class="search-input" id="search" placeholder="Пошук аніме...">
     </div>
+  </div>
+
+  <!-- Права частина - Сюрприз + Сортування -->
+  <div class="controls-right">
+    <button class="surprise-btn" id="surprise">🎲</button>
     
-    <!-- Права частина - Сортування -->
-    <div class="controls-right">
-        <div class="sort-section">
-            <div class="sort-container">
-                <button class="sort-order" id="sort-order" data-order="asc">↑</button>
-                <select class="sort-select" id="sort-by">
-                    <option value="title">Назва</option>
-                    <option value="rating">Рейтинг</option>
-                    <option value="episodes">Серії</option>
-                    <option value="year">Рік</option>
-                </select>
-            </div>
-            
-            <select class="view-select" id="view-select">
-                <option value="grid">⊞</option>
-                <option value="compact">▦</option>
-                <option value="list">☰</option>
-            </select>
-        </div>
+    <div class="sort-section">
+      <div class="sort-container">
+        <button class="sort-order" id="sort-order" data-order="asc">↑</button>
+        <select class="sort-select" id="sort-by">
+          <option value="title">Назва</option>
+          <option value="rating">Рейтинг</option>
+          <option value="episodes">Серії</option>
+          <option value="year">Рік</option>
+        </select>
+      </div>
+
+      <select class="view-select" id="view-select">
+        <option value="grid">⊞</option>
+        <option value="compact">▦</option>
+        <option value="list">☰</option>
+      </select>
     </div>
+  </div>
 </div>
+
 
 <!-- Модальне вікно фільтрів -->
 <div id="filters-modal" class="filters-modal">
