@@ -560,9 +560,14 @@ document.getElementById('view-select').addEventListener('change', (e) => {
 
 document.getElementById('search').addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
-    const filteredData = filterAnimeData(loadedAnimeData).filter(anime => 
-        anime.title.toLowerCase().includes(query)
-    );
+    const filteredData = filterAnimeData(loadedAnimeData).filter(anime => {
+        // Пошук по назві
+        const titleMatch = anime.title && anime.title.toLowerCase().includes(query);
+        // Пошук по ID
+        const idMatch = anime.id && anime.id.toLowerCase().includes(query);
+        
+        return titleMatch || idMatch;
+    });
     
     const grid = document.getElementById('anime-grid');
     const list = document.getElementById('anime-list');
