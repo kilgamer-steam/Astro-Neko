@@ -559,6 +559,7 @@ document.getElementById('view-select').addEventListener('change', (e) => {
 });
 
 // НОВИЙ ПОШУК З ПРИБЛИЗНИМ ПОШУКОМ
+// ПРОСТИЙ ПОШУК З ПРИБЛИЗНИМ ЗБІГОМ
 document.getElementById('search').addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase().trim();
     
@@ -568,27 +569,12 @@ document.getElementById('search').addEventListener('input', (e) => {
     }
     
     const filteredData = filterAnimeData(loadedAnimeData).filter(anime => {
-        const searchFields = [];
+        // Пошук по назві
+        const titleMatch = anime.title && fuzzySearch(anime.title.toLowerCase(), query);
+        // Пошук по ID
+        const idMatch = anime.id && fuzzySearch(anime.id.toLowerCase(), query);
         
-        if (anime.title) searchFields.push(anime.title.toLowerCase());
-        if (anime.id) searchFields.push(anime.id.toLowerCase());
-        
-        return searchFields.some(field => {
-            // Точний збіг
-            if (field.includes(query)) return true;
-            
-            // Приблизний пошук: видаляємо спецсимволи і шукаємо по словам
-            const cleanField = field.replace(/[^a-zA-Z0-9а-яА-ЯёЁіІїЇєЄ\s]/g, ' ');
-            const cleanQuery = query.replace(/[^a-zA-Z0-9а-яА-ЯёЁіІїЇєЄ\s]/g, ' ');
-            
-            const fieldWords = cleanField.split(/\s+/).filter(word => word.length > 0);
-            const queryWords = cleanQuery.split(/\s+/).filter(word => word.length > 0);
-            
-            // Шукаємо кожне слово запиту в полі пошуку
-            return queryWords.every(queryWord => 
-                fieldWords.some(fieldWord => fieldWord.includes(queryWord))
-            );
-        });
+        return titleMatch || idMatch;
     });
     
     const grid = document.getElementById('anime-grid');
@@ -610,6 +596,28 @@ document.getElementById('search').addEventListener('input', (e) => {
         list.appendChild(createAnimeListItem(anime));
     });
 });
+
+// Проста функція приблизного пошуку
+function fuzzySearch(text, query) {
+    if (!text || !query) return false;
+    
+    // Точний збіг
+    if (text.includes(query)) return true;
+    
+    // Приблизний збіг - шукаємо послідовність символів
+    let textIndex = 0;
+    let queryIndex = 0;
+    
+    while (textIndex < text.length && queryIndex < query.length) {
+        if (text[textIndex] === query[queryIndex]) {
+            queryIndex++;
+        }
+        textIndex++;
+    }
+    
+    // Якщо знайшли всі символи запиту в тексті
+    return queryIndex === query.length;
+}
 
 document.getElementById('surprise').addEventListener('click', () => {
     if (loadedAnimeData.length === 0) return;
