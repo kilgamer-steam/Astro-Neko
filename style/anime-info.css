@@ -1,96 +1,75 @@
-/* ===== ОСНОВНІ СТИЛІ ДЛЯ ВСЬОГО ДОКУМЕНТУ ===== */
-
-/* Скидання стандартних відступів браузера та налаштування основного шрифту */
 body {
-  margin: 0; /* Видаляє зовнішні відступи */
-  font-family: "Poppins", "Segoe UI", sans-serif; /* Встановлює пріоритетні шрифти */
-  background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%); /* Градієнтний фон як запасний варіант */
-  color: #964e72ff; /* Основний колір тексту (рожево-фіолетовий) */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Центрування по горизонталі */
-  min-height: 100vh; /* Мінімальна висота - весь екран */
-  overflow-x: hidden; /* Заборона горизонтального скролу */
+  margin: 0;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  color: #964e72ff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background: #44154eff;
 }
 
-/* ===== ФОН АНІМЕ ===== */
+/* ===== Anime background ===== */
 .anime-bg {
-  position: fixed; /* Фіксоване позиціювання для створення фону */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: cover; /* Заповнення всього простору */
-  background-position: center; /* Центрування зображення */
-  background-repeat: no-repeat; /* Заборона повторення */
-  filter: brightness(0.3); /* Затемнення зображення на 70% */
-  z-index: -1; /* Розміщення під основним контентом */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.3);
+  z-index: -1;
 }
 
-/* ===== ШАПКА САЙТУ ===== */
+/* ===== Header ===== */
 header {
   width: 100%;
-  background: rgba(24, 24, 27, 0.56); /* Напівпрозорий темний фон */
-  backdrop-filter: blur(2px); /* Ефект розмиття для сучасного вигляду */
+  background: rgba(24, 24, 27, 0.56);
+  backdrop-filter: blur(2px);
   display: flex;
-  justify-content: space-between; /* Рівномірний розподіл елементів */
+  justify-content: space-between;
   align-items: center;
   padding: 15px 40px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4); /* Тінь для об'ємності */
-  position: fixed; /* Фіксована позиція при скролі */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  position: fixed;
   top: 0;
-  z-index: 100; /* Високий рівень для перекриття контенту */
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3); /* Рожева рамка знизу */
-  box-sizing: border-box; /* Врахування padding у ширині */
-  transition: transform 0.3s ease-in-out; /* Плавна анімація при хованні */
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Логотип у хедері */
+/* Клас для ховання хедера */
+header.hidden {
+  transform: translateY(-100%);
+}
+
 header .logo {
   display: flex;
   align-items: center;
-  gap: 10px; /* Відступ між логотипом і заголовком */
-  text-decoration: none; /* Видалення підкреслення */
+  gap: 10px;
+  text-decoration: none;
+  margin-left: 20px;
 }
 
 header .logo img {
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
 }
 
 header .logo h1 {
-  color: #cc6096ff; /* Рожевий колір */
+  color: #cc6096ff;
   margin: 0;
   font-size: 1.8em;
 }
 
-/* Клас для ховання хедера при скролі вниз */
-header.hidden {
-  transform: translateY(-100%); /* Переміщення за межі екрану */
-}
-
-/* Навігація в хедері */
 .header-nav {
   display: flex;
   gap: 15px;
   align-items: center;
 }
 
-/* Кнопка повернення до інформації про аніме */
-#backToInfo {
-  padding: 10px 20px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(255, 105, 180, 0.1); /* Світлорожевий фон */
-  color: #cc6096ff;
-  font-size: 1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  order: 2; /* Порядок у flex-контейнері */
-}
-
-/* Посилання в навігації */
 .header-nav a {
   padding: 10px 20px;
   border: 2px solid #943a67ff;
@@ -101,506 +80,15 @@ header.hidden {
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  order: 1;
 }
 
-/* Ефекти при наведенні на кнопки та посилання */
-#backToInfo:hover,
 .header-nav a:hover {
   background: #ff69b4;
   color: #fff;
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px); /* Ефект підйому */
-}
-
-/* ===== ОСНОВНОЙ КОНТЕЙНЕР ПЛЕЄРА ===== */
-.player-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 900px;
-  width: 90%;
-  margin-top: 70px; /* Відступ для фіксованого хедера */
-  background: rgba(29, 29, 32, 0.2); /* Напівпрозорий фон */
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Тінь для глибини */
-  overflow: hidden;
-  backdrop-filter: blur(2px); /* Ефект розмиття */
-  border: 1px solid rgba(255, 105, 180, 0.2); /* Рожева рамка */
-}
-
-/* Фон для плеєра (розмите зображення аніме) */
-.player-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  filter: blur(8px) brightness(0.5); /* Сильне розмиття та затемнення */
-  z-index: 0; /* Під основним контентом */
-}
-
-/* ===== ВІДЕО ПЛЕЄР ===== */
-video {
-  width: 100%;
-  max-height: 500px;
-  border-radius: 10px;
-  background: #000; /* Чорний фон поки відео завантажується */
-  margin-bottom: 15px;
-  border: 2px solid #943a67ff; /* Рожева рамка */
-  position: relative;
-  z-index: 1; /* Вище за фон */
-}
-
-/* ===== РЯДОК КЕРУВАННЯ ПЛЕЄРОМ ===== */
-.controls-row {
-  display: flex;
-  flex-wrap: nowrap; /* Заборона переносу елементів */
-  align-items: center;
-  justify-content: flex-start; /* Вирівнювання по лівому краю */
-  gap: 12px; /* Відступи між елементами */
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  white-space: nowrap; /* Заборона переносу тексту */
-  padding: 10px 0;
-}
-
-/* Загальні стилі для кнопок та тексту в рядку керування */
-.controls-row button,
-.controls-row span {
-  color: #cc6096ff;
-}
-
-.controls-row span {
-  font-weight: bold;
-  color: #cc6096ff;
-  font-size: 1em;
-  flex-shrink: 0; /* Заборона стискання */
-}
-
-/* Заголовок епізоду з обрізкою тексту */
-#episode-title {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis; /* Три крапки при довгому тексті */
-  white-space: nowrap;
-  flex-shrink: 1;
-  cursor: help; /* Курсор-підказка */
-  position: relative;
-}
-
-/* Кнопка налаштувань у рядку контролів */
-.controls-row .settings-btn {
-  padding: 10px 20px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #cc6096ff;
-  font-size: 1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  white-space: nowrap;
-  flex-shrink: 0;
-  position: static;
-  top: auto;
-  right: auto;
-  backdrop-filter: blur(2px);
-}
-
-.controls-row .settings-btn:hover {
-  background: #ff69b4;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
   transform: translateY(-2px);
 }
-
-/* Загальні стилі для кнопок контролів */
-.controls-row button {
-  padding: 10px 20px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #cc6096ff;
-  font-size: 1em;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.controls-row button:hover {
-  background: #ff69b4;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
-}
-
-/* ===== МОДАЛЬНЕ ВІКНО НАЛАШТУВАНЬ ===== */
-.settings-modal {
-  display: none; /* Приховане за замовчуванням */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 15, 16, 0.13); /* Напівпрозорий темний фон */
-  backdrop-filter: blur(4px); /* Ефект розмиття */
-  z-index: 1000; /* Найвищий рівень */
-  justify-content: center;
-  align-items: center;
-}
-
-.settings-content {
-  background: rgba(29, 29, 32, 0.95);
-  border: 2px solid #943a67ff;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4); /* Рожева тінь */
-  animation: modalAppear 0.3s ease; /* Анімація появи */
-  backdrop-filter: blur(5px);
-}
-
-/* Анімація появи модального вікна */
-@keyframes modalAppear {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Заголовок модального вікна */
-.settings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 25px;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
-  background: linear-gradient(135deg, rgba(148, 58, 103, 0.1) 0%, rgba(255, 105, 180, 0.05) 100%);
-}
-
-.settings-header h3 {
-  margin: 0;
-  color: #cc6096ff;
-  font-size: 1.4em;
-  font-weight: 600;
-}
-
-/* Кнопка закриття */
-.close-btn {
-  background: none;
-  border: none;
-  color: #cc6096ff;
-  font-size: 2em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-}
-
-.close-btn:hover {
-  color: #ff69b4;
-  background: rgba(255, 105, 180, 0.1);
-  transform: scale(1.1);
-}
-
-/* Тіло модального вікна */
-.settings-body {
-  padding: 25px;
-}
-
-/* Група налаштувань */
-.setting-group {
-  margin-bottom: 20px;
-}
-
-.setting-group label {
-  display: block;
-  margin-bottom: 8px;
-  color: #cc6096ff;
-  font-weight: 500;
-  font-size: 0.95em;
-}
-
-/* Випадаючі списки налаштувань */
-.settings-select {
-  width: 100%;
-  padding: 10px 15px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(24, 24, 27, 0.8);
-  color: #cc6096ff;
-  font-size: 1em;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  backdrop-filter: blur(2px);
-}
-
-.settings-select:focus {
-  outline: none;
-  border-color: #ff69b4;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  background: rgba(29, 29, 32, 0.9);
-}
-
-/* ===== КЛІКАБЕЛЬНІ ПОСИЛАННЯ ЗАМІСТЬ ЧЕКБОКСІВ ===== */
-.toggle-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #cc6096ff;
-  padding: 10px 0;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin: 5px 0;
-}
-
-.toggle-link:hover {
-  background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
-  transform: translateX(5px); /* Ефект зсуву */
-}
-
-.toggle-icon {
-  font-size: 1.3em;
-  margin-right: 12px;
-  transition: all 0.3s ease;
-  width: 20px;
-  text-align: center;
-}
-
-/* Активний стан перемикача */
-.toggle-link.active {
-  background: rgba(255, 105, 180, 0.15);
-  color: #ff69b4;
-  border-left: 3px solid #ff69b4; /* Індикатор активного стану */
-}
-
-.toggle-link.active .toggle-icon {
-  color: #ff69b4;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); /* Світіння */
-}
-
-.toggle-text {
-  font-size: 0.95em;
-  font-weight: 500;
-}
-
-/* Футер модального вікна */
-.settings-footer {
-  padding: 20px 25px;
-  border-top: 1px solid rgba(255, 105, 180, 0.3);
-  text-align: right;
-  background: linear-gradient(135deg, rgba(148, 58, 103, 0.05) 0%, rgba(255, 105, 180, 0.02) 100%);
-}
-
-/* Кнопка застосування */
-.apply-btn {
-  background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  backdrop-filter: blur(2px);
-}
-
-.apply-btn:hover {
-  background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
-}
-
-.apply-btn:active {
-  transform: translateY(0);
-}
-
-/* ===== КАСТОМНА ПІДКАЗКА ===== */
-.custom-tooltip {
-  position: fixed;
-  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-  color: #ff82c1;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 2px solid #943a67ff;
-  white-space: nowrap; /* Заборона переносу тексту */
-  z-index: 10000; /* Дуже високий рівень */
-  font-size: 0.9em;
-  font-weight: 500;
-  box-shadow: 0 8px 25px rgba(148, 58, 103, 0.4);
-  backdrop-filter: blur(15px);
-  pointer-events: none; /* Не заважає клікам */
-  display: none;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-}
-
-/* Стрілка підказки */
-.custom-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-bottom-color: #943a67ff;
-}
-
-/* ===== ІНДИКАТОР ЗАВАНТАЖЕННЯ ===== */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 15, 16, 0.9);
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000; /* Вище за модальні вікна */
-  opacity: 1;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-/* Прихований стан індикатора */
-.loading-overlay.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.loading-text {
-  color: #ff69b4;
-  font-size: 1.2em;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.loading-subtext {
-  color: #cc6096ff;
-  font-size: 0.9em;
-  text-align: center;
-  opacity: 0.8;
-}
-
-/* ===== АНІМАЦІЇ ТА ПЕРЕХОДИ ===== */
-
-/* Плавна поява плеєра */
-.player-wrapper {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.player-wrapper.loaded {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Анімації для кнопок */
-.controls-row button {
-  transform: translateY(0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Плавна крива */
-}
-
-.controls-row button:hover {
-  transform: translateY(-3px); /* Ефект підйому */
-}
-
-.controls-row button:active {
-  transform: translateY(1px); /* Ефект натискання */
-}
-
-/* Анімація для відео */
-video {
-  transform: scale(0.98);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-}
-
-video.loaded {
-  transform: scale(1);
-  box-shadow: 0 10px 40px rgba(148, 58, 103, 0.3); /* Рожева тінь */
-}
-
-/* Пульсуюча анімація для кнопки налаштувань */
-.settings-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-.settings-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.settings-btn:hover::before {
-  left: 100%; /* Ефект блимання */
-}
-
-/* Анімація для модального вікна */
-.settings-content {
-  transform: scale(0.8) translateY(-50px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.settings-content.show {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-}
-
-/* Анімація для інформації про епізод */
-.episode-info span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: all 0.5s ease;
-}
-
-.episode-info span.loaded {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Затримки для послідовної анімації елементів */
-#season-or-movie.loaded { transition-delay: 0.1s; }
-#episode-number.loaded { transition-delay: 0.2s; }
-#episode-title.loaded { transition-delay: 0.3s; }
-.settings-btn.loaded { transition-delay: 0.4s; }
-#prev-episode.loaded { transition-delay: 0.5s; }
-#next-episode.loaded { transition-delay: 0.6s; }
-
-/* ===== СТИЛІЗАЦІЯ СКРОЛБАРІВ ===== */
-
-/* Для WebKit браузерів (Chrome, Safari, Edge) */
+/* Стилі для скролбара */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -624,87 +112,425 @@ video.loaded {
     scrollbar-width: thin;
     scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
 }
-
-/* ===== ДОДАТКОВІ ІНДИКАТОРИ ЗАВАНТАЖЕННЯ ===== */
-
-/* Прогрес бар завантаження */
-.loading-progress {
-  width: 200px;
-  height: 4px;
-  background: rgba(255, 105, 180, 0.2);
-  border-radius: 2px;
-  margin: 15px 0;
-  overflow: hidden;
-}
-
-.loading-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #ff69b4, #ff82c1);
-  border-radius: 2px;
-  width: 0%;
-  transition: width 0.3s ease;
+/* ===== Content wrapper ===== */
+.content-wrapper {
   position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  padding-top: 80px;
+  box-sizing: border-box;
 }
 
-/* Ефект мерехтіння для прогрес бару */
-.loading-progress-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Хвиляста анімація завантаження */
-.wave-loader {
+/* ===== Main content container ===== */
+.main-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin: 15px 0;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.wave-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+/* ===== Anime info block ===== */
+.anime-info-block {
+  background: rgba(24, 24, 27, 0.36);
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.anime-title-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.anime-title-section img {
+  width: 220px;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  filter: brightness(0.6);
+}
+
+.anime-meta {
+  max-width: 800px;
+  flex: 1;
+  color: #cc6096ff;
+}
+
+.anime-meta h2 {
+  font-size: 2em;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.anime-meta p {
+  line-height: 1.5;
+  margin: 8px 0;
+  font-size: 0.95em;
+}
+
+/* ===== Seasons block ===== */
+.seasons-block {
+  background: rgba(24, 24, 27, 0.36);
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.seasons-block h3 {
+  font-size: 1.5em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #cc6096ff;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+}
+
+/* ===== Individual season blocks ===== */
+.season {
+  background: rgba(29, 29, 32, 0.36);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #943a67ff;
+}
+
+.season:last-child {
+  margin-bottom: 0;
+}
+
+.season h4 {
+  margin-top: 0;
+  color: #cc6096ff;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+/* Мета-інформація сезону */
+.season-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.season-year, .season-episodes {
+  padding: 0;
+  background: none;
+  border: none;
+  color: #cc6096ff;
+}
+
+/* Контейнер епізодів */
+.episode-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Кнопки епізодів */
+.episode-btn {
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.episode-btn:hover {
   background: #ff69b4;
-  animation: wave 1.2s ease-in-out infinite;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
 }
 
-/* Затримки для хвильової анімації */
-.wave-dot:nth-child(2) { animation-delay: -0.2s; }
-.wave-dot:nth-child(3) { animation-delay: -0.4s; }
-.wave-dot:nth-child(4) { animation-delay: -0.6s; }
-.wave-dot:nth-child(5) { animation-delay: -0.8s; }
-
-@keyframes wave {
-  0%, 60%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  30% {
-    transform: scale(1.5);
-    opacity: 1;
-  }
+/* ===== Movies block ===== */
+.movies-block {
+  background: rgba(24, 24, 27, 0.36);
+  backdrop-filter: blur(2px);
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #943a67ff;
 }
 
-/* Анімація появи елементів при скролі */
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
+.movies-block h4 {
+  margin-top: 0;
+  color: #cc6096ff;
+  margin-bottom: 15px;
+  font-size: 1.2em;
 }
 
-.fade-in-up.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Стилі для таблиці фільмів */
+.movies-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: rgba(29, 29, 32, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.movies-table th {
+  background: rgba(148, 58, 103, 0.3);
+  padding: 15px;
+  text-align: left;
+  color: #ff82c1;
+  font-weight: 600;
+  border-bottom: 2px solid #943a67ff;
+  font-size: 0.95em;
+}
+
+.movies-table td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 105, 180, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.movie-row:hover {
+  background: rgba(255, 105, 180, 0.08);
+}
+
+.movie-number {
+  width: 60px;
+  text-align: center;
+  font-weight: bold;
+  color: #cc6096ff;
+  font-size: 1.1em;
+}
+
+.movie-title {
+  font-weight: 500;
+  color: #cc6096ff;
+  font-size: 1em;
+}
+
+.movie-date {
+  color: #cc6096ff;  /* ВИПРАВЛЕНО - додано ; */
+  white-space: nowrap;
+  font-size: 0.9em;
+}
+
+.movie-duration {
+  color: #cc6096ff;  /* ВИПРАВЛЕНО - видалено дублювання */
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+/* Додаткові стилі для покращення UX */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 105, 180, 0.3);
+      border-radius: 50%;
+      border-top-color: #ff69b4;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .error-message {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(24, 24, 27, 0.8);
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 50px auto;
+    }
+    
+    .error-message h2 {
+      color: #ff69b4;
+      margin-bottom: 20px;
+    }
+    
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 105, 180, 0.2);
+      color: #ff69b4;
+      border: 2px solid #ff69b4;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .back-button:hover {
+      background: #ff69b4;
+      color: white;
+    }
+    
+    /* Анімація появи контенту */
+    .content-wrapper {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .content-wrapper.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Стилі для додаткових функцій */
+    .anime-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .action-btn {
+      padding: 8px 15px;
+      border: 2px solid #943a67ff;
+      border-radius: 8px;
+      background: rgba(255, 105, 180, 0.1);
+      color: #cc6096ff;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .action-btn:hover {
+      background: #ff69b4;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+    }
+    
+    .action-btn.active {
+      background: #ff69b4;
+      color: #fff;
+    }
+    
+    /* Покращення для таблиці фільмів */
+    .movies-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: rgba(29, 29, 32, 0.5);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .movies-table th {
+      background: rgba(148, 58, 103, 0.3);
+      padding: 15px;
+      text-align: left;
+      color: #ff82c1;
+      font-weight: 600;
+      border-bottom: 2px solid #943a67ff;
+      font-size: 0.95em;
+    }
+    
+    .movies-table td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255, 105, 180, 0.1);
+      transition: background-color 0.3s ease;
+    }
+    
+    .movie-row:hover {
+      background: rgba(255, 105, 180, 0.08);
+    }
+    
+    .movie-number {
+      width: 60px;
+      text-align: center;
+      font-weight: bold;
+      color: #cc6096ff;
+      font-size: 1.1em;
+    }
+    
+    .movie-title {
+      font-weight: 500;
+      color: #cc6096ff;
+      font-size: 1em;
+    }
+    
+    .movie-date {
+      color: #cc6096ff;
+      white-space: nowrap;
+      font-size: 0.9em;
+    }
+    
+    .movie-duration {
+      color: #cc6096ff;
+      white-space: nowrap;
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+    
+    .watch-movie-btn {
+      padding: 10px 20px;
+      border: 2px solid #943a67ff;
+      border-radius: 8px;
+      background: rgba(255, 105, 180, 0.1);
+      color: #cc6096ff;
+      font-size: 1em;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-family: "Poppins", "Segoe UI", sans-serif;
+      cursor: pointer;
+    }
+    
+    .watch-movie-btn:hover {
+      background: #ff69b4;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+      transform: translateY(-2px);
+    }
+.watch-movie-btn {
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.watch-movie-btn:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
 }
