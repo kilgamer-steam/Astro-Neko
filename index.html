@@ -17,25 +17,14 @@
 
     <main>
         <!-- Контейнер для всіх контролів -->
-        <div class="controls-container">
+<div class="controls-container">
     <!-- Ліва частина - Фільтри -->
     <div class="controls-left">
-        <div class="filters-section">
-            <select class="filter-select" id="genre-filter">
-                <option value="">Всі жанри</option>
-            </select>
-            
-            <select class="filter-select" id="status-filter">
-                <option value="">Всі статуси</option>
-                <option value="Онґоїнг">Онґоїнг</option>
-                <option value="Завершено">Завершено</option>
-                <option value="Анонс">Анонс</option>
-            </select>
-            
-            <select class="filter-select" id="year-filter">
-                <option value="">Всі роки</option>
-            </select>
-        </div>
+        <button class="filters-btn" id="filters-btn">
+            <span class="filters-icon">⚙️</span>
+            Фільтри
+            <span class="filters-count" id="filters-count">0</span>
+        </button>
     </div>
     
     <!-- Центральна частина - Пошук -->
@@ -64,6 +53,61 @@
                 <option value="compact">Компактно</option>
                 <option value="list">Список</option>
             </select>
+        </div>
+    </div>
+</div>
+
+<!-- Модальне вікно фільтрів -->
+<div id="filters-modal" class="filters-modal">
+    <div class="filters-content">
+        <div class="filters-header">
+            <h3>Фільтри аніме</h3>
+            <button id="close-filters" class="close-btn">&times;</button>
+        </div>
+        
+        <div class="filters-body">
+            <!-- Жанри -->
+            <div class="filter-group">
+                <h4 class="filter-title">Жанри</h4>
+                <div class="filter-options" id="genre-options">
+                    <!-- Чекбокси жанрів будуть додані через JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Статуси -->
+            <div class="filter-group">
+                <h4 class="filter-title">Статуси</h4>
+                <div class="filter-options" id="status-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="Онґоїнг" class="filter-checkbox" data-type="status">
+                        <span class="checkmark"></span>
+                        Онґоїнг
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="Завершено" class="filter-checkbox" data-type="status">
+                        <span class="checkmark"></span>
+                        Завершено
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" value="Анонс" class="filter-checkbox" data-type="status">
+                        <span class="checkmark"></span>
+                        Анонс
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Роки -->
+            <div class="filter-group">
+                <h4 class="filter-title">Роки випуску</h4>
+                <div class="filter-options" id="year-options">
+                    <!-- Чекбокси років будуть додані через JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="filters-footer">
+            <button id="reset-filters" class="reset-btn">Скинути всі</button>
+            <button id="apply-filters" class="apply-btn">Застосувати</button>
         </div>
     </div>
 </div>

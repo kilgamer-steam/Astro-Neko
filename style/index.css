@@ -96,6 +96,8 @@ main {
     align-items: center;
     flex-wrap: wrap;
     flex: 1;
+    justify-content: flex-start;
+    min-width: 0;
 }
 
 /* Центральна частина - Пошук */
@@ -104,7 +106,7 @@ main {
     gap: 15px;
     align-items: center;
     justify-content: center;
-    flex: 2;
+    flex: 1;
     min-width: 0;
 }
 
@@ -116,6 +118,7 @@ main {
     flex-wrap: wrap;
     flex: 1;
     justify-content: flex-end;
+    min-width: 0;
 }
 
 /* Секції всередині контролів */
@@ -151,7 +154,7 @@ main {
     font-size: 0.9em;
     backdrop-filter: blur(5px);
     transition: all 0.3s ease;
-    min-width: 150px;
+    max-width: 120px;
 }
 
 .search-input {
@@ -207,7 +210,6 @@ main {
 
 .sort-select {
     border: none;
-    background: transparent;
     min-width: 120px;
 }
 
