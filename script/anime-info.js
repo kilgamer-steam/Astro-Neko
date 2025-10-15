@@ -1,7 +1,7 @@
 // Отримуємо ID аніме з URL
     // На цей:
-const urlParams = new URLSearchParams(window.location.search);
-let animeId = urlParams.get('id');
+const Params = new URLSearchParams(window.location.search);
+let animeId = Params.get('id');
 
 // Декодуємо ID, якщо він був закодований
 if (animeId) {
