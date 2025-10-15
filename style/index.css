@@ -789,6 +789,7 @@ main {
   overflow: hidden;
   transition: all 0.3s ease;
   border-left: 4px solid transparent;
+  min-height: 144px; /* Збільшена мінімальна висота елемента */
 }
 
 .anime-list-item:hover {
@@ -798,10 +799,11 @@ main {
 }
 
 .list-item-image {
-  width: 80px;
+  width: 96px; /* Збільшено на 20% (80px * 1.2 = 96px) */
   height: 144px; /* Збільшено на 20% (120px * 1.2 = 144px) */
   object-fit: cover;
   filter: brightness(0.7);
+  flex-shrink: 0; /* Запобігає стисканню зображення */
 }
 
 .list-item-content {
@@ -838,13 +840,13 @@ main {
 }
 
 .list-details-btn {
-  padding: 8px 14px; /* Збільшено padding для більшої кнопки */
+  padding: 6px 12px;
   background: #943a67ff;
   border: none;
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  font-size: 0.9em; /* Збільшено шрифт */
+  font-size: 0.85em;
   transition: background 0.3s ease;
 }
 
@@ -856,6 +858,7 @@ main {
 @media (max-width: 800px) {
   .anime-list-item {
     flex-direction: column;
+    min-height: auto; /* На мобільних автоматична висота */
   }
   
   .list-item-image {
