@@ -107,6 +107,7 @@ class AnimePlayer {
     this.setupEventListeners();
     await this.loadPlayer();
     this.setupAutoHideHeader();
+    this.trackPlayerSessionStart(); // Трекінг початку сесії
   }
 
   setupEventListeners() {
@@ -159,10 +160,113 @@ class AnimePlayer {
       this.updateLoadingProgress(70, 'Перепідключення...');
     });
 
+    // Трекінг закінчення відео
+    this.player.addEventListener('ended', () => {
+      this.trackPlaybackComplete();
+    });
+
     window.addEventListener('beforeunload', () => {
       this.saveProgress();
       this.saveSettings();
+      this.trackPlayerSessionEnd(); // Трекінг завершення сесії
     });
+  }
+
+  // НОВІ МЕТОДИ ДЛЯ ТРЕКІНГУ СТАТИСТИКИ
+
+  trackPlayerSessionStart() {
+    if (window.AstroNekoTracker) {
+      window.AstroNekoTracker.trackCustomEvent('player_session_start', {
+        animeId: this.animeId,
+        season: this.seasonNumber,
+        episode: this.episodeNumber,
+        movie: this.movieNumber,
+        animeTitle: this.currentAnime?.title,
+        episodeTitle: this.currentEpisode?.name
+      });
+    }
+  }
+
+  trackPlayerSessionEnd() {
+    if (window.AstroNekoTracker) {
+      window.AstroNekoTracker.trackCustomEvent('player_session_end', {
+        animeId: this.animeId,
+        season: this.seasonNumber,
+        episode: this.episodeNumber,
+        movie: this.movieNumber,
+        currentTime: this.player.currentTime,
+        duration: this.player.duration,
+        progress: this.player.duration > 0 ? (this.player.currentTime / this.player.duration * 100).toFixed(1) + '%' : '0%'
+      });
+    }
+  }
+
+  trackPlaybackComplete() {
+    if (window.AstroNekoTracker) {
+      window.AstroNekoTracker.trackCustomEvent('playback_complete', {
+        animeId: this.animeId,
+        season: this.seasonNumber,
+        episode: this.episodeNumber,
+        movie: this.movieNumber,
+        animeTitle: this.currentAnime?.title,
+        episodeTitle: this.currentEpisode?.name,
+        duration: this.player.duration
+      });
+    }
+  }
+
+  trackQualityChange() {
+    if (window.trackPlayerQualityChange) {
+      window.trackPlayerQualityChange(this.currentQuality, this.currentDubbingStudio);
+    }
+    
+    if (window.AstroNekoTracker) {
+      window.AstroNekoTracker.trackCustomEvent('quality_change', {
+        animeId: this.animeId,
+        quality: this.currentQuality,
+        audioTrack: this.currentDubbingStudio
+      });
+    }
+  }
+
+  trackSettingsChange() {
+    if (window.trackPlayerSettings) {
+      window.trackPlayerSettings({
+        autoSkipEnabled: this.autoSkipEnabled,
+        autoNextEnabled: this.autoNextEnabled,
+        defaultQuality: this.currentQuality
+      });
+    }
+    
+    if (window.AstroNekoTracker) {
+      window.AstroNekoTracker.trackCustomEvent('settings_change', {
+        autoSkipEnabled: this.autoSkipEnabled,
+        autoNextEnabled: this.autoNextEnabled,
+        quality: this.currentQuality,
+        audioTrack: this.currentDubbingStudio
+      });
+    }
+  }
+
+  trackPlaybackProgress() {
+    if (window.trackPlaybackProgress) {
+      window.trackPlaybackProgress(
+        this.animeId, 
+        this.episodeNumber || this.movieNumber, 
+        this.player.currentTime, 
+        this.player.duration
+      );
+    }
+    
+    if (window.AstroNekoTracker) {
+      window.AstroNekoTracker.trackCustomEvent('playback_progress', {
+        animeId: this.animeId,
+        episode: this.episodeNumber || this.movieNumber,
+        currentTime: this.player.currentTime,
+        duration: this.player.duration,
+        progress: this.player.duration > 0 ? (this.player.currentTime / this.player.duration * 100).toFixed(1) + '%' : '0%'
+      });
+    }
   }
 
   async loadPlayer() {
@@ -184,7 +288,7 @@ class AnimePlayer {
       await this.setupEpisode();
       
       this.updateLoadingProgress(60, 'Налаштування навігації...');
-      this.setupNavigationButtons(); // Змінено з setupNavigation
+      this.setupNavigationButtons();
       this.setupTooltip();
 
       // Автоматично ховаємо завантаження через 5 секунд
@@ -263,14 +367,11 @@ class AnimePlayer {
     this.titleSpan.textContent = this.currentEpisode.name;
   }
 
-  // НОВИЙ МЕТОД: Налаштування кнопок навігації
   setupNavigationButtons() {
     if (this.movieNumber) {
-      // Для фільмів кнопки навігації не потрібні
       return;
     }
 
-    // Перевірка для кнопки "Попередня серія"
     if (this.episodeNumber === 1 && this.seasonNumber === 1) {
       this.prevBtn.disabled = true;
       this.prevBtn.style.opacity = "0.5";
@@ -279,7 +380,6 @@ class AnimePlayer {
       this.prevBtn.style.opacity = "1";
     }
 
-    // Перевірка для кнопки "Наступна серія"
     const currentSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber);
     const nextSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber + 1);
     
@@ -316,6 +416,9 @@ class AnimePlayer {
 
     this.autoSkipEnabled = Boolean(preferences.autoSkip);
     this.autoNextEnabled = Boolean(preferences.autoNext);
+
+    // Трекінг початкових налаштувань
+    this.trackSettingsChange();
   }
 
   async loadVideo() {
@@ -390,11 +493,13 @@ class AnimePlayer {
 
   goBackToInfo() {
     this.saveProgress();
+    this.trackPlayerSessionEnd();
     window.location.href = `anime-info.html?id=${encodeURIComponent(this.animeId)}`;
   }
 
   goToPreviousEpisode() {
     this.saveProgress();
+    this.trackPlayerSessionEnd();
     if (this.episodeNumber > 1) {
       window.location.href = `player.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber}&episode=${this.episodeNumber-1}`;
     } else if (this.seasonNumber > 1) {
@@ -408,6 +513,7 @@ class AnimePlayer {
 
   goToNextEpisode() {
     this.saveProgress();
+    this.trackPlayerSessionEnd();
     const currentSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber);
     
     if (this.episodeNumber < currentSeason.episodes.length) {
@@ -485,6 +591,7 @@ class AnimePlayer {
     };
     
     this.setEpisodeProgress(progress);
+    this.trackPlaybackProgress(); // Трекінг прогресу
   }
 
   throttledSaveProgress() {
@@ -574,6 +681,7 @@ class AnimePlayer {
     this.updateToggleDisplay();
     this.saveSettings();
     this.setupAutoSkip();
+    this.trackSettingsChange(); // Трекінг зміни налаштувань
   }
 
   toggleAutoNext(e) {
@@ -582,6 +690,7 @@ class AnimePlayer {
     this.updateToggleDisplay();
     this.saveSettings();
     this.setupAutoNext();
+    this.trackSettingsChange(); // Трекінг зміни налаштувань
   }
 
   onAudioChange() {
@@ -607,6 +716,7 @@ class AnimePlayer {
       
       this.updateVideoSource(highestQuality.videoUrl);
       this.saveSettings();
+      this.trackQualityChange(); // Трекінг зміни якості
     }
   }
 
@@ -620,6 +730,7 @@ class AnimePlayer {
       this.currentQuality = selectedQuality.value;
       this.updateVideoSource(selectedQuality.videoUrl);
       this.saveSettings();
+      this.trackQualityChange(); // Трекінг зміни якості
     }
   }
 
