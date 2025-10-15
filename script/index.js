@@ -284,6 +284,62 @@ async function loadNextBatch() {
 }
 
 // ===== НОВІ ФУНКЦІЇ ДЛЯ ФІЛЬТРІВ =====
+function updateResultsCounter() {
+    const tempFilters = getCurrentFiltersFromModal();
+    const filteredData = filterAnimeDataWithFilters(loadedAnimeData, tempFilters);
+    const count = filteredData.length;
+    document.getElementById('results-count').textContent = count;
+}
+
+// Функція для отримання поточних фільтрів з модального вікна
+function getCurrentFiltersFromModal() {
+    const tempFilters = {
+        genres: [],
+        statuses: [],
+        years: []
+    };
+
+    document.querySelectorAll('.filter-checkbox:checked').forEach(checkbox => {
+        const type = checkbox.dataset.type;
+        const value = checkbox.value;
+
+        if (type === 'genre') {
+            tempFilters.genres.push(value);
+        } else if (type === 'status') {
+            tempFilters.statuses.push(value);
+        } else if (type === 'year') {
+            tempFilters.years.push(value);
+        }
+    });
+
+    return tempFilters;
+}
+
+// Функція для фільтрації з переданими фільтрами
+function filterAnimeDataWithFilters(animeData, filters) {
+    return animeData.filter(anime => {
+        // Фільтр по жанрам (AND логіка - всі вибрані жанри повинні бути присутні)
+        if (filters.genres.length > 0) {
+            const hasAllGenres = filters.genres.every(genre => 
+                anime.tags && anime.tags.includes(genre)
+            );
+            if (!hasAllGenres) return false;
+        }
+
+        // Фільтр по статусам (OR логіка - достатньо одного статусу)
+        if (filters.statuses.length > 0) {
+            if (!filters.statuses.includes(anime.status)) return false;
+        }
+
+        // Фільтр по рокам (OR логіка - достатньо одного року)
+        if (filters.years.length > 0) {
+            const year = getReleaseYear(anime);
+            if (!filters.years.includes(year.toString())) return false;
+        }
+
+        return true;
+    });
+}
 
 function initializeFilters() {
     const filtersBtn = document.getElementById('filters-btn');
@@ -295,6 +351,7 @@ function initializeFilters() {
     // Відкриття модального вікна
     filtersBtn.addEventListener('click', () => {
         filtersModal.style.display = 'flex';
+        updateResultsCounter(); // Оновити лічильник при відкритті
     });
 
     // Закриття модального вікна
@@ -314,7 +371,14 @@ function initializeFilters() {
     resetFilters.addEventListener('click', () => {
         resetAllFilters();
         updateFiltersCount();
-        updateDisplay();
+        updateResultsCounter(); // Оновити лічильник
+    });
+
+    // Слухачі подій для чекбоксів
+    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            updateResultsCounter(); // Оновити лічильник при зміні чекбоксів
+        });
     });
 
     // Закриття по кліку поза вікном

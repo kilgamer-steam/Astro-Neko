@@ -370,7 +370,101 @@ main {
     flex-direction: column;
     gap: 8px;
 }
+.results-counter {
+    color: #cc6096ff;
+    font-size: 0.9em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 
+#results-count {
+    color: #ff69b4;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.filters-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 105, 180, 0.3);
+    background: linear-gradient(135deg, rgba(148, 58, 103, 0.05) 0%, rgba(255, 105, 180, 0.02) 100%);
+}
+
+.reset-btn {
+    padding: 12px 25px;
+    border: 2px solid #943a67ff;
+    border-radius: 8px;
+    background: transparent;
+    color: #cc6096ff;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    order: 1;
+}
+
+.reset-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    transform: translateY(-2px);
+}
+
+.results-counter {
+    color: #cc6096ff;
+    font-size: 0.9em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    order: 2;
+}
+
+#results-count {
+    color: #ff69b4;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.apply-btn {
+    background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    order: 3;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
+}
+
+/* Адаптивність для мобільних */
+@media (max-width: 480px) {
+    .filters-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .reset-btn, .apply-btn {
+        width: 100%;
+        order: 0;
+    }
+    
+    .results-counter {
+        order: 0;
+    }
+}
 /* Стилі для скролбара */
 ::-webkit-scrollbar {
     width: 6px;
