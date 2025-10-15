@@ -6,6 +6,73 @@ body {
             padding: 20px;
             min-height: 100vh;
         }
+        /* ===== Header ===== */
+header {
+  width: 100%;
+  background: rgba(24, 24, 27, 0.56);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Клас для ховання хедера */
+header.hidden {
+  transform: translateY(-100%);
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+header .logo img {
+  height: 45px;
+  width: 45px;
+}
+
+header .logo h1 {
+  color: #cc6096ff;
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.header-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.header-nav a {
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.header-nav a:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
+}
+
         .stats-container {
             max-width: 1400px;
             margin: 0 auto;
