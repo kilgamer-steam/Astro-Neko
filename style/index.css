@@ -372,21 +372,21 @@ main {
 }
 
 /* Стилі для скролбара */
-.filter-group::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 6px;
 }
 
-.filter-group::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: rgba(255, 105, 180, 0.1);
     border-radius: 3px;
 }
 
-.filter-group::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #943a67ff;
     border-radius: 3px;
 }
 
-.filter-group::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #ff69b4;
 }
 
