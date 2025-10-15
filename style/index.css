@@ -371,6 +371,31 @@ main {
     gap: 8px;
 }
 
+/* Стилі для скролбара */
+.filter-group::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filter-group::-webkit-scrollbar-track {
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 3px;
+}
+
+.filter-group::-webkit-scrollbar-thumb {
+    background: #943a67ff;
+    border-radius: 3px;
+}
+
+.filter-group::-webkit-scrollbar-thumb:hover {
+    background: #ff69b4;
+}
+
+/* Для Firefox */
+.filter-group {
+    scrollbar-width: thin;
+    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
+}
+
 /* Кастомні чекбокси */
 .checkbox-label {
     display: flex;
@@ -763,30 +788,7 @@ main {
   font-size: 1.1em;
   grid-column: 1 / -1;
 }
-/* Стилі для скролбара */
-.filter-group::-webkit-scrollbar {
-    width: 6px;
-}
 
-.filter-group::-webkit-scrollbar-track {
-    background: rgba(255, 105, 180, 0.1);
-    border-radius: 3px;
-}
-
-.filter-group::-webkit-scrollbar-thumb {
-    background: #943a67ff;
-    border-radius: 3px;
-}
-
-.filter-group::-webkit-scrollbar-thumb:hover {
-    background: #ff69b4;
-}
-
-/* Для Firefox */
-.filter-group {
-    scrollbar-width: thin;
-    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
-}
 /* ====== Адаптивність ====== */
 @media (max-width: 1200px) {
     .controls-container {

@@ -396,7 +396,6 @@ function updateFiltersCount() {
     document.getElementById('filters-count').textContent = count;
 }
 
-
 // ===== КІНЕЦЬ НОВИХ ФУНКЦІЙ ДЛЯ ФІЛЬТРІВ =====
 
 function showNoResultsMessage(show) {
