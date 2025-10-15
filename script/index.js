@@ -559,12 +559,19 @@ document.getElementById('view-select').addEventListener('change', (e) => {
 });
 
 document.getElementById('search').addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value.toLowerCase().trim();
+    
+    if (query.length === 0) {
+        // Якщо пошуковий запит пустий, показуємо всі дані
+        updateDisplay();
+        return;
+    }
+    
     const filteredData = filterAnimeData(loadedAnimeData).filter(anime => {
-        // Пошук по назві
-        const titleMatch = anime.title && anime.title.toLowerCase().includes(query);
-        // Пошук по ID
-        const idMatch = anime.id && anime.id.toLowerCase().includes(query);
+        // Пошук по назві (приблизний)
+        const titleMatch = anime.title && fuzzyMatch(anime.title.toLowerCase(), query);
+        // Пошук по ID (приблизний)
+        const idMatch = anime.id && fuzzyMatch(anime.id.toLowerCase(), query);
         
         return titleMatch || idMatch;
     });
@@ -588,6 +595,31 @@ document.getElementById('search').addEventListener('input', (e) => {
         list.appendChild(createAnimeListItem(anime));
     });
 });
+
+// Функція для приблизного пошуку
+function fuzzyMatch(text, query) {
+    if (!text || !query) return false;
+    
+    // Якщо query порожній, повертаємо true
+    if (query.length === 0) return true;
+    
+    // Точний пошук (пріоритетний)
+    if (text.includes(query)) return true;
+    
+    // Приблизний пошук - перевіряємо, чи всі символи query є в text у правильному порядку
+    let textIndex = 0;
+    let queryIndex = 0;
+    
+    while (textIndex < text.length && queryIndex < query.length) {
+        if (text[textIndex] === query[queryIndex]) {
+            queryIndex++;
+        }
+        textIndex++;
+    }
+    
+    // Якщо всі символи query були знайдені в правильному порядку
+    return queryIndex === query.length;
+}
 
 document.getElementById('surprise').addEventListener('click', () => {
     if (loadedAnimeData.length === 0) return;
