@@ -122,13 +122,6 @@ main {
 }
 
 /* Секції всередині контролів */
-.filters-section {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
 .search-section {
     display: flex;
     gap: 15px;
@@ -144,8 +137,50 @@ main {
     flex-wrap: wrap;
 }
 
+/* Кнопка фільтрів */
+.filters-btn {
+    padding: 10px 20px;
+    border: 2px solid #943a67ff;
+    border-radius: 25px;
+    background: rgba(255, 105, 180, 0.1);
+    color: #943a67ff;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.filters-btn:hover {
+    background: rgba(255, 105, 180, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.filters-icon {
+    font-size: 1.1em;
+}
+
+.filters-count {
+    background: #ff69b4;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
 /* Стилі для елементів управління */
-.filter-select, .sort-select, .view-select, .search-input {
+.sort-select, .view-select, .search-input {
     padding: 10px 15px;
     border: 2px solid rgba(255, 105, 180, 0.5);
     border-radius: 25px;
@@ -154,7 +189,7 @@ main {
     font-size: 0.9em;
     backdrop-filter: blur(5px);
     transition: all 0.3s ease;
-    max-width: 120px;
+    min-width: 150px;
 }
 
 .search-input {
@@ -162,7 +197,6 @@ main {
     flex: 1;
 }
 
-.filter-select:focus, 
 .sort-select:focus, 
 .view-select:focus, 
 .search-input:focus {
@@ -237,70 +271,206 @@ main {
     transform: scale(1.1);
 }
 
-/* Адаптивність */
-@media (max-width: 1200px) {
-    .controls-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 15px;
-    }
-    
-    .controls-left,
-    .controls-center,
-    .controls-right {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .search-input {
-        min-width: 200px;
-    }
+/* ===== МОДАЛЬНЕ ВІКНО ФІЛЬТРІВ ===== */
+.filters-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 16, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (max-width: 800px) {
-    .controls-container {
-        padding: 15px 20px;
-    }
-    
-    .filters-section,
-    .search-section,
-    .sort-section {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
-    
-    .filter-select,
-    .sort-select,
-    .view-select,
-    .search-input,
-    .surprise-btn {
-        width: 100%;
-        min-width: auto;
-    }
-    
-    .sort-container {
-        width: 100%;
-    }
-    
-    .search-input {
-        min-width: auto;
-    }
+.filters-content {
+    background: rgba(29, 29, 32, 0.95);
+    border: 2px solid #943a67ff;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4);
+    animation: modalAppear 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
 }
 
-@media (max-width: 480px) {
-    .controls-container {
-        padding: 12px 15px;
-        gap: 12px;
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+    background: linear-gradient(135deg, rgba(148, 58, 103, 0.1) 0%, rgba(255, 105, 180, 0.05) 100%);
+}
+
+.filters-header h3 {
+    margin: 0;
+    color: #cc6096ff;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #cc6096ff;
+    font-size: 2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.close-btn:hover {
+    color: #ff69b4;
+    background: rgba(255, 105, 180, 0.1);
+    transform: scale(1.1);
+}
+
+.filters-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.filter-group {
+    padding: 20px;
+    border-right: 1px solid rgba(255, 105, 180, 0.2);
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.filter-group:last-child {
+    border-right: none;
+}
+
+.filter-title {
+    color: #ff69b4;
+    margin: 0 0 15px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Кастомні чекбокси */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #cc6096ff;
+    font-size: 0.9em;
+}
+
+.checkbox-label:hover {
+    background: rgba(255, 105, 180, 0.1);
+    transform: translateX(5px);
+}
+
+.filter-checkbox {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #943a67ff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.filter-checkbox:checked + .checkmark {
+    background: #ff69b4;
+    border-color: #ff69b4;
+}
+
+.filter-checkbox:checked + .checkmark::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.filters-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 105, 180, 0.3);
+    background: linear-gradient(135deg, rgba(148, 58, 103, 0.05) 0%, rgba(255, 105, 180, 0.02) 100%);
+}
+
+.reset-btn {
+    padding: 12px 25px;
+    border: 2px solid #943a67ff;
+    border-radius: 8px;
+    background: transparent;
+    color: #cc6096ff;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.reset-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    transform: translateY(-2px);
+}
+
+.apply-btn {
+    background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
+}
+
+/* Анімація появи */
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
     }
-    
-    .filter-select,
-    .sort-select,
-    .view-select,
-    .search-input,
-    .surprise-btn {
-        padding: 8px 12px;
-        font-size: 0.85em;
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
     }
 }
 
@@ -562,43 +732,6 @@ main {
 .list-details-btn:hover {
   background: #ff82c1;
 }
-/* ===== Search Container - Центрування ===== */
-.search-container {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  justify-content: center; /* Додаємо центрування */
-  flex: 1; /* Займає всю доступну ширину */
-  max-width: 500px; /* Обмежуємо максимальну ширину */
-  margin: 0 auto; /* Центруємо контейнер */
-}
-
-/* ===== Header - Оновлена структура ===== */
-header {
-  width: 100%;
-  background: rgba(24, 24, 27, 0.56);
-  backdrop-filter: blur(2px);
-  display: flex;
-  justify-content: space-between; /* Залишаємо для логотипу та навігації */
-  align-items: center;
-  padding: 15px 40px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
-  box-sizing: border-box;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Контейнер для пошуку по центру */
-.header-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 2; /* Більше місца для центрованого контенту */
-  min-width: 0; /* Дозволяє зменшення */
-}
 
 /* ====== Індикатор завантаження ====== */
 .loading-indicator {
@@ -632,142 +765,188 @@ header {
 }
 
 /* ====== Адаптивність ====== */
+@media (max-width: 1200px) {
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .controls-left,
+    .controls-center,
+    .controls-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .search-input {
+        min-width: 200px;
+    }
+}
+
 @media (max-width: 800px) {
-  header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
+    .controls-container {
+        padding: 15px 20px;
+    }
+    
+    .search-section,
+    .sort-section {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .sort-select,
+    .view-select,
+    .search-input,
+    .surprise-btn {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .sort-container {
+        width: 100%;
+    }
+    
+    .search-input {
+        min-width: auto;
+    }
 
-  .controls-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
-  }
-  
-  .controls-left, .controls-right {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .filter-select, .sort-select, .view-select {
-    flex: 1;
-    min-width: 120px;
-  }
+    .anime-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
 
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
+    .anime-card {
+        width: 180px;
+        height: 290px;
+    }
 
-  .anime-card {
-    width: 180px;
-    height: 290px;
-  }
+    .anime-grid.compact .anime-card {
+        width: 140px;
+        height: 220px;
+    }
 
-  .anime-grid.compact .anime-card {
-    width: 140px;
-    height: 220px;
-  }
+    #search {
+        width: 180px;
+    }
 
-  #search {
-    width: 180px;
-  }
+    .back-content h4 {
+        font-size: 1em;
+    }
 
-  .back-content h4 {
-    font-size: 1em;
-  }
+    .back-info p {
+        font-size: 0.8em;
+    }
 
-  .back-info p {
-    font-size: 0.8em;
-  }
+    .anime-list-item {
+        flex-direction: column;
+    }
+    
+    .list-item-image {
+        width: 100%;
+        height: 200px;
+    }
 
-  .anime-list-item {
-    flex-direction: column;
-  }
-  
-  .list-item-image {
-    width: 100%;
-    height: 200px;
-  }
-  header {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-    padding: 15px 20px;
-  }
-  
-  .header-center {
-    order: 3; /* Переміщуємо пошук вниз на мобільних */
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .search-container {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  #search {
-    width: 100%;
-    max-width: 300px;
-  }
+    /* Адаптивність для модального вікна фільтрів */
+    .filters-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .filter-group {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+        max-height: 200px;
+    }
+    
+    .filter-group:last-child {
+        border-bottom: none;
+    }
+    
+    .filters-content {
+        width: 95%;
+        max-height: 90vh;
+    }
 }
 
 @media (max-width: 480px) {
-  #search {
-    width: 140px;
-  }
+    .controls-container {
+        padding: 12px 15px;
+        gap: 12px;
+    }
+    
+    .sort-select,
+    .view-select,
+    .search-input,
+    .surprise-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
 
-  .anime-card {
-    width: 160px;
-    height: 260px;
-  }
+    .filters-header {
+        padding: 15px 20px;
+    }
+    
+    .filters-body {
+        padding: 0;
+    }
+    
+    .filter-group {
+        padding: 15px;
+    }
+    
+    .filters-footer {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .reset-btn, .apply-btn {
+        width: 100%;
+    }
 
-  .anime-grid.compact .anime-card {
-    width: 130px;
-    height: 200px;
-  }
+    .anime-card {
+        width: 160px;
+        height: 260px;
+    }
 
-  .back-content h4 {
-    font-size: 0.95em;
-  }
+    .anime-grid.compact .anime-card {
+        width: 130px;
+        height: 200px;
+    }
 
-  .back-info p {
-    font-size: 0.75em;
-  }
+    .back-content h4 {
+        font-size: 0.95em;
+    }
 
-  .controls-container {
-    padding: 15px 20px;
-  }
+    .back-info p {
+        font-size: 0.75em;
+    }
+
+    .controls-left, .controls-right {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .sort-container {
+        width: 100%;
+    }
+    
+    .sort-select {
+        flex: 1;
+    }
+
+    .search-section {
+        flex-direction: column;
+        gap: 10px;
+    }
   
-  .controls-left, .controls-right {
-    flex-direction: column;
-    width: 100%;
-  }
+    #search {
+        max-width: 100%;
+    }
   
-  .filter-select, .sort-select, .view-select {
-    width: 100%;
-    min-width: auto;
-  }
-  
-  .sort-container {
-    width: 100%;
-  }
-  
-  .sort-select {
-    flex: 1;
-  }
-    .search-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  #search {
-    max-width: 100%;
-  }
-  
-  #surprise {
-    width: 100%;
-    max-width: 200px;
-  }
+    #surprise {
+        width: 100%;
+        max-width: 200px;
+    }
 }
