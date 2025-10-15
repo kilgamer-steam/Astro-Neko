@@ -923,21 +923,6 @@ main {
         padding: 15px 20px;
     }
     
-    .search-section,
-    .sort-section {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
-    
-    .sort-select,
-    .view-select,
-    .search-input,
-    .surprise-btn {
-        width: 100%;
-        min-width: auto;
-    }
-    
     .search-input {
         min-width: auto;
     }
@@ -973,7 +958,6 @@ main {
     }
     
     .list-item-image {
-        width: 100%;
         height: 200px;
     }
 
