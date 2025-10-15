@@ -639,7 +639,7 @@ video.loaded {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 105, 180, 0.1);
+    background: #943a67ff;
     border-radius: 3px;
 }
 

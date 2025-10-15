@@ -471,7 +471,7 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 105, 180, 0.1);
+    background: #943a67ff;
     border-radius: 3px;
 }
 
@@ -938,10 +938,6 @@ main {
         min-width: auto;
     }
     
-    .sort-container {
-        width: 100%;
-    }
-    
     .search-input {
         min-width: auto;
     }
@@ -1062,9 +1058,7 @@ main {
         width: 100%;
     }
     
-    .sort-container {
-        width: 100%;
-    }
+
     
     .sort-select {
         flex: 1;
