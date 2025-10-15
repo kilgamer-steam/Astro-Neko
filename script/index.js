@@ -103,20 +103,20 @@ function sortAnimeData(animeData) {
 
 function filterAnimeData(animeData) {
     return animeData.filter(anime => {
-        // Фільтр по жанрам
+        // Фільтр по жанрам (AND логіка - всі вибрані жанри повинні бути присутні)
         if (activeFilters.genres.length > 0) {
-            const hasMatchingGenre = activeFilters.genres.some(genre => 
+            const hasAllGenres = activeFilters.genres.every(genre => 
                 anime.tags && anime.tags.includes(genre)
             );
-            if (!hasMatchingGenre) return false;
+            if (!hasAllGenres) return false;
         }
 
-        // Фільтр по статусам
+        // Фільтр по статусам (OR логіка - достатньо одного статусу)
         if (activeFilters.statuses.length > 0) {
             if (!activeFilters.statuses.includes(anime.status)) return false;
         }
 
-        // Фільтр по рокам
+        // Фільтр по рокам (OR логіка - достатньо одного року)
         if (activeFilters.years.length > 0) {
             const year = getReleaseYear(anime);
             if (!activeFilters.years.includes(year.toString())) return false;
@@ -396,30 +396,7 @@ function updateFiltersCount() {
     document.getElementById('filters-count').textContent = count;
 }
 
-/* Стилі для скролбара */
-.filter-group::-webkit-scrollbar {
-    width: 6px;
-}
 
-.filter-group::-webkit-scrollbar-track {
-    background: rgba(255, 105, 180, 0.1);
-    border-radius: 3px;
-}
-
-.filter-group::-webkit-scrollbar-thumb {
-    background: #943a67ff;
-    border-radius: 3px;
-}
-
-.filter-group::-webkit-scrollbar-thumb:hover {
-    background: #ff69b4;
-}
-
-/* Для Firefox */
-.filter-group {
-    scrollbar-width: thin;
-    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
-}
 // ===== КІНЕЦЬ НОВИХ ФУНКЦІЙ ДЛЯ ФІЛЬТРІВ =====
 
 function showNoResultsMessage(show) {
