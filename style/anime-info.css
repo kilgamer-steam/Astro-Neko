@@ -87,7 +87,30 @@ header .logo h1 {
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
   transform: translateY(-2px);
 }
+/* Стилі для скролбара */
+::-webkit-scrollbar {
+    width: 6px;
+}
 
+::-webkit-scrollbar-track {
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #943a67ff;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff69b4;
+}
+
+/* Для Firefox */
+.filter-group {
+    scrollbar-width: thin;
+    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
+}
 /* ===== Content wrapper ===== */
 .content-wrapper {
   position: relative;

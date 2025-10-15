@@ -633,7 +633,30 @@ video.loaded {
 .settings-btn.loaded { transition-delay: 0.4s; }
 #prev-episode.loaded { transition-delay: 0.5s; }
 #next-episode.loaded { transition-delay: 0.6s; }
+/* Стилі для скролбара */
+::-webkit-scrollbar {
+    width: 6px;
+}
 
+::-webkit-scrollbar-track {
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #943a67ff;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff69b4;
+}
+
+/* Для Firefox */
+.filter-group {
+    scrollbar-width: thin;
+    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
+}
 /* Прогрес бар завантаження */
 .loading-progress {
   width: 200px;
