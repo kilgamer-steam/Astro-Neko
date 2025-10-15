@@ -532,7 +532,7 @@ function saveSortSettings() {
 
 function initializeUI() {
     document.getElementById('sort-by').value = sortSettings.by;
-    document.getElementById('sort-order').textContent = sortSettings.order === 'asc' ? '↑' : '↓';
+    document.getElementById('sort-order').textContent = sortSettings.order === 'asc' ? '▲' : '▼';
     document.getElementById('sort-order').dataset.order = sortSettings.order;
     
     changeView(viewSettings.view);
@@ -548,7 +548,7 @@ document.getElementById('sort-by').addEventListener('change', (e) => {
 
 document.getElementById('sort-order').addEventListener('click', () => {
     sortSettings.order = sortSettings.order === 'asc' ? 'desc' : 'asc';
-    document.getElementById('sort-order').textContent = sortSettings.order === 'asc' ? '↑' : '↓';
+    document.getElementById('sort-order').textContent = sortSettings.order === 'asc' ? '▲' : '▼';
     document.getElementById('sort-order').dataset.order = sortSettings.order;
     saveSortSettings();
     updateDisplay();

@@ -438,73 +438,6 @@ video {
   border-bottom-color: #943a67ff;
 }
 
-/* Адаптивність для мобільних пристроїв */
-@media (max-width: 700px) {
-  video { 
-    max-height: 300px; 
-  }
-  
-  .controls-row {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .controls-row button {
-    font-size: 0.9em;
-    padding: 8px 12px;
-    width: 100%;
-    max-width: 200px;
-  }
-  
-  .controls-row span {
-    font-size: 0.95em;
-  }
-  
-  #episode-title {
-    max-width: 150px;
-  }
-  
-  .settings-content {
-    width: 95%;
-    margin: 20px;
-  }
-  
-  .settings-header {
-    padding: 15px 20px;
-  }
-  
-  .settings-body {
-    padding: 20px;
-  }
-  
-  .settings-footer {
-    padding: 15px 20px;
-  }
-  
-  .settings-header h3 {
-    font-size: 1.2em;
-  }
-  
-  .setting-group label {
-    font-size: 0.9em;
-  }
-  
-  .settings-select {
-    padding: 8px 12px;
-    font-size: 0.9em;
-  }
-  
-  .toggle-link {
-    padding: 6px 10px;
-    font-size: 0.9em;
-  }
-  
-  .apply-btn {
-    padding: 10px 20px;
-    font-size: 0.9em;
-    width: 100%;
-  }
-}
 /* Індикатор завантаження */
 .loading-overlay {
   position: fixed;
@@ -639,7 +572,7 @@ video.loaded {
 }
 
 ::-webkit-scrollbar-track {
-    background: #943a67ff;
+    background: #4b2853ff;
     border-radius: 3px;
 }
 
