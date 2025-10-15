@@ -396,6 +396,30 @@ function updateFiltersCount() {
     document.getElementById('filters-count').textContent = count;
 }
 
+/* Стилі для скролбара */
+.filter-group::-webkit-scrollbar {
+    width: 6px;
+}
+
+.filter-group::-webkit-scrollbar-track {
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 3px;
+}
+
+.filter-group::-webkit-scrollbar-thumb {
+    background: #943a67ff;
+    border-radius: 3px;
+}
+
+.filter-group::-webkit-scrollbar-thumb:hover {
+    background: #ff69b4;
+}
+
+/* Для Firefox */
+.filter-group {
+    scrollbar-width: thin;
+    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
+}
 // ===== КІНЕЦЬ НОВИХ ФУНКЦІЙ ДЛЯ ФІЛЬТРІВ =====
 
 function showNoResultsMessage(show) {
