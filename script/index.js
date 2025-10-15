@@ -126,6 +126,64 @@ function filterAnimeData(animeData) {
     });
 }
 
+// Функція для фільтрації з переданими фільтрами
+function filterAnimeDataWithFilters(animeData, filters) {
+    return animeData.filter(anime => {
+        // Фільтр по жанрам (AND логіка - всі вибрані жанри повинні бути присутні)
+        if (filters.genres.length > 0) {
+            const hasAllGenres = filters.genres.every(genre => 
+                anime.tags && anime.tags.includes(genre)
+            );
+            if (!hasAllGenres) return false;
+        }
+
+        // Фільтр по статусам (OR логіка - достатньо одного статусу)
+        if (filters.statuses.length > 0) {
+            if (!filters.statuses.includes(anime.status)) return false;
+        }
+
+        // Фільтр по рокам (OR логіка - достатньо одного року)
+        if (filters.years.length > 0) {
+            const year = getReleaseYear(anime);
+            if (!filters.years.includes(year.toString())) return false;
+        }
+
+        return true;
+    });
+}
+
+// Функція для отримання поточних фільтрів з модального вікна
+function getCurrentFiltersFromModal() {
+    const tempFilters = {
+        genres: [],
+        statuses: [],
+        years: []
+    };
+
+    document.querySelectorAll('.filter-checkbox:checked').forEach(checkbox => {
+        const type = checkbox.dataset.type;
+        const value = checkbox.value;
+
+        if (type === 'genre') {
+            tempFilters.genres.push(value);
+        } else if (type === 'status') {
+            tempFilters.statuses.push(value);
+        } else if (type === 'year') {
+            tempFilters.years.push(value);
+        }
+    });
+
+    return tempFilters;
+}
+
+// Функція для оновлення лічильника результатів
+function updateResultsCounter() {
+    const tempFilters = getCurrentFiltersFromModal();
+    const filteredData = filterAnimeDataWithFilters(loadedAnimeData, tempFilters);
+    const count = filteredData.length;
+    document.getElementById('results-count').textContent = count;
+}
+
 function updateDisplay() {
     const grid = document.getElementById('anime-grid');
     const list = document.getElementById('anime-list');
@@ -283,63 +341,7 @@ async function loadNextBatch() {
     updateDisplay();
 }
 
-// ===== НОВІ ФУНКЦІЇ ДЛЯ ФІЛЬТРІВ =====
-function updateResultsCounter() {
-    const tempFilters = getCurrentFiltersFromModal();
-    const filteredData = filterAnimeDataWithFilters(loadedAnimeData, tempFilters);
-    const count = filteredData.length;
-    document.getElementById('results-count').textContent = count;
-}
-
-// Функція для отримання поточних фільтрів з модального вікна
-function getCurrentFiltersFromModal() {
-    const tempFilters = {
-        genres: [],
-        statuses: [],
-        years: []
-    };
-
-    document.querySelectorAll('.filter-checkbox:checked').forEach(checkbox => {
-        const type = checkbox.dataset.type;
-        const value = checkbox.value;
-
-        if (type === 'genre') {
-            tempFilters.genres.push(value);
-        } else if (type === 'status') {
-            tempFilters.statuses.push(value);
-        } else if (type === 'year') {
-            tempFilters.years.push(value);
-        }
-    });
-
-    return tempFilters;
-}
-
-// Функція для фільтрації з переданими фільтрами
-function filterAnimeDataWithFilters(animeData, filters) {
-    return animeData.filter(anime => {
-        // Фільтр по жанрам (AND логіка - всі вибрані жанри повинні бути присутні)
-        if (filters.genres.length > 0) {
-            const hasAllGenres = filters.genres.every(genre => 
-                anime.tags && anime.tags.includes(genre)
-            );
-            if (!hasAllGenres) return false;
-        }
-
-        // Фільтр по статусам (OR логіка - достатньо одного статусу)
-        if (filters.statuses.length > 0) {
-            if (!filters.statuses.includes(anime.status)) return false;
-        }
-
-        // Фільтр по рокам (OR логіка - достатньо одного року)
-        if (filters.years.length > 0) {
-            const year = getReleaseYear(anime);
-            if (!filters.years.includes(year.toString())) return false;
-        }
-
-        return true;
-    });
-}
+// ===== ФУНКЦІЇ ДЛЯ ФІЛЬТРІВ =====
 
 function initializeFilters() {
     const filtersBtn = document.getElementById('filters-btn');
@@ -351,6 +353,8 @@ function initializeFilters() {
     // Відкриття модального вікна
     filtersBtn.addEventListener('click', () => {
         filtersModal.style.display = 'flex';
+        // Встановити поточні фільтри в модальне вікно
+        setModalFiltersFromActive();
         updateResultsCounter(); // Оновити лічильник при відкритті
     });
 
@@ -375,10 +379,10 @@ function initializeFilters() {
     });
 
     // Слухачі подій для чекбоксів
-    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            updateResultsCounter(); // Оновити лічильник при зміні чекбоксів
-        });
+    document.addEventListener('change', (e) => {
+        if (e.target.classList.contains('filter-checkbox')) {
+            updateResultsCounter(); // Оновити лічильник при зміні будь-якого чекбокса
+        }
     });
 
     // Закриття по кліку поза вікном
@@ -444,6 +448,30 @@ function updateActiveFilters() {
     });
 }
 
+// Функція для встановлення фільтрів у модальному вікні з активних фільтрів
+function setModalFiltersFromActive() {
+    // Скинути всі чекбокси
+    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Встановити активні фільтри
+    activeFilters.genres.forEach(genre => {
+        const checkbox = document.querySelector(`#genre-options input[value="${genre}"]`);
+        if (checkbox) checkbox.checked = true;
+    });
+
+    activeFilters.statuses.forEach(status => {
+        const checkbox = document.querySelector(`#status-options input[value="${status}"]`);
+        if (checkbox) checkbox.checked = true;
+    });
+
+    activeFilters.years.forEach(year => {
+        const checkbox = document.querySelector(`#year-options input[value="${year}"]`);
+        if (checkbox) checkbox.checked = true;
+    });
+}
+
 function resetAllFilters() {
     document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
         checkbox.checked = false;
@@ -460,7 +488,7 @@ function updateFiltersCount() {
     document.getElementById('filters-count').textContent = count;
 }
 
-// ===== КІНЕЦЬ НОВИХ ФУНКЦІЙ ДЛЯ ФІЛЬТРІВ =====
+// ===== КІНЕЦЬ ФУНКЦІЙ ДЛЯ ФІЛЬТРІВ =====
 
 function showNoResultsMessage(show) {
     let message = document.getElementById('no-results-message');
@@ -508,7 +536,7 @@ function initializeUI() {
     document.getElementById('sort-order').dataset.order = sortSettings.order;
     
     changeView(viewSettings.view);
-    initializeFilters(); // Додано ініціалізацію фільтрів
+    initializeFilters();
 }
 
 // Обробники подій
