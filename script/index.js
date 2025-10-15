@@ -381,9 +381,9 @@ let animeList = [];
 
         document.getElementById('search').addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
-            document.querySelectorAll('.anime-card, .anime-list-item').forEach(item => {
-                const title = item.querySelector('h3').textContent.toLowerCase();
-                item.style.display = title.includes(query) ? '' : 'none';
+            document.querySelectorAll('.anime-card').forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = title.includes(query) ? '' : 'none';
             });
         });
 

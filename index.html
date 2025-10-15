@@ -13,51 +13,60 @@
             <img src="images/favicon1.png" alt="logo">
             <h1>AstroNeko</h1>
         </div>
-
-        <div class="search-container">
-            <input type="text" id="search" placeholder="Пошук аніме...">
-            <button id="surprise">Здивуй мене</button>
-        </div>
     </header>
 
     <main>
         <!-- Контейнер для всіх контролів -->
         <div class="controls-container">
-            <div class="filters-section">
-                <select class="filter-select" id="genre-filter">
-                    <option value="">Всі жанри</option>
-                </select>
-                
-                <select class="filter-select" id="status-filter">
-                    <option value="">Всі статуси</option>
-                    <option value="Онґоїнг">Онґоїнг</option>
-                    <option value="Завершено">Завершено</option>
-                    <option value="Анонс">Анонс</option>
-                </select>
-                
-                <select class="filter-select" id="year-filter">
-                    <option value="">Всі роки</option>
+    <!-- Ліва частина - Фільтри -->
+    <div class="controls-left">
+        <div class="filters-section">
+            <select class="filter-select" id="genre-filter">
+                <option value="">Всі жанри</option>
+            </select>
+            
+            <select class="filter-select" id="status-filter">
+                <option value="">Всі статуси</option>
+                <option value="Онґоїнг">Онґоїнг</option>
+                <option value="Завершено">Завершено</option>
+                <option value="Анонс">Анонс</option>
+            </select>
+            
+            <select class="filter-select" id="year-filter">
+                <option value="">Всі роки</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Центральна частина - Пошук -->
+    <div class="controls-center">
+        <div class="search-section">
+            <input type="text" class="search-input" id="search" placeholder="Пошук аніме...">
+            <button class="surprise-btn" id="surprise">Здивуй мене</button>
+        </div>
+    </div>
+    
+    <!-- Права частина - Сортування -->
+    <div class="controls-right">
+        <div class="sort-section">
+            <div class="sort-container">
+                <button class="sort-order" id="sort-order" data-order="asc">↑</button>
+                <select class="sort-select" id="sort-by">
+                    <option value="title">Назва</option>
+                    <option value="rating">Рейтинг</option>
+                    <option value="episodes">Серії</option>
+                    <option value="year">Рік</option>
                 </select>
             </div>
             
-            <div class="sort-section">
-                <div class="sort-container">
-                  <button class="sort-order" id="sort-order" data-order="asc">↑</button>
-                    <select class="sort-select" id="sort-by">
-                        <option value="title">Назва</option>
-                        <option value="rating">Рейтинг</option>
-                        <option value="episodes">Серії</option>
-                        <option value="year">Рік</option>
-                    </select>
-                </div>
-                
-                <select class="view-select" id="view-select">
-                    <option value="grid">Сітка</option>
-                    <option value="compact">Компактно</option>
-                    <option value="list">Список</option>
-                </select>
-            </div>
+            <select class="view-select" id="view-select">
+                <option value="grid">Сітка</option>
+                <option value="compact">Компактно</option>
+                <option value="list">Список</option>
+            </select>
         </div>
+    </div>
+</div>
         
         <!-- Сітка аніме -->
         <div class="anime-grid" id="anime-grid">
