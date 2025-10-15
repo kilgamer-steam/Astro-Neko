@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Локальна статистика - AstroNeko</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0f10 0%, #1c1c1f 100%);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(29, 29, 32, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+        .stat-card {
+            background: rgba(24, 24, 27, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #ff69b4;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            color: #ff69b4;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .page-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .page-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+            transition: background 0.3s ease;
+        }
+        .page-item:hover {
+            background: rgba(255, 105, 180, 0.1);
+        }
+        .btn {
+            background: linear-gradient(135deg, #943a67 0%, #ff69b4 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4444 0%, #ff6b6b 100%);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+        .warning {
+            background: rgba(255, 165, 0, 0.2);
+            border: 1px solid orange;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 10px 20px;
+            background: rgba(24, 24, 27, 0.6);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab.active {
+            background: rgba(255, 105, 180, 0.2);
+            border-color: #ff69b4;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .anime-title {
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        .episode-info {
+            font-size: 0.9em;
+            color: #cc6096;
+        }
+        .time-info {
+            font-size: 0.8em;
+            color: #888;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 105, 180, 0.2);
+            border-radius: 2px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff69b4, #ff82c1);
+            border-radius: 2px;
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            background: rgba(24, 24, 27, 0.8);
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            border-radius: 8px;
+            color: white;
+            margin: 15px 0;
+            font-size: 1em;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+        }
+        .stats-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .stats-title {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="stats-container">
+        <div class="stats-header">
+            <div class="stats-title">
+                <h1>📊 Локальна статистика AstroNeko</h1>
+                <p>Ваша персональна історія переглядів</p>
+            </div>
+            <div>
+                <button class="btn" onclick="loadStats()">🔄 Оновити</button>
+                <button class="btn btn-danger" onclick="clearStats()">🗑️ Очистити</button>
+                <button class="btn btn-success" onclick="exportStats()">📤 Експорт</button>
+            </div>
+        </div>
+        
+        <div class="warning">
+            ⚠️ Ця статистика зберігається тільки у вашому браузері. 
+            Дані не передаються на сервер і доступні тільки вам.
+        </div>
+
+        <input type="text" class="search-box" id="searchInput" placeholder="🔍 Пошук по аніме, серіях або датах..." onkeyup="filterStats()">
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('overview')">📈 Огляд</div>
+            <div class="tab" onclick="switchTab('anime')">🎌 Аніме</div>
+            <div class="tab" onclick="switchTab('episodes')">🎬 Серії</div>
+            <div class="tab" onclick="switchTab('timeline')">🕒 Хронологія</div>
+            <div class="tab" onclick="switchTab('player')">🎮 Плеєр</div>
+        </div>
+
+        <!-- Вкладка Огляд -->
+        <div id="overview" class="tab-content active">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <h3>Загальна кількість відвідувань</h3>
+                    <div class="stat-number" id="totalVisits">0</div>
+                    <small>Усі сторінки сайту</small>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Переглянуті аніме</h3>
+                    <div class="stat-number" id="uniqueAnime">0</div>
+                    <small>Унікальних аніме</small>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Переглянуті серії</h3>
+                    <div class="stat-number" id="totalEpisodes">0</div>
+                    <small>Всього серій</small>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Час перегляду</h3>
+                    <div class="stat-number" id="watchTime">0h</div>
+                    <small>Приблизний час</small>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <h3>Найпопулярніші аніме</h3>
+                    <div class="page-list" id="popularAnime"></div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Останні перегляди</h3>
+                    <div class="page-list" id="recentVisits"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка Аніме -->
+        <div id="anime" class="tab-content">
+            <div class="stat-card">
+                <h3>📺 Вся історія переглядів аніме</h3>
+                <div class="page-list" id="animeHistory"></div>
+            </div>
+        </div>
+
+        <!-- Вкладка Серії -->
+        <div id="episodes" class="tab-content">
+            <div class="stat-card">
+                <h3>🎬 Детальна історія серій</h3>
+                <div class="page-list" id="episodeHistory"></div>
+            </div>
+        </div>
+
+        <!-- Вкладка Хронологія -->
+        <div id="timeline" class="tab-content">
+            <div class="stat-card">
+                <h3>🕒 Хронологія переглядів</h3>
+                <div class="page-list" id="timelineHistory"></div>
+            </div>
+        </div>
+
+        <!-- Вкладка Плеєр -->
+        <div id="player" class="tab-content">
+            <div class="stat-card">
+                <h3>🎮 Статистика плеєра</h3>
+                <div class="page-list" id="playerStats"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStats = null;
+        let currentTab = 'overview';
+
+        function switchTab(tabName) {
+            // Ховаємо всі вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показуємо обрану вкладку
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            currentTab = tabName;
+            
+            // Оновлюємо контент вкладки
+            if (currentStats) {
+                updateTabContent(tabName, currentStats);
+            }
+        }
+
+        function filterStats() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (currentStats) {
+                updateTabContent(currentTab, currentStats, searchTerm);
+            }
+        }
+
+        function loadStats() {
+            const stats = GitHubTracker.getLocalStats();
+            currentStats = stats;
+            
+            updateOverview(stats);
+            updateTabContent(currentTab, stats);
+        }
+
+        function updateOverview(stats) {
+            document.getElementById('totalVisits').textContent = stats.totalVisits.toLocaleString();
+            document.getElementById('uniqueAnime').textContent = stats.uniqueAnime.toLocaleString();
+            document.getElementById('totalEpisodes').textContent = stats.totalEpisodes.toLocaleString();
+            document.getElementById('watchTime').textContent = stats.totalWatchTime;
+            
+            // Популярні аніме
+            const popularAnime = Object.entries(stats.animeStats)
+                .sort((a, b) => b[1].visits - a[1].visits)
+                .slice(0, 10);
+            
+            document.getElementById('popularAnime').innerHTML = popularAnime.length > 0 
+                ? popularAnime.map(([anime, data]) => `
+                    <div class="page-item">
+                        <div>
+                            <div class="anime-title">${anime}</div>
+                            <div class="episode-info">${data.episodes} серій • ${data.lastVisit ? new Date(data.lastVisit).toLocaleDateString() : 'N/A'}</div>
+                        </div>
+                        <span style="color: #ff69b4">${data.visits}</span>
+                    </div>
+                `).join('')
+                : '<p>Ще не переглянуто жодного аніме</p>';
+            
+            // Останні відвідування
+            document.getElementById('recentVisits').innerHTML = stats.recentVisits.length > 0
+                ? stats.recentVisits.map(visit => `
+                    <div class="page-item">
+                        <div>
+                            <div>${visit.page}</div>
+                            <div class="time-info">${new Date(visit.timestamp).toLocaleString()}</div>
+                        </div>
+                        <span style="color: #ff69b4">${visit.type || 'перегляд'}</span>
+                    </div>
+                `).join('')
+                : '<p>Немає недавніх відвідувань</p>';
+        }
+
+        function updateTabContent(tabName, stats, searchTerm = '') {
+            switch(tabName) {
+                case 'anime':
+                    updateAnimeTab(stats, searchTerm);
+                    break;
+                case 'episodes':
+                    updateEpisodesTab(stats, searchTerm);
+                    break;
+                case 'timeline':
+                    updateTimelineTab(stats, searchTerm);
+                    break;
+                case 'player':
+                    updatePlayerTab(stats, searchTerm);
+                    break;
+            }
+        }
+
+        function updateAnimeTab(stats, searchTerm = '') {
+            let animeList = Object.entries(stats.animeStats)
+                .sort((a, b) => b[1].visits - a[1].visits);
+            
+            if (searchTerm) {
+                animeList = animeList.filter(([anime]) => 
+                    anime.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            document.getElementById('animeHistory').innerHTML = animeList.length > 0 
+                ? animeList.map(([anime, data]) => `
+                    <div class="page-item">
+                        <div style="flex: 1;">
+                            <div class="anime-title">${anime}</div>
+                            <div class="episode-info">
+                                ${data.episodes} серій • 
+                                ${data.visits} відвідувань • 
+                                Останній раз: ${data.lastVisit ? new Date(data.lastVisit).toLocaleDateString() : 'N/A'}
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${Math.min((data.visits / Math.max(...Object.values(stats.animeStats).map(a => a.visits))) * 100, 100)}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')
+                : '<p>Не знайдено аніме за вашим запитом</p>';
+        }
+
+        function updateEpisodesTab(stats, searchTerm = '') {
+            let episodes = [...stats.episodeHistory].reverse();
+            
+            if (searchTerm) {
+                episodes = episodes.filter(episode => 
+                    episode.animeTitle?.toLowerCase().includes(searchTerm) ||
+                    episode.episode?.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            document.getElementById('episodeHistory').innerHTML = episodes.length > 0
+                ? episodes.map(episode => `
+                    <div class="page-item">
+                        <div style="flex: 1;">
+                            <div class="anime-title">${episode.animeTitle || 'Невідоме аніме'}</div>
+                            <div class="episode-info">
+                                ${episode.episode || 'Серія'} • 
+                                ${episode.duration ? `Тривалість: ${episode.duration}` : ''}
+                            </div>
+                            <div class="time-info">
+                                ${new Date(episode.timestamp).toLocaleString()} • 
+                                ${episode.progress ? `Переглянуто: ${episode.progress}` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')
+                : '<p>Не знайдено серій за вашим запитом</p>';
+        }
+
+        function updateTimelineTab(stats, searchTerm = '') {
+            let timeline = [...stats.recentVisits].reverse();
+            
+            if (searchTerm) {
+                timeline = timeline.filter(visit => 
+                    visit.page.toLowerCase().includes(searchTerm) ||
+                    (visit.animeTitle && visit.animeTitle.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            document.getElementById('timelineHistory').innerHTML = timeline.length > 0
+                ? timeline.map(visit => `
+                    <div class="page-item">
+                        <div style="flex: 1;">
+                            <div>
+                                <span class="anime-title">${visit.animeTitle || visit.page}</span>
+                                <span style="margin-left: 10px; color: #cc6096; font-size: 0.9em;">${visit.type || 'відвідування'}</span>
+                            </div>
+                            <div class="time-info">
+                                ${new Date(visit.timestamp).toLocaleString()} • 
+                                ${visit.duration ? `Тривалість: ${visit.duration}` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')
+                : '<p>Не знайдено записів за вашим запитом</p>';
+        }
+
+        function updatePlayerTab(stats, searchTerm = '') {
+            const playerStats = stats.playerStats || {};
+            const qualityStats = playerStats.qualityUsage || {};
+            const audioStats = playerStats.audioUsage || {};
+            
+            document.getElementById('playerStats').innerHTML = `
+                <div class="page-item">
+                    <div>Усього сесій плеєра</div>
+                    <span style="color: #ff69b4">${playerStats.totalSessions || 0}</span>
+                </div>
+                <div class="page-item">
+                    <div>Налаштування автоскіпу</div>
+                    <span style="color: #ff69b4">${playerStats.autoSkipEnabled ? 'Увімкнено' : 'Вимкнено'}</span>
+                </div>
+                <div class="page-item">
+                    <div>Налаштування автопродовження</div>
+                    <span style="color: #ff69b4">${playerStats.autoNextEnabled ? 'Увімкнено' : 'Вимкнено'}</span>
+                </div>
+                <div style="margin: 20px 0; border-top: 1px solid rgba(255,105,180,0.3); padding-top: 20px;">
+                    <h4>Використання якості відео:</h4>
+                    ${Object.entries(qualityStats).map(([quality, count]) => `
+                        <div class="page-item">
+                            <div>${quality}p</div>
+                            <span style="color: #ff69b4">${count} разів</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="margin: 20px 0; border-top: 1px solid rgba(255,105,180,0.3); padding-top: 20px;">
+                    <h4>Використання озвучок:</h4>
+                    ${Object.entries(audioStats).map(([audio, count]) => `
+                        <div class="page-item">
+                            <div>${audio}</div>
+                            <span style="color: #ff69b4">${count} разів</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function clearStats() {
+            if (confirm('Ви впевнені, що хочете видалити всю статистику? Цю дію не можна скасувати.')) {
+                localStorage.removeItem('astro_neko_visits');
+                localStorage.removeItem('astro_neko_player_stats');
+                loadStats();
+            }
+        }
+
+        function exportStats() {
+            const stats = GitHubTracker.getLocalStats();
+            const dataStr = JSON.stringify(stats, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `astro-neko-stats-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+        }
+
+        // Завантажуємо статистику при завантаженні сторінки
+        document.addEventListener('DOMContentLoaded', loadStats);
+    </script>
+    
+    <script>
+        class GitHubTracker {
+            static getLocalStats() {
+                try {
+                    const visits = JSON.parse(localStorage.getItem('astro_neko_visits') || '[]');
+                    const playerStats = JSON.parse(localStorage.getItem('astro_neko_player_stats') || '{}');
+                    
+                    // Аналізуємо дані
+                    const pageStats = {};
+                    const animeStats = {};
+                    const episodeHistory = [];
+                    let totalEpisodes = 0;
+                    let totalWatchTime = 0;
+
+                    visits.forEach(visit => {
+                        // Статистика по сторінках
+                        pageStats[visit.page] = (pageStats[visit.page] || 0) + 1;
+                        
+                        // Виявляємо аніме з URL
+                        const animeData = this.extractAnimeData(visit);
+                        if (animeData.animeTitle) {
+                            if (!animeStats[animeData.animeTitle]) {
+                                animeStats[animeData.animeTitle] = {
+                                    visits: 0,
+                                    episodes: 0,
+                                    lastVisit: null
+                                };
+                            }
+                            animeStats[animeData.animeTitle].visits++;
+                            animeStats[animeData.animeTitle].lastVisit = visit.timestamp;
+                            
+                            if (animeData.isEpisode) {
+                                animeStats[animeData.animeTitle].episodes++;
+                                totalEpisodes++;
+                            }
+                            
+                            // Додаємо в історію епізодів
+                            if (animeData.isEpisode || animeData.isMovie) {
+                                episodeHistory.push({
+                                    ...animeData,
+                                    timestamp: visit.timestamp,
+                                    type: animeData.isMovie ? 'фільм' : 'серія'
+                                });
+                            }
+                        }
+                        
+                        // Розраховуємо приблизний час перегляду
+                        if (visit.duration) {
+                            totalWatchTime += this.parseDuration(visit.duration);
+                        }
+                    });
+
+                    // Форматуємо час перегляду
+                    const watchTimeFormatted = this.formatWatchTime(totalWatchTime);
+                    
+                    return {
+                        totalVisits: visits.length,
+                        uniquePages: Object.keys(pageStats).length,
+                        uniqueAnime: Object.keys(animeStats).length,
+                        totalEpisodes: totalEpisodes,
+                        totalWatchTime: watchTimeFormatted,
+                        pageStats: pageStats,
+                        animeStats: animeStats,
+                        episodeHistory: episodeHistory,
+                        recentVisits: visits.slice(-20).reverse(),
+                        playerStats: playerStats,
+                        firstVisit: visits[0] ? new Date(visits[0].timestamp).toLocaleDateString() : 'N/A'
+                    };
+                } catch (error) {
+                    return { 
+                        totalVisits: 0, 
+                        uniquePages: 0, 
+                        uniqueAnime: 0,
+                        totalEpisodes: 0,
+                        totalWatchTime: '0h',
+                        pageStats: {},
+                        animeStats: {},
+                        episodeHistory: [],
+                        recentVisits: [],
+                        playerStats: {},
+                        firstVisit: 'N/A'
+                    };
+                }
+            }
+
+            static extractAnimeData(visit) {
+                const url = visit.page;
+                const result = {
+                    animeTitle: null,
+                    episode: null,
+                    isEpisode: false,
+                    isMovie: false,
+                    duration: null
+                };
+
+                // Аналізуємо URL для визначення аніме
+                if (url.includes('anime-info.html')) {
+                    const params = new URLSearchParams(url.split('?')[1]);
+                    const animeId = params.get('id');
+                    result.animeTitle = this.getAnimeTitle(animeId) || `Аніме ${animeId}`;
+                }
+                else if (url.includes('player.html')) {
+                    const params = new URLSearchParams(url.split('?')[1]);
+                    const animeId = params.get('id');
+                    result.animeTitle = this.getAnimeTitle(animeId) || `Аніме ${animeId}`;
+                    
+                    if (params.get('season') && params.get('episode')) {
+                        result.episode = `Сезон ${params.get('season')} Серія ${params.get('episode')}`;
+                        result.isEpisode = true;
+                    }
+                    else if (params.get('movie')) {
+                        result.episode = `Фільм ${params.get('movie')}`;
+                        result.isMovie = true;
+                    }
+                }
+
+                return result;
+            }
+
+            static getAnimeTitle(animeId) {
+                // Тут можна додати логіку для отримання назви аніме по ID
+                // Наразі повертаємо ID
+                return animeId;
+            }
+
+            static parseDuration(durationStr) {
+                // Конвертуємо "24m" або "1h 30m" у хвилини
+                if (!durationStr) return 0;
+                
+                let minutes = 0;
+                const hoursMatch = durationStr.match(/(\d+)h/);
+                const minsMatch = durationStr.match(/(\d+)m/);
+                
+                if (hoursMatch) minutes += parseInt(hoursMatch[1]) * 60;
+                if (minsMatch) minutes += parseInt(minsMatch[1]);
+                
+                return minutes;
+            }
+
+            static formatWatchTime(minutes) {
+                if (minutes < 60) {
+                    return `${minutes}m`;
+                } else {
+                    const hours = Math.floor(minutes / 60);
+                    const mins = minutes % 60;
+                    return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
