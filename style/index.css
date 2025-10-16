@@ -866,24 +866,25 @@ main {
 @media (max-width: 480px) {
     .controls-left,
     .controls-right {
-        flex-direction: column;
         gap: 10px;
     }
     
     .filters-btn,
     .surprise-btn {
-        width: 100%;
+        /* width: 100%; */
         max-width: none;
         justify-content: center;
+        flex-wrap: nowrap;
+        display: flex;
     }
     
     .sort-section {
-        width: 100%;
+        /* width: 100%; */
         justify-content: space-between;
     }
     
     .sort-select,
     .view-select {
-        max-width: 48%;
+        max-width: 110px;
     }
 }
