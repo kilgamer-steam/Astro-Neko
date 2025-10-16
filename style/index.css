@@ -347,6 +347,8 @@ main {
     border-right: 1px solid rgba(255, 105, 180, 0.2);
     overflow-y: auto;
     max-height: 400px;
+    /* Заблоковано горизонтальну прокрутку */
+    overflow-x: hidden;
 }
 
 .filter-group:last-child {
@@ -921,6 +923,8 @@ main {
         justify-content: center;
         flex-wrap: nowrap;
         display: flex;
+        padding: 8px 16px; /* Зменшено padding кнопок */
+        font-size: 0.85em; /* Зменшено розмір шрифту */
     }
     
     .sort-section {
@@ -930,6 +934,8 @@ main {
     .sort-select,
     .view-select {
         max-width: 110px;
+        padding: 8px 12px; /* Зменшено padding */
+        font-size: 0.85em; /* Зменшено розмір шрифту */
     }
 
     /* Сітка карток для 480px */
@@ -1006,5 +1012,121 @@ main {
     .anime-card .front .title-container {
         font-size: 0.85em;
         padding: 4px;
+    }
+
+    /* ===== АДАПТАЦІЯ МОДАЛЬНОГО ВІКНА ФІЛЬТРІВ ДЛЯ 480px ===== */
+    .filters-content {
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .filters-header {
+        padding: 15px 20px;
+    }
+
+    .filters-header h3 {
+        font-size: 1.2em; /* Зменшено розмір шрифту заголовка */
+    }
+
+    .close-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5em; /* Зменшено розмір кнопки закриття */
+    }
+
+    /* Змінюємо розташування фільтрів на колонки */
+    .filters-body {
+        grid-template-columns: 1fr; /* Одна колонка замість трьох */
+        overflow-y: auto;
+    }
+
+    .filter-group {
+        padding: 15px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+        max-height: none;
+        overflow-x: hidden; /* Заблоковано горизонтальну прокрутку */
+    }
+
+    .filter-group:last-child {
+        border-bottom: none;
+    }
+
+    .filter-title {
+        font-size: 1em; /* Зменшено розмір шрифту заголовків груп */
+        margin: 0 0 12px 0;
+    }
+
+    /* Зменшуємо розміри чекбоксів та тексту */
+    .checkbox-label {
+        font-size: 0.85em; /* Зменшено розмір шрифту міток */
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .checkmark {
+        width: 16px; /* Зменшено розмір чекбоксу */
+        height: 16px;
+    }
+
+    .filter-checkbox:checked + .checkmark::after {
+        font-size: 10px; /* Зменшено розмір галочки */
+    }
+
+    /* Зменшуємо розміри кнопок у футері */
+    .filters-footer {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .reset-btn,
+    .apply-btn {
+        padding: 10px 20px; /* Зменшено padding кнопок */
+        font-size: 0.9em; /* Зменшено розмір шрифту */
+        width: 100%;
+        text-align: center;
+    }
+
+    .results-counter {
+        font-size: 0.85em; /* Зменшено розмір шрифту лічильника */
+        justify-content: center;
+        width: 100%;
+    }
+
+    #results-count {
+        font-size: 1em; /* Зменшено розмір шрифту числа */
+    }
+}
+
+/* Додаткові стилі для дуже малих екранів */
+@media (max-width: 360px) {
+    .filters-content {
+        width: 98%;
+        margin: 10px;
+    }
+
+    .checkbox-label {
+        font-size: 0.8em;
+        padding: 5px 8px;
+    }
+
+    .checkmark {
+        width: 14px;
+        height: 14px;
+    }
+
+    .filter-checkbox:checked + .checkmark::after {
+        font-size: 9px;
+    }
+
+    .filters-header h3 {
+        font-size: 1.1em;
+    }
+
+    .reset-btn,
+    .apply-btn {
+        padding: 8px 16px;
+        font-size: 0.85em;
     }
 }
