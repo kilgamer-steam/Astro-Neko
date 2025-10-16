@@ -519,7 +519,7 @@ main {
 /* ===== СІТКА АНІМЕ (КАРТОЧКИ) ===== */
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(6, 1fr); /* 6 карток в ряду для ПК */
   gap: 25px;
   padding: 30px;
   color: #cc6096ff;
@@ -527,8 +527,9 @@ main {
   align-items: start;
 }
 
+/* Компактна сітка */
 .anime-grid.compact {
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(9, 1fr); /* 9 карток в ряду для ПК */
   gap: 15px;
 }
 
@@ -592,6 +593,14 @@ main {
   padding: 6px;
   font-weight: 600;
   font-size: 0.95em;
+  /* Дозволяємо перенесення тексту на новий рядок */
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .anime-card .back {
@@ -626,6 +635,9 @@ main {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  /* Дозволяємо перенесення тексту */
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .anime-grid.compact .back-content h4 {
@@ -737,6 +749,10 @@ main {
   font-size: 1.1em;
   color: #ff69b4;
   margin: 0 0 10px 0;
+  /* Дозволяємо перенесення тексту */
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .list-item-meta {
@@ -803,7 +819,10 @@ main {
 }
 
 /* ===== АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ ===== */
-@media (max-width: 702px) {
+
+/* Для екранів до 720px */
+@media (max-width: 720px) {
+    /* Контейнер керування */
     .controls-container {
         flex-direction: column;
         gap: 15px;
@@ -861,8 +880,35 @@ main {
         max-width: 100px;
         flex: 1;
     }
+
+    /* Сітка карток для 720px */
+    .anime-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 картки в ряду */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .anime-grid.compact {
+        grid-template-columns: repeat(3, 1fr); /* 3 картки в ряду для компактного режиму */
+        gap: 12px;
+        padding: 20px;
+    }
+
+    /* Картки для 720px */
+    .anime-card {
+        width: 100%;
+        max-width: 180px;
+        height: 280px;
+    }
+
+    .anime-grid.compact .anime-card {
+        width: 100%;
+        max-width: 140px;
+        height: 210px;
+    }
 }
 
+/* Для екранів до 480px */
 @media (max-width: 480px) {
     .controls-left,
     .controls-right {
@@ -871,7 +917,6 @@ main {
     
     .filters-btn,
     .surprise-btn {
-        /* width: 100%; */
         max-width: none;
         justify-content: center;
         flex-wrap: nowrap;
@@ -879,12 +924,87 @@ main {
     }
     
     .sort-section {
-        /* width: 100%; */
         justify-content: space-between;
     }
     
     .sort-select,
     .view-select {
         max-width: 110px;
+    }
+
+    /* Сітка карток для 480px */
+    .anime-grid {
+        grid-template-columns: repeat(1, 1fr); /* 1 картка в ряду */
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .anime-grid.compact {
+        grid-template-columns: repeat(2, 1fr); /* 2 картки в ряду для компактного режиму */
+        gap: 10px;
+        padding: 15px;
+    }
+
+    /* Картки для 480px */
+    .anime-card {
+        width: 100%;
+        max-width: 160px;
+        height: 250px;
+        margin: 0 auto;
+    }
+
+    .anime-grid.compact .anime-card {
+        width: 100%;
+        max-width: 130px;
+        height: 190px;
+    }
+
+    /* Список для 480px */
+    .anime-list-item {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .list-item-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .list-item-content {
+        padding: 10px;
+    }
+
+    .list-item-title {
+        font-size: 1em;
+    }
+
+    .list-item-meta {
+        font-size: 0.8em;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .list-item-tags {
+        font-size: 0.75em;
+    }
+
+    .list-details-btn {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+
+    /* Зменшуємо розміри тексту для компактних карток на мобільних */
+    .anime-grid.compact .back-content h4 {
+        font-size: 0.85em;
+    }
+
+    .anime-grid.compact .back-info p {
+        font-size: 0.7em;
+    }
+
+    .anime-card .front .title-container {
+        font-size: 0.85em;
+        padding: 4px;
     }
 }
