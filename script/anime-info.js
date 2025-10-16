@@ -47,7 +47,7 @@
         <div class="error-message">
           <h2>${title}</h2>
           <p>${message}</p>
-          <a href="" class="back-button">Повернутися на головну</a>
+          <a href="https://kilgamer-steam.github.io/Astro-Neko" class="back-button">Повернутися на головну</a>
         </div>
       `;
     }
