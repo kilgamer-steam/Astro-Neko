@@ -88,6 +88,7 @@ header .logo h1 {
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
   transform: translateY(-2px);
 }
+
 /* Стилі для скролбара */
 ::-webkit-scrollbar {
     width: 6px;
@@ -112,6 +113,7 @@ header .logo h1 {
     scrollbar-width: thin;
     scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
 }
+
 /* ===== Content wrapper ===== */
 .content-wrapper {
   position: relative;
@@ -171,6 +173,40 @@ header .logo h1 {
   line-height: 1.5;
   margin: 8px 0;
   font-size: 0.95em;
+}
+
+/* Кнопки дій для аніме */
+.anime-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.action-btn:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+}
+
+.action-btn.active {
+  background: #ff69b4;
+  color: #fff;
 }
 
 /* ===== Seasons block ===== */
@@ -246,6 +282,9 @@ header .logo h1 {
   text-decoration: none;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
 }
 
 .episode-btn:hover {
@@ -318,204 +357,18 @@ header .logo h1 {
 }
 
 .movie-date {
-  color: #cc6096ff;  /* ВИПРАВЛЕНО - додано ; */
+  color: #cc6096ff;
   white-space: nowrap;
   font-size: 0.9em;
 }
 
 .movie-duration {
-  color: #cc6096ff;  /* ВИПРАВЛЕНО - видалено дублювання */
+  color: #cc6096ff;
   white-space: nowrap;
   font-weight: 500;
   font-size: 0.9em;
 }
-/* Додаткові стилі для покращення UX */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      opacity: 1;
-      transition: opacity 0.5s ease;
-    }
-    
-    .loading-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(255, 105, 180, 0.3);
-      border-radius: 50%;
-      border-top-color: #ff69b4;
-      animation: spin 1s ease-in-out infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    .error-message {
-      text-align: center;
-      padding: 40px 20px;
-      background: rgba(24, 24, 27, 0.8);
-      border-radius: 10px;
-      max-width: 500px;
-      margin: 50px auto;
-    }
-    
-    .error-message h2 {
-      color: #ff69b4;
-      margin-bottom: 20px;
-    }
-    
-    .back-button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: rgba(255, 105, 180, 0.2);
-      color: #ff69b4;
-      border: 2px solid #ff69b4;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    
-    .back-button:hover {
-      background: #ff69b4;
-      color: white;
-    }
-    
-    /* Анімація появи контенту */
-    .content-wrapper {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    
-    .content-wrapper.loaded {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* Стилі для додаткових функцій */
-    .anime-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      flex-wrap: wrap;
-    }
-    
-    .action-btn {
-      padding: 8px 15px;
-      border: 2px solid #943a67ff;
-      border-radius: 8px;
-      background: rgba(255, 105, 180, 0.1);
-      color: #cc6096ff;
-      font-size: 0.9em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    
-    .action-btn:hover {
-      background: #ff69b4;
-      color: #fff;
-      box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
-    }
-    
-    .action-btn.active {
-      background: #ff69b4;
-      color: #fff;
-    }
-    
-    /* Покращення для таблиці фільмів */
-    .movies-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background: rgba(29, 29, 32, 0.5);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .movies-table th {
-      background: rgba(148, 58, 103, 0.3);
-      padding: 15px;
-      text-align: left;
-      color: #ff82c1;
-      font-weight: 600;
-      border-bottom: 2px solid #943a67ff;
-      font-size: 0.95em;
-    }
-    
-    .movies-table td {
-      padding: 15px;
-      border-bottom: 1px solid rgba(255, 105, 180, 0.1);
-      transition: background-color 0.3s ease;
-    }
-    
-    .movie-row:hover {
-      background: rgba(255, 105, 180, 0.08);
-    }
-    
-    .movie-number {
-      width: 60px;
-      text-align: center;
-      font-weight: bold;
-      color: #cc6096ff;
-      font-size: 1.1em;
-    }
-    
-    .movie-title {
-      font-weight: 500;
-      color: #cc6096ff;
-      font-size: 1em;
-    }
-    
-    .movie-date {
-      color: #cc6096ff;
-      white-space: nowrap;
-      font-size: 0.9em;
-    }
-    
-    .movie-duration {
-      color: #cc6096ff;
-      white-space: nowrap;
-      font-weight: 500;
-      font-size: 0.9em;
-    }
-    
-    .watch-movie-btn {
-      padding: 10px 20px;
-      border: 2px solid #943a67ff;
-      border-radius: 8px;
-      background: rgba(255, 105, 180, 0.1);
-      color: #cc6096ff;
-      font-size: 1em;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-family: "Poppins", "Segoe UI", sans-serif;
-      cursor: pointer;
-    }
-    
-    .watch-movie-btn:hover {
-      background: #ff69b4;
-      color: #fff;
-      box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-      transform: translateY(-2px);
-    }
+
 .watch-movie-btn {
   padding: 10px 20px;
   border: 2px solid #943a67ff;
@@ -533,4 +386,308 @@ header .logo h1 {
   color: #fff;
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
   transform: translateY(-2px);
+}
+
+/* Додаткові стилі для покращення UX */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 105, 180, 0.3);
+  border-radius: 50%;
+  border-top-color: #ff69b4;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(24, 24, 27, 0.8);
+  border-radius: 10px;
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+.error-message h2 {
+  color: #ff69b4;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: rgba(255, 105, 180, 0.2);
+  color: #ff69b4;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: #ff69b4;
+  color: white;
+}
+
+/* Анімація появи контенту */
+.content-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.content-wrapper.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ ===== */
+
+/* Для екранів до 720px */
+@media (max-width: 720px) {
+  /* Зменшуємо шрифти */
+  .anime-meta h2 {
+    font-size: 1.6em;
+  }
+  
+  .anime-meta p {
+    font-size: 0.9em;
+  }
+  
+  .seasons-block h3,
+  .movies-block h4 {
+    font-size: 1.3em;
+  }
+  
+  .season h4 {
+    font-size: 1.1em;
+  }
+  
+  /* Кнопки епізодів - 3 в ряд */
+  .episode-container {
+    gap: 8px;
+  }
+  
+  .episode-btn {
+    flex: 0 0 calc(33.333% - 6px);
+    min-width: auto;
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+  
+  /* Таблиця фільмів */
+  .movies-table th,
+  .movies-table td {
+    padding: 12px 10px;
+    font-size: 0.9em;
+  }
+}
+
+/* Для екранів до 480px */
+@media (max-width: 480px) {
+  /* Хедер */
+  header {
+    padding: 10px 15px;
+  }
+  
+  header .logo h1 {
+    font-size: 1.4em;
+  }
+  
+  .header-nav a {
+    padding: 8px 12px;
+    font-size: 0.85em;
+  }
+  
+  /* Контент */
+  .content-wrapper {
+    padding: 0 15px;
+    padding-top: 70px;
+  }
+  
+  .anime-info-block,
+  .seasons-block,
+  .movies-block {
+    padding: 20px;
+  }
+  
+  /* Змінюємо структуру інформації про аніме */
+  .anime-title-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .anime-title-section img {
+    width: 180px;
+    height: 270px;
+  }
+  
+  .anime-meta h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+  }
+  
+  .anime-meta p {
+    font-size: 0.85em;
+    margin: 6px 0;
+  }
+  
+  /* Кнопки дій */
+  .anime-actions {
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .action-btn {
+    padding: 8px 15px;
+    font-size: 0.85em;
+    flex: 1;
+    min-width: 100px;
+    justify-content: center;
+  }
+  
+  /* Сезони */
+  .seasons-block h3 {
+    font-size: 1.2em;
+  }
+  
+  .season {
+    padding: 15px;
+  }
+  
+  .season h4 {
+    font-size: 1em;
+  }
+  
+  .season-meta {
+    font-size: 0.8em;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  /* Кнопки епізодів - 3 в ряд */
+  .episode-container {
+    gap: 6px;
+  }
+  
+  .episode-btn {
+    flex: 0 0 calc(33.333% - 4px);
+    padding: 6px 8px;
+    font-size: 0.8em;
+    min-width: auto;
+  }
+  
+  /* Фільми - спрощена таблиця */
+  .movies-block h4 {
+    font-size: 1.1em;
+  }
+  
+  .movies-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  /* Приховуємо колонки року та тривалості */
+  .movie-date,
+  .movie-duration,
+  .data-tab,
+  .time-tab {
+    display: none;
+  }
+  
+  .movies-table th.movie-date-header,
+  .movies-table th.movie-duration-header {
+    display: none;
+  }
+  
+  /* Адаптуємо ширину колонок */
+  .movie-number {
+    width: 50px;
+    font-size: 1em;
+  }
+  
+  .movie-title {
+    font-size: 0.9em;
+  }
+  
+  .movies-table th,
+  .movies-table td {
+    padding: 10px 8px;
+    font-size: 0.85em;
+  }
+  
+  .watch-movie-btn {
+    padding: 8px 15px;
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+  
+  /* Додаткові адаптації */
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .error-message {
+    padding: 30px 15px;
+    margin: 30px auto;
+  }
+  
+  .error-message h2 {
+    font-size: 1.3em;
+  }
+  
+  .back-button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+  }
+}
+
+/* Додаткові стилі для кращого відображення на дуже малих екранах */
+@media (max-width: 360px) {
+  .episode-btn {
+    font-size: 0.75em;
+    padding: 5px 6px;
+  }
+  
+  .anime-title-section img {
+    width: 150px;
+    height: 225px;
+  }
+  
+  .anime-meta h2 {
+    font-size: 1.2em;
+  }
+  
+  .action-btn {
+    min-width: 80px;
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
 }

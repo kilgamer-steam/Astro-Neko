@@ -140,11 +140,11 @@
         // Заголовки таблиці
         const tableHeader = document.createElement("tr");
         tableHeader.innerHTML = `
-          <th>№</th>
-          <th>Назва фільму</th>
-          <th>Дата релізу</th>
-          <th>Тривалість</th>
-          <th></th>
+          <th class="num-tab">№</th>
+          <th class="name-tab">Назва фільму</th>
+          <th class="data-tab">Дата релізу</th>
+          <th class="time-tab">Тривалість</th>
+          <th class="button-tab"></th>
         `;
         moviesTable.appendChild(tableHeader);
 
