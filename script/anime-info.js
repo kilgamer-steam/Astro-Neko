@@ -47,7 +47,7 @@
         <div class="error-message">
           <h2>${title}</h2>
           <p>${message}</p>
-          <a href="index.html" class="back-button">Повернутися на головну</a>
+          <a href="" class="back-button">Повернутися на головну</a>
         </div>
       `;
     }

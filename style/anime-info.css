@@ -621,11 +621,6 @@ header .logo h1 {
     display: none;
   }
   
-  .movies-table th.movie-date-header,
-  .movies-table th.movie-duration-header {
-    display: none;
-  }
-  
   /* Адаптуємо ширину колонок */
   .movie-number {
     width: 50px;
