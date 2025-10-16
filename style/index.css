@@ -262,6 +262,8 @@ main {
 
 .view-select {
     max-width: 80px;
+    border-color: rgba(255, 105, 180, 0.5);
+    border-radius: 25px;
 }
 
 /* ===== МОДАЛЬНЕ ВІКНО ФІЛЬТРІВ ===== */
