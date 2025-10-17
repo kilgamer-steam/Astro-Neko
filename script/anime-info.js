@@ -284,13 +284,27 @@ function showTempMessage(message) {
     backdrop-filter: blur(10px);
     border: 2px solid #ff69b4;
     box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s ease;
   `;
   
   document.body.appendChild(messageEl);
   
-  // Автоматично видаляємо через 2 секунди
+  // Анімація появи - плавно з'являється за 0.5 секунди
   setTimeout(() => {
-    document.body.removeChild(messageEl);
+    messageEl.style.opacity = '1';
+  }, 10);
+  
+  // Анімація зникнення - плавно зникає через 2 секунди
+  setTimeout(() => {
+    messageEl.style.opacity = '0';
+    
+    // Видаляємо елемент після завершення анімації
+    setTimeout(() => {
+      if (document.body.contains(messageEl)) {
+        document.body.removeChild(messageEl);
+      }
+    }, 500); // Чекаємо завершення анімації зникнення
   }, 2000);
 }
 
