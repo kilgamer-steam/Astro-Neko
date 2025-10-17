@@ -279,6 +279,7 @@ main {
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 105, 180, 0.1);
     cursor: pointer;
+    position: relative;
 }
 
 .preview-item:hover {
@@ -340,6 +341,79 @@ main {
 .preview-more-count {
     font-size: 0.9em;
     opacity: 0.8;
+}
+
+/* Стилі для кнопок керування на головній сторінці */
+.preview-item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.preview-item:hover .preview-item-actions {
+    opacity: 1;
+}
+
+.preview-details-btn, .preview-remove-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    flex: 1;
+}
+
+.preview-details-btn {
+    background: #943a67ff;
+    color: white;
+}
+
+.preview-details-btn:hover {
+    background: #ff82c1;
+}
+
+.preview-remove-btn {
+    background: transparent;
+    border: 1px solid #943a67ff;
+    color: #cc6096ff;
+}
+
+.preview-remove-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    border-color: #ff69b4;
+    color: #ff69b4;
+}
+
+/* Стилі для кнопки видалення в оцінках на головній сторінці */
+.preview-rating-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 5px 10px;
+    border: 1px solid #943a67ff;
+    border-radius: 5px;
+    background: rgba(29, 29, 32, 0.9);
+    color: #cc6096ff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8em;
+    opacity: 0;
+}
+
+.preview-item:hover .preview-rating-remove {
+    opacity: 1;
+}
+
+.preview-rating-remove:hover {
+    background: rgba(255, 105, 180, 0.1);
+    border-color: #ff69b4;
+    color: #ff69b4;
 }
 
 /* Стилі для картки закладки */
@@ -678,118 +752,6 @@ main {
     opacity: 1;
 }
 
-/* Анімації */
-@keyframes modalAppear {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.profile-section {
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.profile-section:nth-child(1) { animation-delay: 0.1s; }
-.profile-section:nth-child(2) { animation-delay: 0.2s; }
-.profile-section:nth-child(3) { animation-delay: 0.3s; }
-.profile-section:nth-child(4) { animation-delay: 0.4s; }
-
-/* Додамо ці стилі в кінець CSS файлу */
-
-/* Стилі для кнопок керування на головній сторінці */
-.preview-item-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.preview-item:hover .preview-item-actions {
-    opacity: 1;
-}
-
-.preview-details-btn, .preview-remove-btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 0.8em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-    flex: 1;
-}
-
-.preview-details-btn {
-    background: #943a67ff;
-    color: white;
-}
-
-.preview-details-btn:hover {
-    background: #ff82c1;
-}
-
-.preview-remove-btn {
-    background: transparent;
-    border: 1px solid #943a67ff;
-    color: #cc6096ff;
-}
-
-.preview-remove-btn:hover {
-    background: rgba(255, 105, 180, 0.1);
-    border-color: #ff69b4;
-    color: #ff69b4;
-}
-
-/* Стилі для хрестика в оцінках на головній сторінці */
-.preview-rating-remove {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 25px;
-    height: 25px;
-    border: 1px solid #943a67ff;
-    border-radius: 50%;
-    background: rgba(29, 29, 32, 0.8);
-    color: #cc6096ff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    font-size: 0.9em;
-    opacity: 0;
-}
-
-.preview-item:hover .preview-rating-remove {
-    opacity: 1;
-}
-
-.preview-rating-remove:hover {
-    background: rgba(255, 105, 180, 0.1);
-    border-color: #ff69b4;
-    color: #ff69b4;
-    transform: scale(1.1);
-}
-
 /* Модальне вікно підтвердження */
 .confirmation-modal {
     display: none;
@@ -864,5 +826,95 @@ main {
     border-color: #ff69b4;
     color: #ff69b4;
 }
-@media (max-width: 720px) {}
-@media (max-width: 480px) {}
+
+/* Анімації */
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-section {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.profile-section:nth-child(1) { animation-delay: 0.1s; }
+.profile-section:nth-child(2) { animation-delay: 0.2s; }
+.profile-section:nth-child(3) { animation-delay: 0.3s; }
+.profile-section:nth-child(4) { animation-delay: 0.4s; }
+
+@media (max-width: 720px) {
+    .profile-sections {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .profile-stats {
+        justify-content: center;
+    }
+    
+    .profile-preview {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 15px 20px;
+        padding-top: 70px;
+    }
+    
+    .profile-container {
+        padding: 10px;
+    }
+    
+    .profile-header {
+        padding: 20px;
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .profile-info h1 {
+        font-size: 1.5em;
+    }
+    
+    .profile-stats {
+        gap: 15px;
+    }
+    
+    .stat-item {
+        padding: 8px 12px;
+    }
+    
+    .stat-number {
+        font-size: 1.2em;
+    }
+    
+    .profile-section {
+        padding: 20px;
+    }
+}

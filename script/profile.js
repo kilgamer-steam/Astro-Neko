@@ -283,7 +283,7 @@ function createRatingPreviewItem(animeId, ratingData, animeInfo) {
     const stars = '★'.repeat(ratingData.rating) + '☆'.repeat(10 - ratingData.rating);
     
     previewItem.innerHTML = `
-        <button class="preview-rating-remove" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">×</button>
+        <button class="preview-rating-remove" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">Видалити</button>
         <img src="${imageSrc}" alt="${title}" class="preview-item-image">
         <div class="preview-item-info">
             <div class="preview-item-title">${title}</div>
@@ -464,7 +464,7 @@ function confirmRemoveBookmark(animeId, title) {
                 <h3>Видалити закладку?</h3>
                 <p>Ви дійсно хочете видалити "${title}" з закладок?</p>
                 <div class="confirmation-modal-buttons">
-                    <button class="confirm-btn" onclick="removeBookmark('${animeId}')">Так, видалити</button>
+                    <button class="confirm-btn" onclick="executeRemoveBookmark('${animeId}')">Так, видалити</button>
                     <button class="cancel-btn" onclick="closeConfirmationModal('confirm-bookmark-remove')">Скасувати</button>
                 </div>
             </div>
@@ -484,7 +484,7 @@ function confirmDeleteRating(animeId, title) {
                 <h3>Видалити оцінку?</h3>
                 <p>Ви дійсно хочете видалити вашу оцінку для "${title}"?</p>
                 <div class="confirmation-modal-buttons">
-                    <button class="confirm-btn" onclick="deleteRating('${animeId}')">Так, видалити</button>
+                    <button class="confirm-btn" onclick="executeDeleteRating('${animeId}')">Так, видалити</button>
                     <button class="cancel-btn" onclick="closeConfirmationModal('confirm-rating-delete')">Скасувати</button>
                 </div>
             </div>
@@ -496,47 +496,53 @@ function confirmDeleteRating(animeId, title) {
     modal.style.display = 'flex';
 }
 
-// Функція для закриття модального вікна підтвердження
-function closeConfirmationModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.remove();
-    }
-}
-
-// Функція для видалення закладки
-function removeBookmark(animeId) {
+// Функція для виконання видалення закладки (без закриття модального вікна)
+function executeRemoveBookmark(animeId) {
     allBookmarks = allBookmarks.filter(item => item.id !== animeId);
     localStorage.setItem('animeBookmarks', JSON.stringify(allBookmarks));
     
-    // Закриваємо модальне вікно підтвердження
+    // Закриваємо тільки модальне вікно підтвердження
     closeConfirmationModal('confirm-bookmark-remove');
     
     // Оновлюємо інтерфейс
     updateProfileStats();
     showTempMessage('Закладку видалено 📕');
     
-    // Закриваємо модальне вікно з закладками якщо воно відкрите
-    const modal = document.getElementById('bookmarks-modal');
-    if (modal) {
-        modal.remove();
+    // Оновлюємо модальне вікно з закладками якщо воно відкрите
+    const bookmarksModal = document.getElementById('bookmarks-modal');
+    if (bookmarksModal) {
+        // Видаляємо старе модальне вікно
+        bookmarksModal.remove();
+        // Відкриваємо нове з оновленими даними
+        showBookmarksModal();
     }
 }
 
-// Функція для видалення оцінки
-function deleteRating(animeId) {
+// Функція для виконання видалення оцінки (без закриття модального вікна)
+function executeDeleteRating(animeId) {
     delete allRatings[animeId];
     localStorage.setItem('animeRatings', JSON.stringify(allRatings));
     
-    // Закриваємо модальне вікно підтвердження
+    // Закриваємо тільки модальне вікно підтвердження
     closeConfirmationModal('confirm-rating-delete');
     
     // Оновлюємо інтерфейс
     updateProfileStats();
     showTempMessage('Оцінку видалено ⭐');
     
-    // Закриваємо модальне вікно з оцінками якщо воно відкрите
-    const modal = document.getElementById('ratings-modal');
+    // Оновлюємо модальне вікно з оцінками якщо воно відкрите
+    const ratingsModal = document.getElementById('ratings-modal');
+    if (ratingsModal) {
+        // Видаляємо старе модальне вікно
+        ratingsModal.remove();
+        // Відкриваємо нове з оновленими даними
+        showRatingsModal();
+    }
+}
+
+// Функція для закриття модального вікна підтвердження
+function closeConfirmationModal(modalId) {
+    const modal = document.getElementById(modalId);
     if (modal) {
         modal.remove();
     }

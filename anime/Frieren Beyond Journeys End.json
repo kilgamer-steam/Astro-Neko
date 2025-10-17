@@ -31,8 +31,8 @@
               "opening": [0,0],
               "ending": [0,0],
               "quality": [
-                {"value":"1080", "videoUrl":""},
-                {"value":"720", "videoUrl":""},
+                {"value":"1080", "videoUrl":"https://www.youtube.com/watch?v=5q-dfVr15xI"},
+                {"value":"720", "videoUrl":"https://www.youtube.com/embed/5q-dfVr15xI?si=5rmatjMV5WdfUtcL"},
                 {"value":"360", "videoUrl":""}
               ]
             }
