@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій профіль — AstroNeko</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Додаткові стилі для сторінки профілю */
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            background: rgba(24, 24, 27, 0.36);
+            backdrop-filter: blur(2px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #943a67ff;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .profile-info h1 {
+            color: #ff69b4;
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff69b4;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #cc6096ff;
+        }
+
+        .profile-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .profile-section {
+            background: rgba(24, 24, 27, 0.36);
+            backdrop-filter: blur(2px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+        }
+
+        .section-title {
+            color: #ff69b4;
+            margin: 0 0 20px 0;
+            font-size: 1.3em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .bookmarks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .bookmark-item {
+            background: rgba(29, 29, 32, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 105, 180, 0.1);
+        }
+
+        .bookmark-item:hover {
+            transform: translateY(-5px);
+            border-color: #ff69b4;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .bookmark-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .bookmark-title {
+            padding: 10px;
+            font-size: 0.9em;
+            color: #cc6096ff;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ratings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(29, 29, 32, 0.6);
+            border-radius: 10px;
+            border-left: 4px solid #943a67ff;
+        }
+
+        .rating-image {
+            width: 60px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .rating-info {
+            flex: 1;
+        }
+
+        .rating-title {
+            color: #ff69b4;
+            margin: 0 0 5px 0;
+            font-size: 1em;
+        }
+
+        .rating-stars {
+            color: #ffd700;
+            font-size: 1.1em;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #cc6096ff;
+        }
+
+        .empty-state .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .coming-soon-badge {
+            background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        /* Адаптація для мобільних */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .profile-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+
+            .bookmarks-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-container {
+                padding: 10px;
+            }
+
+            .profile-header {
+                padding: 20px;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .bookmarks-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фон -->
+    <div class="anime-bg"></div>
+
+    <!-- Шапка -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="https://kilgamer-steam.github.io/Astro-Neko/images/logo.png" alt="AstroNeko">
+            <h1>AstroNeko</h1>
+        </a>
+        <nav class="header-nav">
+            <a href="index.html">Головна</a>
+            <a href="catalog.html">Каталог</a>
+            <a href="profile.html" style="background: #ff69b4; color: white;">Профіль</a>
+        </nav>
+    </header>
+
+    <!-- Основний контент -->
+    <main>
+        <div class="profile-container">
+            <!-- Заголовок профілю -->
+            <div class="profile-header">
+                <img src="https://kilgamer-steam.github.io/Astro-Neko/images/default-avatar.png" alt="Аватар" class="profile-avatar">
+                <div class="profile-info">
+                    <h1>Анонімний Користувач <span class="coming-soon-badge">Demo</span></h1>
+                    <p style="color: #cc6096ff; margin: 0;">Приємного перегляду! 🎬</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">В закладках</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Оцінено</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Переглянуто</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секції профілю -->
+            <div class="profile-sections">
+                <!-- Закладки -->
+                <div class="profile-section">
+                    <h2 class="section-title">Мої закладки ★</h2>
+                    <div class="empty-state">
+                        <div class="icon">📚</div>
+                        <p>Тут будуть зберігатися ваші закладки</p>
+                        <small style="opacity: 0.7;">Функція буде доступна після реєстрації</small>
+                    </div>
+                </div>
+
+                <!-- Оцінки -->
+                <div class="profile-section">
+                    <h2 class="section-title">Мої оцінки ⭐</h2>
+                    <div class="empty-state">
+                        <div class="icon">🎯</div>
+                        <p>Тут будуть ваші оцінки аніме</p>
+                        <small style="opacity: 0.7;">Оцінюйте аніме та слідкуйте за статистикою</small>
+                    </div>
+                </div>
+
+                <!-- Переглянуті -->
+                <div class="profile-section">
+                    <h2 class="section-title">Нещодавно переглянуті 👁️</h2>
+                    <div class="empty-state">
+                        <div class="icon">👀</div>
+                        <p>Тут буде історія переглядів</p>
+                        <small style="opacity: 0.7;">Відстежуйте ваш прогрес по серіалам</small>
+                    </div>
+                </div>
+
+                <!-- Налаштування -->
+                <div class="profile-section">
+                    <h2 class="section-title">Налаштування ⚙️</h2>
+                    <div class="empty-state">
+                        <div class="icon">🔧</div>
+                        <p>Персоналізуйте ваш досвід</p>
+                        <small style="opacity: 0.7;">Змінюйте тему, мову та інші параметри</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Інформація про демо-режим -->
+            <div class="profile-section" style="margin-top: 30px; text-align: center;">
+                <h2 class="section-title">Демо-режим</h2>
+                <div style="color: #cc6096ff; line-height: 1.6;">
+                    <p>🚧 Ця сторінка знаходиться в стадії розробки</p>
+                    <p>На GitHub Pages функціонал профілю обмежений через відсутність серверної частини</p>
+                    <p>💡 У майбутньому тут буде:</p>
+                    <ul style="text-align: left; display: inline-block; margin: 15px 0;">
+                        <li>Персональна статистика переглядів</li>
+                        <li>Синхронізація закладок між пристроями</li>
+                        <li>Рекомендації на основі ваших вподобань</li>
+                        <li>Система досягнень та нагород</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Демо-функціонал для показу можливостей
+        document.addEventListener('DOMContentLoaded', function() {
+            // Демо-повідомлення при кліку на аватар
+            document.querySelector('.profile-avatar').addEventListener('click', function() {
+                alert('🎭 Демо-режим\n\nУ повнофункціональній версії тут буде можливість змінити аватар та налаштування профілю!');
+            });
+
+            // Демо-повідомлення для секцій
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.addEventListener('click', function() {
+                    const title = this.querySelector('.section-title').textContent;
+                    alert(`🔮 Демо-функція: ${title}\n\nЦя функція буде повністю доступна після реалізації системи користувачів!`);
+                });
+            });
+
+            // Плавна анімація появи контенту
+            setTimeout(() => {
+                document.querySelector('.profile-container').style.opacity = '1';
+                document.querySelector('.profile-container').style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        // Стилі для плавної появи
+        document.querySelector('.profile-container').style.cssText = `
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        `;
+
+        // Auto-hide header (той самий код що і на інших сторінках)
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > lastScrollY && currentScrollY > header.offsetHeight) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        header.addEventListener('mouseenter', () => {
+            header.classList.remove('hidden');
+        });
+
+        header.addEventListener('mouseleave', () => {
+            lastScrollY = window.scrollY;
+        });
+    </script>
+</body>
+</html>
