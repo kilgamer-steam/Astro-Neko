@@ -74,122 +74,116 @@
       });
     }
 
-   function displayAnimeInfo(anime) {
-  document.title = `${anime.title} — AstroNeko`;
-  document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
-  document.getElementById("anime-image").src = anime.img;
-  document.getElementById("anime-title").textContent = anime.title;
-  document.getElementById("anime-description").textContent = anime.description;
-  document.getElementById("anime-tags").textContent = anime.tags.join(", ");
-  document.getElementById("anime-status").textContent = anime.status;
-  document.getElementById("anime-age").textContent = anime.age;
-  document.getElementById("anime-rating").textContent = anime.rating || "N/A";
+    function displayAnimeInfo(anime) {
+      document.title = `${anime.title} — AstroNeko`;
+      document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
+      document.getElementById("anime-image").src = anime.img;
+      document.getElementById("anime-title").textContent = anime.title;
+      document.getElementById("anime-description").textContent = anime.description;
+      document.getElementById("anime-tags").textContent = anime.tags.join(", ");
+      document.getElementById("anime-status").textContent = anime.status;
+      document.getElementById("anime-age").textContent = anime.age;
+      document.getElementById("anime-rating").textContent = anime.rating || "N/A";
 
-  const seasonList = document.getElementById("season-list");
-  seasonList.innerHTML = "";
+      const seasonList = document.getElementById("season-list");
+      seasonList.innerHTML = "";
 
-  // Відображення сезонів
-  anime.seasons.forEach(season => {
-    const seasonDiv = document.createElement("div");
-    seasonDiv.classList.add("season");
+      // Відображення сезонів
+      anime.seasons.forEach(season => {
+        const seasonDiv = document.createElement("div");
+        seasonDiv.classList.add("season");
 
-    const seasonTitle = document.createElement("h4");
-    
-    // Перевіряємо, чи є назва сезону
-    if (season.title && season.title.trim() !== "") {
-      seasonTitle.textContent = `Сезон ${season.seasonNumber}: "${season.title}"`;
-    } else {
-      seasonTitle.textContent = `Сезон ${season.seasonNumber}`;
+        const seasonTitle = document.createElement("h4");
+        const seasonName = season.title && season.title.trim() !== "" ? `: "${season.title}"` : "";
+        seasonTitle.textContent = `Сезон ${season.seasonNumber}${seasonName}`;
+        seasonDiv.appendChild(seasonTitle);
+
+        // Додаємо інформацію про рік та кількість серій
+        const seasonMeta = document.createElement("div");
+        seasonMeta.classList.add("season-meta");
+        seasonMeta.innerHTML = `
+          <span class="season-year">${season.year} рік</span>
+          <span class="season-episodes">${season.episodeCount} серій</span>
+        `;
+        seasonDiv.appendChild(seasonMeta);
+
+        const episodeContainer = document.createElement("div");
+        episodeContainer.classList.add("episode-container");
+
+        season.episodes.forEach((ep, idx) => {
+          const btn = document.createElement("button");
+          btn.classList.add("episode-btn");
+          btn.textContent = ep.title || `Серія ${idx + 1}`;
+          btn.onclick = () => {
+            const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
+            window.location.href = url;
+          };
+          episodeContainer.appendChild(btn);
+        });
+
+        seasonDiv.appendChild(episodeContainer);
+        seasonList.appendChild(seasonDiv);
+      });
+
+      // Відображення фільмів
+      if (anime.movies && anime.movies.length > 0) {
+        const moviesBlock = document.createElement("div");
+        moviesBlock.classList.add("movies-block");
+
+        const moviesTitle = document.createElement("h4");
+        moviesTitle.textContent = "Фільми";
+        moviesBlock.appendChild(moviesTitle);
+
+        // Створюємо таблицю для фільмів
+        const moviesTable = document.createElement("table");
+        moviesTable.classList.add("movies-table");
+        
+        // Заголовки таблиці
+        const tableHeader = document.createElement("tr");
+        tableHeader.innerHTML = `
+          <th class="num-tab">№</th>
+          <th class="name-tab">Назва фільму</th>
+          <th class="data-tab">Дата релізу</th>
+          <th class="time-tab">Тривалість</th>
+          <th class="button-tab"></th>
+        `;
+        moviesTable.appendChild(tableHeader);
+
+        // Заповнюємо таблицю даними
+        anime.movies.forEach((movie, idx) => {
+          const row = document.createElement("tr");
+          row.classList.add("movie-row");
+          
+          // Конвертуємо секунди в читабельний формат
+          const duration = formatDuration(movie.duration);
+          
+          row.innerHTML = `
+            <td class="movie-number">${movie.movieNumber}</td>
+            <td class="movie-title">${movie.name}</td>
+            <td class="movie-date">${formatDate(movie.releaseDate)}</td>
+            <td class="movie-duration">${duration}</td>
+            <td class="movie-action">
+              <button class="watch-movie-btn" data-movie="${idx + 1}">Дивитися</button>
+            </td>
+          `;
+          
+          // Обробник кнопки "Дивитися"
+          const watchBtn = row.querySelector('.watch-movie-btn');
+          watchBtn.onclick = () => {
+            const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
+            window.location.href = url;
+          };
+          
+          moviesTable.appendChild(row);
+        });
+
+        moviesBlock.appendChild(moviesTable);
+        seasonList.appendChild(moviesBlock);
+      }
+      
+      // Додаємо обробники для кнопок дій
+      setupActionButtons(anime);
     }
-    
-    seasonDiv.appendChild(seasonTitle);
-
-    // Додаємо інформацію про рік та кількість серій
-    const seasonMeta = document.createElement("div");
-    seasonMeta.classList.add("season-meta");
-    seasonMeta.innerHTML = `
-      <span class="season-year">${season.year} рік</span>
-      <span class="season-episodes">${season.episodeCount} серій</span>
-    `;
-    seasonDiv.appendChild(seasonMeta);
-
-    const episodeContainer = document.createElement("div");
-    episodeContainer.classList.add("episode-container");
-
-    season.episodes.forEach((ep, idx) => {
-      const btn = document.createElement("button");
-      btn.classList.add("episode-btn");
-      btn.textContent = ep.title || `Серія ${idx + 1}`;
-      btn.onclick = () => {
-        const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
-        window.location.href = url;
-      };
-      episodeContainer.appendChild(btn);
-    });
-
-    seasonDiv.appendChild(episodeContainer);
-    seasonList.appendChild(seasonDiv);
-  });
-
-  // Відображення фільмів
-  if (anime.movies && anime.movies.length > 0) {
-    const moviesBlock = document.createElement("div");
-    moviesBlock.classList.add("movies-block");
-
-    const moviesTitle = document.createElement("h4");
-    moviesTitle.textContent = "Фільми";
-    moviesBlock.appendChild(moviesTitle);
-
-    // Створюємо таблицю для фільмів
-    const moviesTable = document.createElement("table");
-    moviesTable.classList.add("movies-table");
-    
-    // Заголовки таблиці
-    const tableHeader = document.createElement("tr");
-    tableHeader.innerHTML = `
-      <th class="num-tab">№</th>
-      <th class="name-tab">Назва фільму</th>
-      <th class="data-tab">Дата релізу</th>
-      <th class="time-tab">Тривалість</th>
-      <th class="button-tab"></th>
-    `;
-    moviesTable.appendChild(tableHeader);
-
-    // Заповнюємо таблицю даними
-    anime.movies.forEach((movie, idx) => {
-      const row = document.createElement("tr");
-      row.classList.add("movie-row");
-      
-      // Конвертуємо секунди в читабельний формат
-      const duration = formatDuration(movie.duration);
-      
-      row.innerHTML = `
-        <td class="movie-number">${movie.movieNumber}</td>
-        <td class="movie-title">${movie.name}</td>
-        <td class="movie-date">${formatDate(movie.releaseDate)}</td>
-        <td class="movie-duration">${duration}</td>
-        <td class="movie-action">
-          <button class="watch-movie-btn" data-movie="${idx + 1}">Дивитися</button>
-        </td>
-      `;
-      
-      // Обробник кнопки "Дивитися"
-      const watchBtn = row.querySelector('.watch-movie-btn');
-      watchBtn.onclick = () => {
-        const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
-        window.location.href = url;
-      };
-      
-      moviesTable.appendChild(row);
-    });
-
-    moviesBlock.appendChild(moviesTable);
-    seasonList.appendChild(moviesBlock);
-  }
-  
-  // Додаємо обробники для кнопок дій
-  setupActionButtons(anime);
-}
     
     function setupActionButtons(anime) {
       const bookmarkBtn = document.getElementById('bookmark-btn');
