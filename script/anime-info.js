@@ -1,29 +1,29 @@
 // Отримуємо ID аніме з URL
-    const params = new URLSearchParams(window.location.search);
-    const animeId = params.get("id");
-    
-    // Елементи для управління станом завантаження
-    const loadingOverlay = document.getElementById('loading-overlay');
-    const contentWrapper = document.getElementById('content-wrapper');
-    
-    // Показуємо індикатор завантаження
-    loadingOverlay.classList.remove('hidden');
-    contentWrapper.classList.remove('loaded');
-    
-    if (!animeId) {
-      showError("Аніме не знайдено 😿", "Не вдалося отримати ID аніме з URL.");
-    } else {
-      loadAnime(animeId);
-    }
+const params = new URLSearchParams(window.location.search);
+const animeId = params.get("id");
 
-    async function loadAnime(id) {
-      try {
+// Елементи для управління станом завантаження
+const loadingOverlay = document.getElementById('loading-overlay');
+const contentWrapper = document.getElementById('content-wrapper');
+
+// Показуємо індикатор завантаження
+loadingOverlay.classList.remove('hidden');
+contentWrapper.classList.remove('loaded');
+
+if (!animeId) {
+    showError("Аніме не знайдено 😿", "Не вдалося отримати ID аніме з URL.");
+} else {
+    loadAnime(animeId);
+}
+
+async function loadAnime(id) {
+    try {
         console.log("Завантажую аніме з ID:", id);
         const response = await fetch(`anime/${encodeURIComponent(id)}.json`);
         console.log("Статус відповіді:", response.status);
         
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const anime = await response.json();
@@ -31,65 +31,65 @@
         
         // Ховаємо індикатор завантаження та показуємо контент
         setTimeout(() => {
-          loadingOverlay.classList.add('hidden');
-          contentWrapper.classList.add('loaded');
-          displayAnimeInfo(anime);
+            loadingOverlay.classList.add('hidden');
+            contentWrapper.classList.add('loaded');
+            displayAnimeInfo(anime);
         }, 500);
         
-      } catch (error) {
+    } catch (error) {
         console.error("Деталі помилки:", error);
         showError("Помилка при завантаженні аніме 😿", error.message);
-      }
     }
+}
 
-    function showError(title, message) {
-      document.body.innerHTML = `
+function showError(title, message) {
+    document.body.innerHTML = `
         <div class="error-message">
-          <h2>${title}</h2>
-          <p>${message}</p>
-          <a href="https://kilgamer-steam.github.io/Astro-Neko" class="back-button">Повернутися на головну</a>
+        <h2>${title}</h2>
+        <p>${message}</p>
+        <a href="https://kilgamer-steam.github.io/Astro-Neko" class="back-button">Повернутися на головну</a>
         </div>
-      `;
-    }
+    `;
+}
 
-    // Функція для форматування тривалості
-    function formatDuration(seconds) {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      
-      if (hours > 0) {
+// Функція для форматування тривалості
+function formatDuration(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    
+    if (hours > 0) {
         return `${hours} год ${minutes} хв`;
-      } else {
+    } else {
         return `${minutes} хв`;
-      }
     }
+}
 
-    // Функція для форматування дати
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('uk-UA', {
+// Функція для форматування дати
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('uk-UA', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-      });
-    }
+    });
+}
 
-    function displayAnimeInfo(anime) {
-      document.title = `${anime.title} — AstroNeko`;
-      document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
-      document.getElementById("anime-image").src = anime.img;
-      document.getElementById("anime-title").textContent = anime.title;
-      document.getElementById("anime-description").textContent = anime.description;
-      document.getElementById("anime-tags").textContent = anime.tags.join(", ");
-      document.getElementById("anime-status").textContent = anime.status;
-      document.getElementById("anime-age").textContent = anime.age;
-      document.getElementById("anime-rating").textContent = anime.rating || "N/A";
+function displayAnimeInfo(anime) {
+    document.title = `${anime.title} — AstroNeko`;
+    document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
+    document.getElementById("anime-image").src = anime.img;
+    document.getElementById("anime-title").textContent = anime.title;
+    document.getElementById("anime-description").textContent = anime.description;
+    document.getElementById("anime-tags").textContent = anime.tags.join(", ");
+    document.getElementById("anime-status").textContent = anime.status;
+    document.getElementById("anime-age").textContent = anime.age;
+    document.getElementById("anime-rating").textContent = anime.rating || "N/A";
 
-      const seasonList = document.getElementById("season-list");
-      seasonList.innerHTML = "";
+    const seasonList = document.getElementById("season-list");
+    seasonList.innerHTML = "";
 
-      // Відображення сезонів
-      anime.seasons.forEach(season => {
+    // Відображення сезонів
+    anime.seasons.forEach(season => {
         const seasonDiv = document.createElement("div");
         seasonDiv.classList.add("season");
 
@@ -102,8 +102,8 @@
         const seasonMeta = document.createElement("div");
         seasonMeta.classList.add("season-meta");
         seasonMeta.innerHTML = `
-          <span class="season-year">${season.year} рік</span>
-          <span class="season-episodes">${season.episodeCount} серій</span>
+        <span class="season-year">${season.year} рік</span>
+        <span class="season-episodes">${season.episodeCount} серій</span>
         `;
         seasonDiv.appendChild(seasonMeta);
 
@@ -111,22 +111,22 @@
         episodeContainer.classList.add("episode-container");
 
         season.episodes.forEach((ep, idx) => {
-          const btn = document.createElement("button");
-          btn.classList.add("episode-btn");
-          btn.textContent = ep.title || `Серія ${idx + 1}`;
-          btn.onclick = () => {
+        const btn = document.createElement("button");
+        btn.classList.add("episode-btn");
+        btn.textContent = ep.title || `Серія ${idx + 1}`;
+        btn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
             window.location.href = url;
-          };
-          episodeContainer.appendChild(btn);
+        };
+        episodeContainer.appendChild(btn);
         });
 
         seasonDiv.appendChild(episodeContainer);
         seasonList.appendChild(seasonDiv);
-      });
+    });
 
-      // Відображення фільмів
-      if (anime.movies && anime.movies.length > 0) {
+    // Відображення фільмів
+    if (anime.movies && anime.movies.length > 0) {
         const moviesBlock = document.createElement("div");
         moviesBlock.classList.add("movies-block");
 
@@ -141,51 +141,51 @@
         // Заголовки таблиці
         const tableHeader = document.createElement("tr");
         tableHeader.innerHTML = `
-          <th class="num-tab">№</th>
-          <th class="name-tab">Назва фільму</th>
-          <th class="data-tab">Дата релізу</th>
-          <th class="time-tab">Тривалість</th>
-          <th class="button-tab"></th>
+        <th class="num-tab">№</th>
+        <th class="name-tab">Назва фільму</th>
+        <th class="data-tab">Дата релізу</th>
+        <th class="time-tab">Тривалість</th>
+        <th class="button-tab"></th>
         `;
         moviesTable.appendChild(tableHeader);
 
         // Заповнюємо таблицю даними
         anime.movies.forEach((movie, idx) => {
-          const row = document.createElement("tr");
-          row.classList.add("movie-row");
-          
-          // Конвертуємо секунди в читабельний формат
-          const duration = formatDuration(movie.duration);
-          
-          row.innerHTML = `
+        const row = document.createElement("tr");
+        row.classList.add("movie-row");
+        
+        // Конвертуємо секунди в читабельний формат
+        const duration = formatDuration(movie.duration);
+        
+        row.innerHTML = `
             <td class="movie-number">${movie.movieNumber}</td>
             <td class="movie-title">${movie.name}</td>
             <td class="movie-date">${formatDate(movie.releaseDate)}</td>
             <td class="movie-duration">${duration}</td>
             <td class="movie-action">
-              <button class="watch-movie-btn" data-movie="${idx + 1}">Дивитися</button>
+            <button class="watch-movie-btn" data-movie="${idx + 1}">Дивитися</button>
             </td>
-          `;
-          
-          // Обробник кнопки "Дивитися"
-          const watchBtn = row.querySelector('.watch-movie-btn');
-          watchBtn.onclick = () => {
+        `;
+        
+        // Обробник кнопки "Дивитися"
+        const watchBtn = row.querySelector('.watch-movie-btn');
+        watchBtn.onclick = () => {
             const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
             window.location.href = url;
-          };
-          
-          moviesTable.appendChild(row);
+        };
+        
+        moviesTable.appendChild(row);
         });
 
         moviesBlock.appendChild(moviesTable);
         seasonList.appendChild(moviesBlock);
-      }
-      
-      // Додаємо обробники для кнопок дій
-      setupActionButtons(anime);
     }
     
-    function setupActionButtons(anime) {
+    // Додаємо обробники для кнопок дій
+    setupActionButtons(anime);
+}
+
+function setupActionButtons(anime) {
     const bookmarkBtn = document.getElementById('bookmark-btn');
     const rateBtn = document.getElementById('rate-btn');
     const shareBtn = document.getElementById('share-btn');
@@ -464,63 +464,34 @@ function fallbackCopyToClipboard(text) {
     }
 }
 
-// Резервна функція копіювання для старих браузерів
-function fallbackCopyToClipboard(text) {
-  const textArea = document.createElement("textarea");
-  textArea.value = text;
-  textArea.style.cssText = `
-    position: fixed;
-    left: -9999px;
-    opacity: 0;
-  `;
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  
-  try {
-    const successful = document.execCommand('copy');
-    document.body.removeChild(textArea);
+// Auto-hide header functionality
+let lastScrollY = window.scrollY;
+const header = document.querySelector('header');
+const headerHeight = header.offsetHeight;
+
+// Встановлюємо правильний відступ для контенту
+document.querySelector('.content-wrapper').style.paddingTop = headerHeight + 'px';
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
     
-    if (successful) {
-      showTempMessage('Посилання скопійовано в буфер обміну! 📋');
-    } else {
-      showTempMessage('Не вдалося скопіювати. Спробуйте ще раз.');
-    }
-  } catch (err) {
-    document.body.removeChild(textArea);
-    showTempMessage('Помилка копіювання. Скопіюйте посилання вручну.');
-  }
-}
-    }
-
-    // Auto-hide header functionality
-    let lastScrollY = window.scrollY;
-    const header = document.querySelector('header');
-    const headerHeight = header.offsetHeight;
-
-    // Встановлюємо правильний відступ для контенту
-    document.querySelector('.content-wrapper').style.paddingTop = headerHeight + 'px';
-
-    window.addEventListener('scroll', () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
+    if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
         // Скролимо вниз - ховаємо хедер
         header.classList.add('hidden');
-      } else {
+    } else {
         // Скролимо вгору - показуємо хедер
         header.classList.remove('hidden');
-      }
-      
-      lastScrollY = currentScrollY;
-    });
+    }
+    
+    lastScrollY = currentScrollY;
+});
 
-    // Додатково: показуємо хедер при ховері
-    header.addEventListener('mouseenter', () => {
-      header.classList.remove('hidden');
-    });
+// Додатково: показуємо хедер при ховері
+header.addEventListener('mouseenter', () => {
+    header.classList.remove('hidden');
+});
 
-    // Запобігаємо миттєвому хованню при виході курсора
-    header.addEventListener('mouseleave', () => {
-      lastScrollY = window.scrollY;
-    });
+// Запобігаємо миттєвому хованню при виході курсора
+header.addEventListener('mouseleave', () => {
+    lastScrollY = window.scrollY;
+});

@@ -1,3 +1,6 @@
+/* ===== ОСНОВНІ СТИЛІ ДЛЯ ВСЬОГО ДОКУМЕНТУ ===== */
+
+/* Скидання стандартних відступів браузера та налаштування основного шрифту */
 body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
@@ -208,135 +211,7 @@ header .logo h1 {
   background: #ff69b4;
   color: #fff;
 }
-/* ===== СТИЛІ ДЛЯ РЕЙТИНГУ ЗІ ЗІРОЧКАМИ ===== */
-.rating-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 15, 16, 0.9);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
 
-.rating-content {
-    background: rgba(29, 29, 32, 0.95);
-    border: 2px solid #943a67ff;
-    border-radius: 15px;
-    padding: 30px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4);
-    animation: modalAppear 0.3s ease;
-}
-
-.rating-title {
-    color: #ff69b4;
-    margin: 0 0 20px 0;
-    font-size: 1.4em;
-    font-weight: 600;
-}
-
-.rating-stars {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    margin: 25px 0;
-    font-size: 2.5em;
-    cursor: pointer;
-}
-
-.rating-star {
-    color: #444;
-    transition: all 0.2s ease;
-    position: relative;
-    cursor: pointer;
-}
-
-.rating-star:hover {
-    transform: scale(1.2);
-}
-
-.rating-star.active {
-    color: #ffd700;
-}
-
-.rating-star.half::before {
-    content: '★';
-    position: absolute;
-    left: 0;
-    width: 50%;
-    overflow: hidden;
-    color: #ffd700;
-}
-
-.rating-value {
-    color: #cc6096ff;
-    font-size: 1.1em;
-    margin: 15px 0;
-    font-weight: 600;
-}
-
-.rating-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.rating-cancel, .rating-submit {
-    padding: 10px 25px;
-    border: 2px solid #943a67ff;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: "Poppins", "Segoe UI", sans-serif;
-}
-
-.rating-cancel {
-    background: transparent;
-    color: #cc6096ff;
-}
-
-.rating-cancel:hover {
-    background: rgba(255, 105, 180, 0.1);
-}
-
-.rating-submit {
-    background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
-    color: white;
-    border: none;
-}
-
-.rating-submit:hover {
-    background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
-}
-
-.rating-submit:disabled {
-    background: #666;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Анімація для зірочок */
-@keyframes starPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-}
-
-.rating-star.animated {
-    animation: starPulse 0.3s ease;
-}
 /* ===== Seasons block ===== */
 .seasons-block {
   background: rgba(24, 24, 27, 0.36);
@@ -516,6 +391,147 @@ header .logo h1 {
   transform: translateY(-2px);
 }
 
+/* ===== СТИЛІ ДЛЯ РЕЙТИНГУ ЗІ ЗІРОЧКАМИ ===== */
+.rating-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 16, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-content {
+    background: rgba(29, 29, 32, 0.95);
+    border: 2px solid #943a67ff;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4);
+    animation: modalAppear 0.3s ease;
+}
+
+.rating-title {
+    color: #ff69b4;
+    margin: 0 0 20px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 25px 0;
+    font-size: 2.5em;
+    cursor: pointer;
+}
+
+.rating-star {
+    color: #444;
+    transition: all 0.2s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.rating-star:hover {
+    transform: scale(1.2);
+}
+
+.rating-star.active {
+    color: #ffd700;
+}
+
+.rating-star.half::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #ffd700;
+}
+
+.rating-value {
+    color: #cc6096ff;
+    font-size: 1.1em;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+.rating-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.rating-cancel, .rating-submit {
+    padding: 10px 25px;
+    border: 2px solid #943a67ff;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.rating-cancel {
+    background: transparent;
+    color: #cc6096ff;
+}
+
+.rating-cancel:hover {
+    background: rgba(255, 105, 180, 0.1);
+}
+
+.rating-submit {
+    background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
+    color: white;
+    border: none;
+}
+
+.rating-submit:hover {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+}
+
+.rating-submit:disabled {
+    background: #666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Анімація для зірочок */
+@keyframes starPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.rating-star.animated {
+    animation: starPulse 0.3s ease;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
 /* Додаткові стилі для покращення UX */
 .loading-overlay {
   position: fixed;
@@ -632,6 +648,15 @@ header .logo h1 {
   .movies-table td {
     padding: 12px 10px;
     font-size: 0.9em;
+  }
+
+  /* Рейтинг модальне вікно */
+  .rating-stars {
+    font-size: 2em;
+  }
+
+  .rating-content {
+    padding: 20px;
   }
 }
 
@@ -771,6 +796,21 @@ header .logo h1 {
     white-space: nowrap;
   }
   
+  /* Рейтинг модальне вікно */
+  .rating-stars {
+    font-size: 1.8em;
+    gap: 3px;
+  }
+
+  .rating-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rating-cancel, .rating-submit {
+    width: 100%;
+  }
+
   /* Додаткові адаптації */
   .loading-spinner {
     width: 40px;
@@ -812,5 +852,13 @@ header .logo h1 {
     min-width: 80px;
     padding: 6px 10px;
     font-size: 0.8em;
+  }
+
+  .rating-stars {
+    font-size: 1.6em;
+  }
+
+  .rating-content {
+    padding: 15px;
   }
 }
