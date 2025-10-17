@@ -79,9 +79,7 @@
               "opening": [15, 104],
               "ending": [1346, 1452],
               "quality": [
-                {"value":"1080", "videoUrl":""},
-                {"value":"720", "videoUrl":""},
-                {"value":"360", "videoUrl":""}
+                {"value":"1080", "videoUrl":"https://www.youtube.com/watch?v=AbG_c0CdrhQ&feature=youtu.be"}
               ]
             }
           ]
