@@ -710,5 +710,159 @@ main {
 .profile-section:nth-child(3) { animation-delay: 0.3s; }
 .profile-section:nth-child(4) { animation-delay: 0.4s; }
 
+/* Додамо ці стилі в кінець CSS файлу */
+
+/* Стилі для кнопок керування на головній сторінці */
+.preview-item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.preview-item:hover .preview-item-actions {
+    opacity: 1;
+}
+
+.preview-details-btn, .preview-remove-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    flex: 1;
+}
+
+.preview-details-btn {
+    background: #943a67ff;
+    color: white;
+}
+
+.preview-details-btn:hover {
+    background: #ff82c1;
+}
+
+.preview-remove-btn {
+    background: transparent;
+    border: 1px solid #943a67ff;
+    color: #cc6096ff;
+}
+
+.preview-remove-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    border-color: #ff69b4;
+    color: #ff69b4;
+}
+
+/* Стилі для хрестика в оцінках на головній сторінці */
+.preview-rating-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #943a67ff;
+    border-radius: 50%;
+    background: rgba(29, 29, 32, 0.8);
+    color: #cc6096ff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+    opacity: 0;
+}
+
+.preview-item:hover .preview-rating-remove {
+    opacity: 1;
+}
+
+.preview-rating-remove:hover {
+    background: rgba(255, 105, 180, 0.1);
+    border-color: #ff69b4;
+    color: #ff69b4;
+    transform: scale(1.1);
+}
+
+/* Модальне вікно підтвердження */
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 15, 16, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation-modal-content {
+    background: rgba(29, 29, 32, 0.95);
+    border: 2px solid #943a67ff;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4);
+}
+
+.confirmation-modal h3 {
+    color: #ff69b4;
+    margin: 0 0 15px 0;
+    font-size: 1.3em;
+}
+
+.confirmation-modal p {
+    color: #cc6096ff;
+    margin: 0 0 25px 0;
+    line-height: 1.5;
+}
+
+.confirmation-modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.confirm-btn, .cancel-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.confirm-btn {
+    background: #943a67ff;
+    color: white;
+}
+
+.confirm-btn:hover {
+    background: #ff82c1;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 2px solid #943a67ff;
+    color: #cc6096ff;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    border-color: #ff69b4;
+    color: #ff69b4;
+}
 @media (max-width: 720px) {}
 @media (max-width: 480px) {}

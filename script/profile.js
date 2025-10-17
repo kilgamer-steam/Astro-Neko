@@ -79,7 +79,8 @@ async function updateProfileStats() {
     }
     
     if (watchedCountElement) {
-        watchedCountElement.textContent = ratingsCount;
+        // ВИМКНЕНО: не рахуємо оцінки як переглянуті
+        watchedCountElement.textContent = '0';
     }
     
     // Оновлюємо вміст секцій з даними
@@ -235,6 +236,7 @@ async function updateRatingsPreview() {
 function createBookmarkPreviewItem(bookmark, animeInfo) {
     const previewItem = document.createElement('div');
     previewItem.classList.add('preview-item');
+    previewItem.style.position = 'relative';
     
     const metaInfo = animeInfo ? `
         <div class="preview-item-meta">
@@ -253,12 +255,17 @@ function createBookmarkPreviewItem(bookmark, animeInfo) {
         <div class="preview-item-info">
             <div class="preview-item-title">${bookmark.title}</div>
             ${metaInfo}
+            <div class="preview-item-actions">
+                <a href="anime-info.html?id=${bookmark.id}" class="preview-details-btn">Детальніше</a>
+                <button class="preview-remove-btn" onclick="event.stopPropagation(); confirmRemoveBookmark('${bookmark.id}', '${bookmark.title.replace(/'/g, "\\'")}')">Видалити</button>
+            </div>
         </div>
     `;
     
     previewItem.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.location.href = `anime-info.html?id=${bookmark.id}`;
+        if (!e.target.closest('.preview-item-actions')) {
+            window.location.href = `anime-info.html?id=${bookmark.id}`;
+        }
     });
     
     return previewItem;
@@ -268,13 +275,15 @@ function createBookmarkPreviewItem(bookmark, animeInfo) {
 function createRatingPreviewItem(animeId, ratingData, animeInfo) {
     const previewItem = document.createElement('div');
     previewItem.classList.add('preview-item');
+    previewItem.style.position = 'relative';
     
     const title = animeInfo ? animeInfo.title : `Аніме ID: ${animeId}`;
-    const imageSrc = animeInfo ? animeInfo.img : bookmark.img;
+    const imageSrc = animeInfo ? animeInfo.img : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="140" viewBox="0 0 100 140"><rect width="100" height="140" fill="%23943a67"/><text x="50" y="70" font-family="Arial" font-size="14" fill="white" text-anchor="middle">⭐</text></svg>';
     
     const stars = '★'.repeat(ratingData.rating) + '☆'.repeat(10 - ratingData.rating);
     
     previewItem.innerHTML = `
+        <button class="preview-rating-remove" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">×</button>
         <img src="${imageSrc}" alt="${title}" class="preview-item-image">
         <div class="preview-item-info">
             <div class="preview-item-title">${title}</div>
@@ -282,12 +291,16 @@ function createRatingPreviewItem(animeId, ratingData, animeInfo) {
                 <div style="color: #ffd700;">${stars}</div>
                 <div>${ratingData.rating}/10</div>
             </div>
+            <div class="preview-item-actions">
+                <a href="anime-info.html?id=${animeId}" class="preview-details-btn">Детальніше</a>
+            </div>
         </div>
     `;
     
     previewItem.addEventListener('click', (e) => {
-        e.stopPropagation();
-        window.location.href = `anime-info.html?id=${animeId}`;
+        if (!e.target.closest('.preview-rating-remove') && !e.target.closest('.preview-item-actions')) {
+            window.location.href = `anime-info.html?id=${animeId}`;
+        }
     });
     
     return previewItem;
@@ -355,7 +368,7 @@ async function showBookmarksModal() {
                     ${metaInfo}
                     <div class="bookmark-card-actions">
                         <a href="anime-info.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
-                        <button class="remove-btn" onclick="event.preventDefault(); removeBookmark('${bookmark.id}')">Видалити</button>
+                        <button class="remove-btn" onclick="event.preventDefault(); confirmRemoveBookmark('${bookmark.id}', '${bookmark.title.replace(/'/g, "\\'")}')">Видалити</button>
                     </div>
                 </div>
             `;
@@ -415,7 +428,7 @@ async function showRatingsModal() {
                     <div class="rating-card-date">Оцінено: ${new Date(ratingData.date).toLocaleDateString('uk-UA')}</div>
                 </div>
                 <div class="rating-card-actions">
-                    <button class="delete-rating-btn" onclick="deleteRating('${animeId}')">×</button>
+                    <button class="delete-rating-btn" onclick="confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">×</button>
                 </div>
             `;
             
@@ -443,39 +456,89 @@ async function showRatingsModal() {
     });
 }
 
+// Функція для підтвердження видалення закладки
+function confirmRemoveBookmark(animeId, title) {
+    const modalHTML = `
+        <div class="confirmation-modal" id="confirm-bookmark-remove">
+            <div class="confirmation-modal-content">
+                <h3>Видалити закладку?</h3>
+                <p>Ви дійсно хочете видалити "${title}" з закладок?</p>
+                <div class="confirmation-modal-buttons">
+                    <button class="confirm-btn" onclick="removeBookmark('${animeId}')">Так, видалити</button>
+                    <button class="cancel-btn" onclick="closeConfirmationModal('confirm-bookmark-remove')">Скасувати</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const modal = document.getElementById('confirm-bookmark-remove');
+    modal.style.display = 'flex';
+}
+
+// Функція для підтвердження видалення оцінки
+function confirmDeleteRating(animeId, title) {
+    const modalHTML = `
+        <div class="confirmation-modal" id="confirm-rating-delete">
+            <div class="confirmation-modal-content">
+                <h3>Видалити оцінку?</h3>
+                <p>Ви дійсно хочете видалити вашу оцінку для "${title}"?</p>
+                <div class="confirmation-modal-buttons">
+                    <button class="confirm-btn" onclick="deleteRating('${animeId}')">Так, видалити</button>
+                    <button class="cancel-btn" onclick="closeConfirmationModal('confirm-rating-delete')">Скасувати</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const modal = document.getElementById('confirm-rating-delete');
+    modal.style.display = 'flex';
+}
+
+// Функція для закриття модального вікна підтвердження
+function closeConfirmationModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.remove();
+    }
+}
+
 // Функція для видалення закладки
 function removeBookmark(animeId) {
-    if (confirm('Видалити цю закладку?')) {
-        allBookmarks = allBookmarks.filter(item => item.id !== animeId);
-        localStorage.setItem('animeBookmarks', JSON.stringify(allBookmarks));
-        
-        // Оновлюємо інтерфейс
-        updateProfileStats();
-        showTempMessage('Закладку видалено 📕');
-        
-        // Закриваємо модальне вікно якщо воно відкрите
-        const modal = document.getElementById('bookmarks-modal');
-        if (modal) {
-            modal.remove();
-        }
+    allBookmarks = allBookmarks.filter(item => item.id !== animeId);
+    localStorage.setItem('animeBookmarks', JSON.stringify(allBookmarks));
+    
+    // Закриваємо модальне вікно підтвердження
+    closeConfirmationModal('confirm-bookmark-remove');
+    
+    // Оновлюємо інтерфейс
+    updateProfileStats();
+    showTempMessage('Закладку видалено 📕');
+    
+    // Закриваємо модальне вікно з закладками якщо воно відкрите
+    const modal = document.getElementById('bookmarks-modal');
+    if (modal) {
+        modal.remove();
     }
 }
 
 // Функція для видалення оцінки
 function deleteRating(animeId) {
-    if (confirm('Видалити цю оцінку?')) {
-        delete allRatings[animeId];
-        localStorage.setItem('animeRatings', JSON.stringify(allRatings));
-        
-        // Оновлюємо інтерфейс
-        updateProfileStats();
-        showTempMessage('Оцінку видалено ⭐');
-        
-        // Закриваємо модальне вікно якщо воно відкрите
-        const modal = document.getElementById('ratings-modal');
-        if (modal) {
-            modal.remove();
-        }
+    delete allRatings[animeId];
+    localStorage.setItem('animeRatings', JSON.stringify(allRatings));
+    
+    // Закриваємо модальне вікно підтвердження
+    closeConfirmationModal('confirm-rating-delete');
+    
+    // Оновлюємо інтерфейс
+    updateProfileStats();
+    showTempMessage('Оцінку видалено ⭐');
+    
+    // Закриваємо модальне вікно з оцінками якщо воно відкрите
+    const modal = document.getElementById('ratings-modal');
+    if (modal) {
+        modal.remove();
     }
 }
 
