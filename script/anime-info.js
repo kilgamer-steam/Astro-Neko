@@ -115,7 +115,7 @@ function displayAnimeInfo(anime) {
         btn.classList.add("episode-btn");
         btn.textContent = ep.title || `Серія ${idx + 1}`;
         btn.onclick = () => {
-            const url = `player.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
+            const url = `player yt.html?id=${encodeURIComponent(anime.id)}&season=${season.seasonNumber}&episode=${idx+1}`;
             window.location.href = url;
         };
         episodeContainer.appendChild(btn);
@@ -170,7 +170,7 @@ function displayAnimeInfo(anime) {
         // Обробник кнопки "Дивитися"
         const watchBtn = row.querySelector('.watch-movie-btn');
         watchBtn.onclick = () => {
-            const url = `player.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
+            const url = `player yt.html?id=${encodeURIComponent(anime.id)}&movie=${idx + 1}`;
             window.location.href = url;
         };
         
