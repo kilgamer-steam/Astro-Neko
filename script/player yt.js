@@ -445,11 +445,11 @@ class YouTubeAnimePlayer {
     const currentSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber);
     
     if (this.episodeNumber < currentSeason.episodes.length) {
-      window.location.href = `player.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber}&episode=${this.episodeNumber+1}`;
+      window.location.href = `player yt.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber}&episode=${this.episodeNumber+1}`;
     } else {
       const nextSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber + 1);
       if (nextSeason && nextSeason.episodes.length > 0) {
-        window.location.href = `player.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber+1}&episode=1`;
+        window.location.href = `player yt.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber+1}&episode=1`;
       } else {
         alert("Це остання серія аніме!");
       }
