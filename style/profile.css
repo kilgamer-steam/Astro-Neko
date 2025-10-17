@@ -1,0 +1,448 @@
+/* ===== ОСНОВНІ СТИЛІ ДЛЯ СТОРІНКИ ПРОФІЛЮ ===== */
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.profile-container.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== ЗАГОЛОВОК ПРОФІЛЮ ===== */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: rgba(24, 24, 27, 0.36);
+    backdrop-filter: blur(2px);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #943a67ff;
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+}
+
+.profile-info h1 {
+    color: #ff69b4;
+    margin: 0 0 10px 0;
+    font-size: 2em;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+}
+
+.profile-info p {
+    color: #cc6096ff;
+    margin: 0;
+    font-size: 1em;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 10px 15px;
+    background: rgba(29, 29, 32, 0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 105, 180, 0.1);
+    transform: translateY(-2px);
+    border-color: rgba(255, 105, 180, 0.3);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff69b4;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    color: #cc6096ff;
+}
+
+/* ===== СЕКЦІЇ ПРОФІЛЮ ===== */
+.profile-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.profile-section {
+    background: rgba(24, 24, 27, 0.36);
+    backdrop-filter: blur(2px);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.profile-section:hover {
+    border-color: rgba(255, 105, 180, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+}
+
+.section-title {
+    color: #ff69b4;
+    margin: 0 0 20px 0;
+    font-size: 1.3em;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 105, 180, 0.3);
+}
+
+/* ===== СТИЛІ ДЛЯ ЗАКЛАДОК ===== */
+.bookmarks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.bookmark-item {
+    background: rgba(29, 29, 32, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 105, 180, 0.1);
+}
+
+.bookmark-item:hover {
+    transform: translateY(-5px);
+    border-color: #ff69b4;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+.bookmark-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    filter: brightness(0.7);
+    transition: filter 0.3s ease;
+}
+
+.bookmark-item:hover .bookmark-image {
+    filter: brightness(1);
+}
+
+.bookmark-title {
+    padding: 10px;
+    font-size: 0.9em;
+    color: #cc6096ff;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: rgba(26, 26, 29, 0.8);
+}
+
+/* ===== СТИЛІ ДЛЯ ОЦІНОК ===== */
+.ratings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.rating-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(29, 29, 32, 0.6);
+    border-radius: 10px;
+    border-left: 4px solid #943a67ff;
+    transition: all 0.3s ease;
+}
+
+.rating-item:hover {
+    background: rgba(29, 29, 32, 0.8);
+    transform: translateX(5px);
+}
+
+.rating-image {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    filter: brightness(0.8);
+    transition: filter 0.3s ease;
+}
+
+.rating-item:hover .rating-image {
+    filter: brightness(1);
+}
+
+.rating-info {
+    flex: 1;
+}
+
+.rating-title {
+    color: #ff69b4;
+    margin: 0 0 5px 0;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.rating-stars {
+    color: #ffd700;
+    font-size: 1.1em;
+    letter-spacing: 2px;
+}
+
+/* ===== СТАН ПУСТОТИ ===== */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #cc6096ff;
+}
+
+.empty-state .icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+    opacity: 0.5;
+    display: block;
+}
+
+.empty-state p {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+}
+
+.empty-state small {
+    opacity: 0.7;
+    font-size: 0.9em;
+}
+
+/* ===== БЕЙДЖ "DEMO" ===== */
+.coming-soon-badge {
+    background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    margin-left: 10px;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+}
+
+/* ===== ІНФОРМАЦІЯ ПРО ДЕМО-РЕЖИМ ===== */
+.demo-info {
+    background: rgba(24, 24, 27, 0.36);
+    backdrop-filter: blur(2px);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 30px;
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    text-align: center;
+}
+
+.demo-info .section-title {
+    text-align: center;
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+
+.demo-info ul {
+    text-align: left;
+    display: inline-block;
+    margin: 15px 0;
+    color: #cc6096ff;
+}
+
+.demo-info li {
+    margin-bottom: 8px;
+    padding-left: 10px;
+}
+
+.demo-info li::before {
+    content: "✨";
+    margin-right: 8px;
+}
+
+/* ===== АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ ===== */
+
+/* Для екранів до 768px */
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 15px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .profile-sections {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .profile-stats {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .stat-item {
+        padding: 8px 12px;
+    }
+
+    .bookmarks-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+
+    .profile-section {
+        padding: 20px;
+    }
+}
+
+/* Для екранів до 480px */
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 10px;
+    }
+
+    .profile-header {
+        padding: 15px;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-info h1 {
+        font-size: 1.6em;
+    }
+
+    .profile-stats {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .stat-item {
+        width: 120px;
+    }
+
+    .bookmarks-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .rating-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .rating-image {
+        width: 80px;
+        height: 100px;
+    }
+
+    .demo-info {
+        padding: 20px 15px;
+    }
+
+    .demo-info ul {
+        text-align: center;
+    }
+}
+
+/* Для дуже малих екранів */
+@media (max-width: 360px) {
+    .profile-info h1 {
+        font-size: 1.4em;
+    }
+
+    .bookmarks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-number {
+        font-size: 1.3em;
+    }
+
+    .section-title {
+        font-size: 1.1em;
+    }
+}
+
+/* ===== АНІМАЦІЇ ТА ІНТЕРАКТИВ ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-section {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.profile-section:nth-child(1) { animation-delay: 0.1s; }
+.profile-section:nth-child(2) { animation-delay: 0.2s; }
+.profile-section:nth-child(3) { animation-delay: 0.3s; }
+.profile-section:nth-child(4) { animation-delay: 0.4s; }
+
+/* Стилі для повідомлень */
+.temp-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(148, 58, 103, 0.95);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    z-index: 10000;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+    border: 2px solid #ff69b4;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.temp-message.show {
+    opacity: 1;
+}
