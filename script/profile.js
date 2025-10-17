@@ -258,7 +258,7 @@ function createBookmarkPreviewItem(bookmark, animeInfo) {
     
     previewItem.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = `aanime-info.html?id=${bookmark.id}`;
+        window.location.href = `anime-info.html?id=${bookmark.id}`;
     });
     
     return previewItem;
@@ -287,7 +287,7 @@ function createRatingPreviewItem(animeId, ratingData, animeInfo) {
     
     previewItem.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.location.href = `aanime-info.html?id=${animeId}`;
+        window.location.href = `anime-info.html?id=${animeId}`;
     });
     
     return previewItem;
@@ -334,7 +334,7 @@ async function showBookmarksModal() {
             const animeInfo = await loadAnimeInfo(bookmark.id);
             const bookmarkCard = document.createElement('a');
             bookmarkCard.classList.add('bookmark-card');
-            bookmarkCard.href = `aanime-info.html?id=${bookmark.id}`;
+            bookmarkCard.href = `anime-info.html?id=${bookmark.id}`;
             
             const metaInfo = animeInfo ? `
                 <div class="bookmark-card-meta">
@@ -354,7 +354,7 @@ async function showBookmarksModal() {
                     <div class="bookmark-card-title">${bookmark.title}</div>
                     ${metaInfo}
                     <div class="bookmark-card-actions">
-                        <a href="aanime-info.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
+                        <a href="anime-info.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
                         <button class="remove-btn" onclick="event.preventDefault(); removeBookmark('${bookmark.id}')">Видалити</button>
                     </div>
                 </div>
@@ -421,7 +421,7 @@ async function showRatingsModal() {
             
             ratingCard.addEventListener('click', (e) => {
                 if (!e.target.closest('.delete-rating-btn')) {
-                    window.location.href = `aanime-info.html?id=${animeId}`;
+                    window.location.href = `anime-info.html?id=${animeId}`;
                 }
             });
             
