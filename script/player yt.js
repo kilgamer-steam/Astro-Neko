@@ -41,6 +41,7 @@ class YouTubeAnimePlayer {
     this.isLoading = true;
     this.playerReady = false;
     this.currentTime = 0;
+    this.autoPlayEnabled = false; // ВИМКНЕНО автостарт
 
     this.init();
   }
@@ -89,20 +90,18 @@ class YouTubeAnimePlayer {
     this.loadingOverlay.classList.add('hidden');
     
     // Анімація появи контенту
-    setTimeout(() => {
-      const playerWrapper = document.querySelector('.player-wrapper');
-      const youtubePlayer = document.getElementById('youtube-player');
-      const controls = document.querySelectorAll('.controls-row button, .controls-row span');
-      
-      if (playerWrapper) playerWrapper.classList.add('loaded');
-      if (youtubePlayer) youtubePlayer.classList.add('loaded');
-      
-      controls.forEach((control, index) => {
-        setTimeout(() => {
-          control.classList.add('loaded');
-        }, index * 100);
-      });
-    }, 300);
+    const playerWrapper = document.querySelector('.player-wrapper');
+    const youtubePlayer = document.getElementById('youtube-player');
+    const controls = document.querySelectorAll('.controls-row button, .controls-row span');
+    
+    if (playerWrapper) playerWrapper.classList.add('loaded');
+    if (youtubePlayer) youtubePlayer.classList.add('loaded');
+    
+    controls.forEach((control, index) => {
+      setTimeout(() => {
+        control.classList.add('loaded');
+      }, index * 100);
+    });
   }
 
   async init() {
@@ -136,12 +135,12 @@ class YouTubeAnimePlayer {
     this.throttledSaveProgress = this.throttle(() => this.saveProgress(), 2000);
     
     // Автоматичне ховання завантаження
-    setTimeout(() => {
+    this.loadingTimeout = setTimeout(() => {
       if (this.isLoading) {
         console.log('Автоматичне приховування завантаження через таймаут');
         this.hideLoading();
       }
-    }, 5000);
+    }, 200);
   }
 
   async loadPlayer() {
@@ -314,7 +313,8 @@ class YouTubeAnimePlayer {
         'widget_referrer': window.location.href,
         'rel': 0,
         'modestbranding': 1,
-        'showinfo': 0
+        'showinfo': 0,
+        'autoplay': 0 // ВИМКНЕНО автостарт
       },
       events: {
         'onReady': (event) => this.onPlayerReady(event, resolve),
@@ -328,14 +328,18 @@ class YouTubeAnimePlayer {
     this.playerReady = true;
     this.updateLoadingProgress(90, 'Плеєр готовий до відтворення');
     
-    // Відновлюємо прогрес
+    // Відновлюємо прогрес (без автоматичного запуску)
     const progress = this.getEpisodeProgress();
     if (progress && progress.time > 0) {
       event.target.seekTo(progress.time, true);
     }
     
-    // Запускаємо відтворення
-    event.target.playVideo();
+    // НЕ запускаємо автоматичне відтворення
+    // event.target.playVideo(); // Цей рядок видаляємо
+    
+    // Ховаємо завантаження, оскільки плеєр готовий
+    this.updateLoadingProgress(100, 'Плеєр завантажено');
+    this.hideLoadingDelay = setTimeout(() => this.hideLoading(), 500);
     
     resolve();
   }
@@ -346,7 +350,7 @@ class YouTubeAnimePlayer {
     switch (state) {
       case YT.PlayerState.PLAYING:
         this.updateLoadingProgress(100, 'Відтворення розпочато!');
-        setTimeout(() => this.hideLoading(), 500);
+        this.hideLoadingDelay = setTimeout(() => this.hideLoading(), 500);
         this.startProgressTracking();
         break;
         
@@ -362,7 +366,13 @@ class YouTubeAnimePlayer {
         break;
         
       case YT.PlayerState.BUFFERING:
-        this.updateLoadingProgress(70, 'Буферизація...');
+        // Прибираємо оновлення прогресу під час буферизації, оскільки відео не запускається автоматично
+        break;
+        
+      case YT.PlayerState.CUED:
+        // Стан, коли відео завантажене та готове до відтворення
+        this.updateLoadingProgress(100, 'Плеєр готовий');
+        this.hideLoadingDelay = setTimeout(() => this.hideLoading(), 500);
         break;
     }
     
@@ -375,7 +385,6 @@ class YouTubeAnimePlayer {
   onPlayerError(event) {
     console.error('YouTube помилка:', event.data);
     this.updateLoadingProgress(0, 'Помилка завантаження відео');
-    
   }
 
   startProgressTracking() {
@@ -417,7 +426,7 @@ class YouTubeAnimePlayer {
   closeSettings() {
     const settingsContent = this.settingsModal.querySelector('.settings-content');
     settingsContent.classList.remove('show');
-    setTimeout(() => {
+    this.closeModalTimeout = setTimeout(() => {
       this.settingsModal.style.display = 'none';
     }, 300);
   }
@@ -700,9 +709,23 @@ class YouTubeAnimePlayer {
 
   handleAutoNext() {
     if (this.nextBtn.style.display !== 'none') {
-      setTimeout(() => {
+      this.autoNextTimeout = setTimeout(() => {
         this.nextBtn.click();
-      }, 2000); // Затримка 2 секунди перед автоматичним переходом
+      }, 100); // Затримка 2 секунди перед автоматичним переходом
+    }
+  }
+
+  // Додаємо метод для ручного запуску відео (якщо потрібно)
+  playVideo() {
+    if (this.player && this.player.playVideo) {
+      this.player.playVideo();
+    }
+  }
+
+  // Додаємо метод для паузи
+  pauseVideo() {
+    if (this.player && this.player.pauseVideo) {
+      this.player.pauseVideo();
     }
   }
 
@@ -723,7 +746,7 @@ class YouTubeAnimePlayer {
       customTooltip.style.opacity = '0';
       customTooltip.style.display = 'block';
       
-      setTimeout(() => {
+      this.tooltipTimeout = setTimeout(() => {
         customTooltip.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
         customTooltip.style.transform = 'translateX(-50%) scale(1)';
         customTooltip.style.opacity = '1';
@@ -736,7 +759,7 @@ class YouTubeAnimePlayer {
         customTooltip.style.transform = 'translateX(-50%) scale(0.7)';
         customTooltip.style.opacity = '0';
         
-        setTimeout(() => {
+        this.tooltipHideTimeout = setTimeout(() => {
           customTooltip.style.display = 'none';
         }, 300);
       }
@@ -748,6 +771,14 @@ class YouTubeAnimePlayer {
     this.stopProgressTracking();
     this.saveProgress();
     this.saveSettings();
+    
+    // Очищаємо всі таймери
+    if (this.loadingTimeout) clearTimeout(this.loadingTimeout);
+    if (this.hideLoadingDelay) clearTimeout(this.hideLoadingDelay);
+    if (this.closeModalTimeout) clearTimeout(this.closeModalTimeout);
+    if (this.autoNextTimeout) clearTimeout(this.autoNextTimeout);
+    if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout);
+    if (this.tooltipHideTimeout) clearTimeout(this.tooltipHideTimeout);
     
     if (this.player && this.player.destroy) {
       this.player.destroy();
