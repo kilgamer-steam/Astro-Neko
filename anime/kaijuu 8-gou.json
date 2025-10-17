@@ -31,7 +31,7 @@
               "opening": [0, 0],
               "ending": [1282, 1372],
               "quality": [
-                {"value":"1080", "videoUrl":"https://youtu.be/Guk0xnR4LKA"}
+                {"value":"1080", "videoUrl":"www.youtube.com/watch?v=Guk0xnR4LKA&feature=youtu.be"}
               ]
             }
           ]
@@ -47,7 +47,7 @@
               "opening": [63, 150],
               "ending": [1350, 1456],
               "quality": [
-                {"value":"1080", "videoUrl":"https://youtu.be/ttHpaYOSogI"}
+                {"value":"1080", "videoUrl":"https://www.youtube.com/watch?v=ttHpaYOSogI&feature=youtu.be"}
               ]
             }
           ]
@@ -63,9 +63,7 @@
               "opening": [147, 235],
               "ending": [1329, 1418],
               "quality": [
-                {"value":"1080", "videoUrl":""},
-                {"value":"720", "videoUrl":""},
-                {"value":"360", "videoUrl":""}
+                {"value":"1080", "videoUrl":"www.youtube.com/watch?v=hpb3EwoQvis&feature=youtu.be"}
               ]
             }
           ]
