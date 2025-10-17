@@ -272,8 +272,8 @@ function createBookmarkPreviewItem(bookmark, animeInfo) {
             <div class="preview-item-title">${bookmark.title}</div>
             ${metaInfo}
             <div class="preview-item-actions">
-                <a href="anime-info.html?id=${bookmark.id}" class="preview-details-btn">Детальніше</a>
-                <button class="preview-remove-btn" onclick="event.stopPropagation(); confirmRemoveBookmark('${bookmark.id}', '${bookmark.title.replace(/'/g, "\\'")}')">Видалити</button>
+                <a href="anime-info.html?id=${bookmark.id}" class="preview-details-btn">?</a>
+                <button class="preview-remove-btn" onclick="event.stopPropagation(); confirmRemoveBookmark('${bookmark.id}', '${bookmark.title.replace(/'/g, "\\'")}')">X</button>
             </div>
         </div>
     `;
@@ -306,8 +306,8 @@ function createRatingPreviewItem(animeId, ratingData, animeInfo) {
                 <div>${ratingData.rating}/10</div>
             </div>
             <div class="preview-item-actions">
-                <a href="anime-info.html?id=${animeId}" class="preview-details-btn">Детальніше</a>
-                <button class="preview-remove-btn" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">Видалити</button>
+                <a href="anime-info.html?id=${animeId}" class="preview-details-btn">?</a>
+                <button class="preview-remove-btn" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">X</button>
             </div>
         </div>
     `;
