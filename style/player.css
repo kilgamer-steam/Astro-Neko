@@ -78,7 +78,6 @@ header.hidden {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  order: 2;
 }
 
 .header-nav a {
