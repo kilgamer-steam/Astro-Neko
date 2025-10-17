@@ -340,6 +340,12 @@ async function showBookmarksModal() {
     // Завантажуємо актуальні дані
     const { bookmarks } = loadProfileData();
     
+    // Видаляємо існуюче модальне вікно якщо воно є
+    const existingModal = document.getElementById('bookmarks-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
     const modalHTML = `
         <div class="profile-modal" id="bookmarks-modal">
             <div class="profile-modal-content">
@@ -422,6 +428,12 @@ async function showRatingsModal() {
     // Завантажуємо актуальні дані
     const { ratings } = loadProfileData();
     const ratingsCount = Object.keys(ratings).length;
+    
+    // Видаляємо існуюче модальне вікно якщо воно є
+    const existingModal = document.getElementById('ratings-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
     
     const modalHTML = `
         <div class="profile-modal" id="ratings-modal">
@@ -509,6 +521,12 @@ function handleDeleteRatingFromModal(animeId, title) {
 
 // Функція для підтвердження видалення закладки
 function confirmRemoveBookmark(animeId, title) {
+    // Видаляємо існуюче модальне вікно підтвердження якщо воно є
+    const existingModal = document.getElementById('confirm-bookmark-remove');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
     const modalHTML = `
         <div class="confirmation-modal" id="confirm-bookmark-remove">
             <div class="confirmation-modal-content">
@@ -541,6 +559,12 @@ function confirmRemoveBookmark(animeId, title) {
 
 // Функція для підтвердження видалення оцінки
 function confirmDeleteRating(animeId, title) {
+    // Видаляємо існуюче модальне вікно підтвердження якщо воно є
+    const existingModal = document.getElementById('confirm-rating-delete');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
     const modalHTML = `
         <div class="confirmation-modal" id="confirm-rating-delete">
             <div class="confirmation-modal-content">
@@ -643,7 +667,9 @@ function executeRemoveBookmark(animeId) {
         // Видаляємо старе модальне вікно
         bookmarksModal.remove();
         // Відкриваємо нове з оновленими даними
-        showBookmarksModal();
+        setTimeout(() => {
+            showBookmarksModal();
+        }, 50);
     }
 }
 
@@ -670,7 +696,9 @@ function executeDeleteRating(animeId) {
         // Видаляємо старе модальне вікно
         ratingsModal.remove();
         // Відкриваємо нове з оновленими даними
-        showRatingsModal();
+        setTimeout(() => {
+            showRatingsModal();
+        }, 50);
     }
 }
 
