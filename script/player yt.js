@@ -1,4 +1,4 @@
-class AnimePlayer {
+class YouTubeAnimePlayer {
   constructor() {
     this.params = new URLSearchParams(window.location.search);
     this.animeId = this.params.get("id");
@@ -6,7 +6,8 @@ class AnimePlayer {
     this.episodeNumber = parseInt(this.params.get("episode"));
     this.movieNumber = parseInt(this.params.get("movie"));
     
-    this.player = document.getElementById("anime-player");
+    this.player = null;
+    this.playerElement = document.getElementById("youtube-player");
     this.seasonOrMovieSpan = document.getElementById("season-or-movie");
     this.episodeNumSpan = document.getElementById("episode-number");
     this.titleSpan = document.getElementById("episode-title");
@@ -33,11 +34,13 @@ class AnimePlayer {
     this.currentAnime = null;
     this.currentDubbingStudio = null;
     this.currentQuality = null;
+    this.currentVideoId = null;
     this.autoSkipInterval = null;
     this.autoSkipEnabled = false;
     this.autoNextEnabled = false;
     this.isLoading = true;
-    this.videoLoadAttempted = false;
+    this.playerReady = false;
+    this.currentTime = 0;
 
     this.init();
   }
@@ -54,7 +57,7 @@ class AnimePlayer {
         <div class="wave-dot"></div>
       </div>
       <div class="loading-text">Триває Astro завантаження</div>
-      <div class="loading-subtext" id="loading-status">Підготовка плеєра</div>
+      <div class="loading-subtext" id="loading-status">Підготовка YouTube плеєра</div>
       <div class="loading-progress">
         <div class="loading-progress-bar" id="loading-progress-bar"></div>
       </div>
@@ -78,7 +81,7 @@ class AnimePlayer {
   showLoading() {
     this.isLoading = true;
     this.loadingOverlay.classList.remove('hidden');
-    this.updateLoadingProgress(0, 'Підготовка плеєра...');
+    this.updateLoadingProgress(0, 'Підготовка YouTube плеєра...');
   }
 
   hideLoading() {
@@ -88,11 +91,11 @@ class AnimePlayer {
     // Анімація появи контенту
     setTimeout(() => {
       const playerWrapper = document.querySelector('.player-wrapper');
-      const video = document.querySelector('video');
+      const youtubePlayer = document.getElementById('youtube-player');
       const controls = document.querySelectorAll('.controls-row button, .controls-row span');
       
       if (playerWrapper) playerWrapper.classList.add('loaded');
-      if (video) video.classList.add('loaded');
+      if (youtubePlayer) youtubePlayer.classList.add('loaded');
       
       controls.forEach((control, index) => {
         setTimeout(() => {
@@ -130,39 +133,15 @@ class AnimePlayer {
     this.settingsQualitySelect.addEventListener('change', () => this.onQualityChange());
 
     // Збереження прогресу
-    this.player.addEventListener('timeupdate', () => this.throttledSaveProgress());
-    this.player.addEventListener('volumechange', () => this.saveSettings());
+    this.throttledSaveProgress = this.throttle(() => this.saveProgress(), 2000);
     
-    // Слухачі для індикації завантаження відео
-    this.player.addEventListener('loadstart', () => {
-      this.updateLoadingProgress(30, 'Завантаження відео...');
-    });
-    
-    this.player.addEventListener('progress', () => {
-      if (this.player.buffered.length > 0 && this.player.duration > 0) {
-        const progress = (this.player.buffered.end(0) / this.player.duration) * 40 + 30;
-        this.updateLoadingProgress(progress, 'Буферизація відео...');
+    // Автоматичне ховання завантаження
+    setTimeout(() => {
+      if (this.isLoading) {
+        console.log('Автоматичне приховування завантаження через таймаут');
+        this.hideLoading();
       }
-    });
-    
-    this.player.addEventListener('canplay', () => {
-      this.updateLoadingProgress(90, 'Можна відтворювати...');
-    });
-    
-    this.player.addEventListener('playing', () => {
-      this.updateLoadingProgress(100, 'Готово!');
-      setTimeout(() => this.hideLoading(), 500);
-    });
-
-    this.player.addEventListener('error', (e) => {
-      console.warn('Помилка відео:', e);
-      this.updateLoadingProgress(70, 'Перепідключення...');
-    });
-
-    window.addEventListener('beforeunload', () => {
-      this.saveProgress();
-      this.saveSettings();
-    });
+    }, 5000);
   }
 
   async loadPlayer() {
@@ -183,17 +162,12 @@ class AnimePlayer {
       this.updateLoadingProgress(40, 'Завантаження епізоду...');
       await this.setupEpisode();
       
-      this.updateLoadingProgress(60, 'Налаштування навігації...');
-      this.setupNavigationButtons(); // Змінено з setupNavigation
+      this.updateLoadingProgress(60, 'Ініціалізація YouTube плеєра...');
+      await this.initializeYouTubePlayer();
+      
+      this.updateLoadingProgress(80, 'Налаштування навігації...');
+      this.setupNavigationButtons();
       this.setupTooltip();
-
-      // Автоматично ховаємо завантаження через 5 секунд
-      setTimeout(() => {
-        if (this.isLoading) {
-          console.log('Автоматичне приховування завантаження через таймаут');
-          this.hideLoading();
-        }
-      }, 2000);
 
     } catch (err) {
       console.error('Критична помилка:', err);
@@ -227,13 +201,8 @@ class AnimePlayer {
     const preferences = this.getAnimePreferences();
     this.applyPreferences(preferences);
     
-    try {
-      await this.loadVideo();
-      this.restoreProgress();
-      this.setupAutoFeatures();
-    } catch (err) {
-      console.warn('Попередження при завантаженні відео:', err);
-    }
+    this.restoreProgress();
+    this.setupAutoFeatures();
   }
 
   findCurrentEpisode() {
@@ -263,10 +232,8 @@ class AnimePlayer {
     this.titleSpan.textContent = this.currentEpisode.name;
   }
 
-  // НОВИЙ МЕТОД: Налаштування кнопок навігації
   setupNavigationButtons() {
     if (this.movieNumber) {
-      // Для фільмів кнопки навігації не потрібні
       return;
     }
 
@@ -309,61 +276,132 @@ class AnimePlayer {
 
     this.currentDubbingStudio = this.currentEpisode.dubbing[dubbingIndex].studio;
     this.currentQuality = this.currentEpisode.dubbing[dubbingIndex].quality[qualityIndex].value;
+    this.currentVideoId = this.extractYouTubeId(this.currentEpisode.dubbing[dubbingIndex].quality[qualityIndex].videoUrl);
     
-    if (preferences.volume !== undefined) {
-      this.player.volume = preferences.volume;
-    }
-
     this.autoSkipEnabled = Boolean(preferences.autoSkip);
     this.autoNextEnabled = Boolean(preferences.autoNext);
   }
 
-  async loadVideo() {
-    const selectedDubbing = this.currentEpisode.dubbing.find(d => d.studio === this.currentDubbingStudio);
-    const selectedQuality = selectedDubbing.quality.find(q => q.value === this.currentQuality);
-    
-    this.player.src = selectedQuality.videoUrl;
-    this.videoLoadAttempted = true;
-    
+  extractYouTubeId(url) {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
+  initializeYouTubePlayer() {
     return new Promise((resolve) => {
-      const onCanPlayThrough = () => {
-        this.player.removeEventListener('canplaythrough', onCanPlayThrough);
-        this.player.removeEventListener('error', onError);
-        resolve();
-      };
-      
-      const onError = () => {
-        this.player.removeEventListener('canplaythrough', onCanPlayThrough);
-        this.player.removeEventListener('error', onError);
-        resolve();
-      };
-      
-      if (this.player.readyState >= 3) {
-        resolve();
-        return;
+      // Чекаємо на завантаження YouTube IFrame API
+      if (window.YT && window.YT.Player) {
+        this.createPlayer(resolve);
+      } else {
+        // Якщо API ще не завантажено, чекаємо
+        window.onYouTubeIframeAPIReady = () => {
+          this.createPlayer(resolve);
+        };
       }
-      
-      this.player.addEventListener('canplaythrough', onCanPlayThrough, { once: true });
-      this.player.addEventListener('error', onError, { once: true });
-      
-      setTimeout(() => {
-        this.player.removeEventListener('canplaythrough', onCanPlayThrough);
-        this.player.removeEventListener('error', onError);
-        resolve();
-      }, 1000);
     });
+  }
+
+  createPlayer(resolve) {
+    this.player = new YT.Player('youtube-player', {
+      height: '500',
+      width: '100%',
+      videoId: this.currentVideoId,
+      playerVars: {
+        'playsinline': 1,
+        'enablejsapi': 1,
+        'origin': window.location.origin,
+        'widget_referrer': window.location.href,
+        'rel': 0,
+        'modestbranding': 1,
+        'showinfo': 0
+      },
+      events: {
+        'onReady': (event) => this.onPlayerReady(event, resolve),
+        'onStateChange': (event) => this.onPlayerStateChange(event),
+        'onError': (event) => this.onPlayerError(event)
+      }
+    });
+  }
+
+  onPlayerReady(event, resolve) {
+    this.playerReady = true;
+    this.updateLoadingProgress(90, 'Плеєр готовий до відтворення');
+    
+    // Відновлюємо прогрес
+    const progress = this.getEpisodeProgress();
+    if (progress && progress.time > 0) {
+      event.target.seekTo(progress.time, true);
+    }
+    
+    // Запускаємо відтворення
+    event.target.playVideo();
+    
+    resolve();
+  }
+
+  onPlayerStateChange(event) {
+    const state = event.data;
+    
+    switch (state) {
+      case YT.PlayerState.PLAYING:
+        this.updateLoadingProgress(100, 'Відтворення розпочато!');
+        setTimeout(() => this.hideLoading(), 500);
+        this.startProgressTracking();
+        break;
+        
+      case YT.PlayerState.PAUSED:
+        this.saveProgress();
+        break;
+        
+      case YT.PlayerState.ENDED:
+        this.saveProgress();
+        if (this.autoNextEnabled) {
+          this.handleAutoNext();
+        }
+        break;
+        
+      case YT.PlayerState.BUFFERING:
+        this.updateLoadingProgress(70, 'Буферизація...');
+        break;
+    }
+    
+    // Авто-скіп
+    if (this.autoSkipEnabled && state === YT.PlayerState.PLAYING) {
+      this.checkAutoSkip();
+    }
+  }
+
+  onPlayerError(event) {
+    console.error('YouTube помилка:', event.data);
+    this.updateLoadingProgress(0, 'Помилка завантаження відео');
+    
+    setTimeout(() => {
+      alert("Помилка завантаження відео. Спробуйте іншу озвучку або якість.");
+      this.hideLoading();
+    }, 1000);
+  }
+
+  startProgressTracking() {
+    this.progressInterval = setInterval(() => {
+      if (this.player && this.player.getCurrentTime) {
+        this.currentTime = this.player.getCurrentTime();
+        this.throttledSaveProgress();
+      }
+    }, 1000);
+  }
+
+  stopProgressTracking() {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    }
   }
 
   restoreProgress() {
     const progress = this.getEpisodeProgress();
     if (progress && progress.time) {
-      if (this.player.readyState > 0) {
-        this.player.currentTime = Math.min(progress.time, this.player.duration - 1);
-      } else {
-        this.player.addEventListener('loadedmetadata', () => {
-          this.player.currentTime = Math.min(progress.time, this.player.duration - 1);
-        }, { once: true });
-      }
+      this.currentTime = progress.time;
     }
   }
 
@@ -476,23 +514,26 @@ class AnimePlayer {
   }
 
   saveProgress() {
-    if (!this.animeId || !this.seasonNumber || !this.currentEpisode) return;
+    if (!this.animeId || !this.seasonNumber || !this.currentEpisode || !this.playerReady) return;
     
     const progress = {
-      time: this.player.currentTime,
-      duration: this.player.duration,
+      time: this.currentTime,
       timestamp: new Date().toISOString()
     };
     
     this.setEpisodeProgress(progress);
   }
 
-  throttledSaveProgress() {
-    if (!this.throttleTimer) {
-      this.throttleTimer = setTimeout(() => {
-        this.saveProgress();
-        this.throttleTimer = null;
-      }, 2000);
+  throttle(func, limit) {
+    let inThrottle;
+    return function() {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
     }
   }
 
@@ -502,7 +543,6 @@ class AnimePlayer {
     const updatedPrefs = {
       dubbing: this.currentDubbingStudio,
       quality: this.currentQuality,
-      volume: this.player.volume,
       autoSkip: this.autoSkipEnabled,
       autoNext: this.autoNextEnabled,
       lastUpdated: new Date().toISOString()
@@ -573,7 +613,6 @@ class AnimePlayer {
     this.autoSkipEnabled = !this.autoSkipEnabled;
     this.updateToggleDisplay();
     this.saveSettings();
-    this.setupAutoSkip();
   }
 
   toggleAutoNext(e) {
@@ -581,7 +620,6 @@ class AnimePlayer {
     this.autoNextEnabled = !this.autoNextEnabled;
     this.updateToggleDisplay();
     this.saveSettings();
-    this.setupAutoNext();
   }
 
   onAudioChange() {
@@ -604,8 +642,9 @@ class AnimePlayer {
       
       this.currentDubbingStudio = this.settingsAudioSelect.value;
       this.currentQuality = highestQuality.value;
+      this.currentVideoId = this.extractYouTubeId(highestQuality.videoUrl);
       
-      this.updateVideoSource(highestQuality.videoUrl);
+      this.updateVideoSource();
       this.saveSettings();
     }
   }
@@ -618,38 +657,23 @@ class AnimePlayer {
     
     if (selectedQuality) {
       this.currentQuality = selectedQuality.value;
-      this.updateVideoSource(selectedQuality.videoUrl);
+      this.currentVideoId = this.extractYouTubeId(selectedQuality.videoUrl);
+      this.updateVideoSource();
       this.saveSettings();
     }
   }
 
-  updateVideoSource(videoUrl) {
-    const currentTime = this.player.currentTime;
-    const wasPaused = this.player.paused;
+  updateVideoSource() {
+    if (!this.playerReady || !this.currentVideoId) return;
     
-    this.player.src = videoUrl;
-    
-    this.player.addEventListener('loadedmetadata', function onLoad() {
-      this.player.currentTime = Math.min(currentTime, this.player.duration - 1);
-      this.player.removeEventListener('loadedmetadata', onLoad);
-      
-      if (!wasPaused) {
-        this.player.play().catch(e => console.log('Auto-play prevented'));
-      }
-      
-      this.setupAutoSkip();
-    }.bind(this), { once: true });
+    this.player.loadVideoById({
+      videoId: this.currentVideoId,
+      startSeconds: this.currentTime
+    });
   }
 
-  setupAutoSkip() {
-    if (this.autoSkipInterval) {
-      clearInterval(this.autoSkipInterval);
-      this.autoSkipInterval = null;
-    }
-
-    if (!this.autoSkipEnabled || !this.currentEpisode) {
-      return;
-    }
+  checkAutoSkip() {
+    if (!this.autoSkipEnabled || !this.currentEpisode || !this.playerReady) return;
     
     const currentDubbing = this.currentEpisode.dubbing.find(d => d.studio === this.currentDubbingStudio);
     if (!currentDubbing) return;
@@ -657,37 +681,33 @@ class AnimePlayer {
     const [openingStart, openingEnd] = currentDubbing.opening || [0, 0];
     const [endingStart, endingEnd] = currentDubbing.ending || [0, 0];
     
-    this.autoSkipInterval = setInterval(() => {
-      if (this.player.paused || this.player.ended) return;
-      
-      const currentTime = this.player.currentTime;
-      
-      if (openingStart >= 0 && openingEnd > openingStart && 
-          currentTime >= openingStart && currentTime <= openingEnd) {
-        this.player.currentTime = openingEnd;
-      }
-      
-      if (endingStart >= 0 && endingEnd > endingStart && 
-          currentTime >= endingStart && currentTime <= endingEnd) {
-        this.player.currentTime = endingEnd;
-      }
-    }, 500);
+    const currentTime = this.player.getCurrentTime();
+    
+    if (openingStart >= 0 && openingEnd > openingStart && 
+        currentTime >= openingStart && currentTime <= openingEnd) {
+      this.player.seekTo(openingEnd, true);
+    }
+    
+    if (endingStart >= 0 && endingEnd > endingStart && 
+        currentTime >= endingStart && currentTime <= endingEnd) {
+      this.player.seekTo(endingEnd, true);
+    }
+  }
+
+  setupAutoSkip() {
+    // Авто-скіп обробляється в onPlayerStateChange
   }
 
   setupAutoNext() {
-    this.player.removeEventListener('ended', this.handleVideoEnd);
-    
-    if (!this.autoNextEnabled) {
-      return;
-    }
-    
-    this.handleVideoEnd = () => {
-      if (this.nextBtn.style.display !== 'none') {
+    // Авто-продовження обробляється в onPlayerStateChange
+  }
+
+  handleAutoNext() {
+    if (this.nextBtn.style.display !== 'none') {
+      setTimeout(() => {
         this.nextBtn.click();
-      }
-    };
-    
-    this.player.addEventListener('ended', this.handleVideoEnd);
+      }, 2000); // Затримка 2 секунди перед автоматичним переходом
+    }
   }
 
   setupTooltip() {
@@ -726,9 +746,27 @@ class AnimePlayer {
       }
     });
   }
+
+  // Знищення плеєра при закритті сторінки
+  destroy() {
+    this.stopProgressTracking();
+    this.saveProgress();
+    this.saveSettings();
+    
+    if (this.player && this.player.destroy) {
+      this.player.destroy();
+    }
+  }
 }
 
 // Ініціалізація плеєра при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', () => {
-  new AnimePlayer();
+  window.animePlayer = new YouTubeAnimePlayer();
+});
+
+// Збереження стану при закритті сторінки
+window.addEventListener('beforeunload', () => {
+  if (window.animePlayer) {
+    window.animePlayer.destroy();
+  }
 });
