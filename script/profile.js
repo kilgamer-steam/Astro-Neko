@@ -52,18 +52,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Глобальні змінні для зберігання даних
-let allBookmarks = [];
-let allRatings = {};
+// Функція для завантаження актуальних даних з localStorage
+function loadProfileData() {
+    return {
+        bookmarks: JSON.parse(localStorage.getItem('animeBookmarks') || '[]'),
+        ratings: JSON.parse(localStorage.getItem('animeRatings') || '{}')
+    };
+}
 
 // Функція для оновлення всієї статистики профілю
 async function updateProfileStats() {
-    // Отримуємо дані з localStorage
-    allBookmarks = JSON.parse(localStorage.getItem('animeBookmarks') || '[]');
-    allRatings = JSON.parse(localStorage.getItem('animeRatings') || '{}');
+    // Завантажуємо актуальні дані
+    const { bookmarks, ratings } = loadProfileData();
     
     // Підраховуємо кількість оцінок
-    const ratingsCount = Object.keys(allRatings).length;
+    const ratingsCount = Object.keys(ratings).length;
     
     // Оновлюємо числа в статистиці
     const bookmarkCountElement = document.querySelector('.stat-item:nth-child(1) .stat-number');
@@ -71,7 +74,7 @@ async function updateProfileStats() {
     const watchedCountElement = document.querySelector('.stat-item:nth-child(3) .stat-number');
     
     if (bookmarkCountElement) {
-        bookmarkCountElement.textContent = allBookmarks.length;
+        bookmarkCountElement.textContent = bookmarks.length;
     }
     
     if (ratingCountElement) {
@@ -84,16 +87,22 @@ async function updateProfileStats() {
     }
     
     // Оновлюємо вміст секцій з даними
-    await updateBookmarksPreview();
-    await updateRatingsPreview();
+    await updateBookmarksPreview(bookmarks);
+    await updateRatingsPreview(ratings);
 }
 
 // Функція для оновлення превью закладок
-async function updateBookmarksPreview() {
+async function updateBookmarksPreview(bookmarks = null) {
     const bookmarksContainer = document.querySelector('.profile-section:nth-child(1)');
     const emptyState = bookmarksContainer.querySelector('.empty-state');
     
     if (!bookmarksContainer) return;
+    
+    // Якщо bookmarks не передано, завантажуємо актуальні дані
+    if (!bookmarks) {
+        const data = loadProfileData();
+        bookmarks = data.bookmarks;
+    }
     
     // Знаходимо або створюємо контейнер для превью
     let previewContainer = bookmarksContainer.querySelector('.profile-preview');
@@ -106,7 +115,7 @@ async function updateBookmarksPreview() {
     // Очищаємо контейнер
     previewContainer.innerHTML = '';
     
-    if (allBookmarks.length === 0) {
+    if (bookmarks.length === 0) {
         // Показуємо стан "пусто"
         if (emptyState) {
             emptyState.style.display = 'block';
@@ -120,7 +129,7 @@ async function updateBookmarksPreview() {
     }
     
     // Беремо перші 3 закладки
-    const previewBookmarks = allBookmarks.slice(0, 3);
+    const previewBookmarks = bookmarks.slice(0, 3);
     
     // Додаємо превью закладок
     for (const bookmark of previewBookmarks) {
@@ -138,12 +147,12 @@ async function updateBookmarksPreview() {
     }
     
     // Додаємо кнопку "Показати всі" якщо закладок більше 3
-    if (allBookmarks.length > 3) {
+    if (bookmarks.length > 3) {
         const moreButton = document.createElement('div');
         moreButton.classList.add('preview-more');
         moreButton.innerHTML = `
             <div class="preview-more-text">Показати всі закладки</div>
-            <div class="preview-more-count">+${allBookmarks.length - 3} ще</div>
+            <div class="preview-more-count">+${bookmarks.length - 3} ще</div>
         `;
         moreButton.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -154,18 +163,24 @@ async function updateBookmarksPreview() {
     
     // Додаємо обробник кліку на всю секцію
     bookmarksContainer.addEventListener('click', (e) => {
-        if (!e.target.closest('.preview-more') && !e.target.closest('.preview-item') && allBookmarks.length > 0) {
+        if (!e.target.closest('.preview-more') && !e.target.closest('.preview-item') && bookmarks.length > 0) {
             showBookmarksModal();
         }
     });
 }
 
 // Функція для оновлення превью оцінок
-async function updateRatingsPreview() {
+async function updateRatingsPreview(ratings = null) {
     const ratingsContainer = document.querySelector('.profile-section:nth-child(2)');
     const emptyState = ratingsContainer.querySelector('.empty-state');
     
     if (!ratingsContainer) return;
+    
+    // Якщо ratings не передано, завантажуємо актуальні дані
+    if (!ratings) {
+        const data = loadProfileData();
+        ratings = data.ratings;
+    }
     
     // Знаходимо або створюємо контейнер для превью
     let previewContainer = ratingsContainer.querySelector('.profile-preview');
@@ -178,7 +193,9 @@ async function updateRatingsPreview() {
     // Очищаємо контейнер
     previewContainer.innerHTML = '';
     
-    if (Object.keys(allRatings).length === 0) {
+    const ratingsCount = Object.keys(ratings).length;
+    
+    if (ratingsCount === 0) {
         // Показуємо стан "пусто"
         if (emptyState) {
             emptyState.style.display = 'block';
@@ -192,7 +209,7 @@ async function updateRatingsPreview() {
     }
     
     // Беремо перші 3 оцінки
-    const previewRatings = Object.entries(allRatings).slice(0, 3);
+    const previewRatings = Object.entries(ratings).slice(0, 3);
     
     // Додаємо превью оцінок
     for (const [animeId, ratingData] of previewRatings) {
@@ -210,12 +227,12 @@ async function updateRatingsPreview() {
     }
     
     // Додаємо кнопку "Показати всі" якщо оцінок більше 3
-    if (Object.keys(allRatings).length > 3) {
+    if (ratingsCount > 3) {
         const moreButton = document.createElement('div');
         moreButton.classList.add('preview-more');
         moreButton.innerHTML = `
             <div class="preview-more-text">Показати всі оцінки</div>
-            <div class="preview-more-count">+${Object.keys(allRatings).length - 3} ще</div>
+            <div class="preview-more-count">+${ratingsCount - 3} ще</div>
         `;
         moreButton.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -226,13 +243,12 @@ async function updateRatingsPreview() {
     
     // Додаємо обробник кліку на всю секцію
     ratingsContainer.addEventListener('click', (e) => {
-        if (!e.target.closest('.preview-more') && !e.target.closest('.preview-item') && Object.keys(allRatings).length > 0) {
+        if (!e.target.closest('.preview-more') && !e.target.closest('.preview-item') && ratingsCount > 0) {
             showRatingsModal();
         }
     });
 }
 
-// Функція для створення елемента превью закладки
 // Функція для створення елемента превью закладки
 function createBookmarkPreviewItem(bookmark, animeInfo) {
     const previewItem = document.createElement('div');
@@ -321,11 +337,14 @@ async function loadAnimeInfo(animeId) {
 
 // Функція для показу модального вікна з усіма закладками
 async function showBookmarksModal() {
+    // Завантажуємо актуальні дані
+    const { bookmarks } = loadProfileData();
+    
     const modalHTML = `
         <div class="profile-modal" id="bookmarks-modal">
             <div class="profile-modal-content">
                 <div class="profile-modal-header">
-                    <h3 class="profile-modal-title">Мої закладки (${allBookmarks.length})</h3>
+                    <h3 class="profile-modal-title">Мої закладки (${bookmarks.length})</h3>
                     <button class="profile-modal-close">&times;</button>
                 </div>
                 <div class="profile-modal-list" id="bookmarks-modal-list">
@@ -340,8 +359,20 @@ async function showBookmarksModal() {
     const closeBtn = modal.querySelector('.profile-modal-close');
     const listContainer = document.getElementById('bookmarks-modal-list');
     
+    // Додаємо обробник закриття по кліку поза модальним вікном
+    const closeOnOutsideClick = (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    };
+    
+    modal.addEventListener('click', closeOnOutsideClick);
+    
+    // Зберігаємо обробник для подальшого видалення
+    modal._closeOnOutsideClick = closeOnOutsideClick;
+    
     // Заповнюємо список закладок
-    for (const bookmark of allBookmarks) {
+    for (const bookmark of bookmarks) {
         try {
             const animeInfo = await loadAnimeInfo(bookmark.id);
             const bookmarkCard = document.createElement('a');
@@ -367,7 +398,7 @@ async function showBookmarksModal() {
                     ${metaInfo}
                     <div class="bookmark-card-actions">
                         <a href="anime-info.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
-                        <button class="remove-btn" onclick="event.preventDefault(); confirmRemoveBookmark('${bookmark.id}', '${bookmark.title.replace(/'/g, "\\'")}')">Видалити</button>
+                        <button class="remove-btn" onclick="event.preventDefault(); handleRemoveBookmarkFromModal('${bookmark.id}', '${bookmark.title.replace(/'/g, "\\'")}')">Видалити</button>
                     </div>
                 </div>
             `;
@@ -381,21 +412,22 @@ async function showBookmarksModal() {
     modal.style.display = 'flex';
     
     // Обробники закриття
-    closeBtn.addEventListener('click', () => modal.remove());
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
+    closeBtn.addEventListener('click', () => {
+        modal.remove();
     });
 }
 
 // Функція для показу модального вікна з усіма оцінками
 async function showRatingsModal() {
+    // Завантажуємо актуальні дані
+    const { ratings } = loadProfileData();
+    const ratingsCount = Object.keys(ratings).length;
+    
     const modalHTML = `
         <div class="profile-modal" id="ratings-modal">
             <div class="profile-modal-content">
                 <div class="profile-modal-header">
-                    <h3 class="profile-modal-title">Мої оцінки (${Object.keys(allRatings).length})</h3>
+                    <h3 class="profile-modal-title">Мої оцінки (${ratingsCount})</h3>
                     <button class="profile-modal-close">&times;</button>
                 </div>
                 <div class="profile-modal-list" id="ratings-modal-list">
@@ -410,8 +442,20 @@ async function showRatingsModal() {
     const closeBtn = modal.querySelector('.profile-modal-close');
     const listContainer = document.getElementById('ratings-modal-list');
     
+    // Додаємо обробник закриття по кліку поза модальним вікном
+    const closeOnOutsideClick = (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    };
+    
+    modal.addEventListener('click', closeOnOutsideClick);
+    
+    // Зберігаємо обробник для подальшого видалення
+    modal._closeOnOutsideClick = closeOnOutsideClick;
+    
     // Заповнюємо список оцінок
-    for (const [animeId, ratingData] of Object.entries(allRatings)) {
+    for (const [animeId, ratingData] of Object.entries(ratings)) {
         try {
             const animeInfo = await loadAnimeInfo(animeId);
             const title = animeInfo ? animeInfo.title : `Аніме ID: ${animeId}`;
@@ -427,7 +471,7 @@ async function showRatingsModal() {
                     <div class="rating-card-date">Оцінено: ${new Date(ratingData.date).toLocaleDateString('uk-UA')}</div>
                 </div>
                 <div class="rating-card-actions">
-                    <button class="delete-rating-btn" onclick="confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">×</button>
+                    <button class="delete-rating-btn" onclick="handleDeleteRatingFromModal('${animeId}', '${title.replace(/'/g, "\\'")}')">×</button>
                 </div>
             `;
             
@@ -447,12 +491,20 @@ async function showRatingsModal() {
     modal.style.display = 'flex';
     
     // Обробники закриття
-    closeBtn.addEventListener('click', () => modal.remove());
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
+    closeBtn.addEventListener('click', () => {
+        modal.remove();
     });
+}
+
+// Функції для обробки видалення з модальних вікон
+function handleRemoveBookmarkFromModal(animeId, title) {
+    temporarilyDisableOutsideClick('bookmarks-modal', 300);
+    confirmRemoveBookmark(animeId, title);
+}
+
+function handleDeleteRatingFromModal(animeId, title) {
+    temporarilyDisableOutsideClick('ratings-modal', 300);
+    confirmDeleteRating(animeId, title);
 }
 
 // Функція для підтвердження видалення закладки
@@ -463,8 +515,8 @@ function confirmRemoveBookmark(animeId, title) {
                 <h3>Видалити закладку?</h3>
                 <p>Ви дійсно хочете видалити "${title}" з закладок?</p>
                 <div class="confirmation-modal-buttons">
-                    <button class="confirm-btn" onclick="executeRemoveBookmark('${animeId}')">Так, видалити</button>
-                    <button class="cancel-btn" onclick="closeConfirmationModal('confirm-bookmark-remove')">Скасувати</button>
+                    <button class="confirm-btn" onclick="handleConfirmRemoveBookmark('${animeId}')">Так, видалити</button>
+                    <button class="cancel-btn" onclick="handleCancelRemoveBookmark()">Скасувати</button>
                 </div>
             </div>
         </div>
@@ -473,6 +525,18 @@ function confirmRemoveBookmark(animeId, title) {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     const modal = document.getElementById('confirm-bookmark-remove');
     modal.style.display = 'flex';
+    
+    // Додаємо обробник закриття по кліку поза модальним вікном
+    const closeOnOutsideClick = (e) => {
+        if (e.target === modal) {
+            closeConfirmationModal('confirm-bookmark-remove');
+        }
+    };
+    
+    modal.addEventListener('click', closeOnOutsideClick);
+    
+    // Зберігаємо обробник для подальшого видалення
+    modal._closeOnOutsideClick = closeOnOutsideClick;
 }
 
 // Функція для підтвердження видалення оцінки
@@ -483,8 +547,8 @@ function confirmDeleteRating(animeId, title) {
                 <h3>Видалити оцінку?</h3>
                 <p>Ви дійсно хочете видалити вашу оцінку для "${title}"?</p>
                 <div class="confirmation-modal-buttons">
-                    <button class="confirm-btn" onclick="executeDeleteRating('${animeId}')">Так, видалити</button>
-                    <button class="cancel-btn" onclick="closeConfirmationModal('confirm-rating-delete')">Скасувати</button>
+                    <button class="confirm-btn" onclick="handleConfirmDeleteRating('${animeId}')">Так, видалити</button>
+                    <button class="cancel-btn" onclick="handleCancelDeleteRating()">Скасувати</button>
                 </div>
             </div>
         </div>
@@ -493,12 +557,78 @@ function confirmDeleteRating(animeId, title) {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     const modal = document.getElementById('confirm-rating-delete');
     modal.style.display = 'flex';
+    
+    // Додаємо обробник закриття по кліку поза модальним вікном
+    const closeOnOutsideClick = (e) => {
+        if (e.target === modal) {
+            closeConfirmationModal('confirm-rating-delete');
+        }
+    };
+    
+    modal.addEventListener('click', closeOnOutsideClick);
+    
+    // Зберігаємо обробник для подальшого видалення
+    modal._closeOnOutsideClick = closeOnOutsideClick;
 }
 
-// Функція для виконання видалення закладки (без закриття модального вікна)
+// Функції для обробки підтвердження з тимчасовим вимиканням
+function handleConfirmRemoveBookmark(animeId) {
+    temporarilyDisableOutsideClick('confirm-bookmark-remove', 300);
+    executeRemoveBookmark(animeId);
+}
+
+function handleCancelRemoveBookmark() {
+    temporarilyDisableOutsideClick('confirm-bookmark-remove', 300);
+    closeConfirmationModal('confirm-bookmark-remove');
+}
+
+function handleConfirmDeleteRating(animeId) {
+    temporarilyDisableOutsideClick('confirm-rating-delete', 300);
+    executeDeleteRating(animeId);
+}
+
+function handleCancelDeleteRating() {
+    temporarilyDisableOutsideClick('confirm-rating-delete', 300);
+    closeConfirmationModal('confirm-rating-delete');
+}
+
+// Функція для тимчасового вимикання закриття по кліку поза вікном
+function temporarilyDisableOutsideClick(modalId, duration = 300) {
+    const modal = document.getElementById(modalId);
+    if (modal && modal._closeOnOutsideClick) {
+        // Тимчасово видаляємо обробник
+        modal.removeEventListener('click', modal._closeOnOutsideClick);
+        
+        // Через вказаний час відновлюємо обробник
+        setTimeout(() => {
+            if (document.body.contains(modal)) {
+                modal.addEventListener('click', modal._closeOnOutsideClick);
+            }
+        }, duration);
+    }
+}
+
+// Функція для закриття модального вікна підтвердження
+function closeConfirmationModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        // Видаляємо обробник події
+        if (modal._closeOnOutsideClick) {
+            modal.removeEventListener('click', modal._closeOnOutsideClick);
+        }
+        modal.remove();
+    }
+}
+
+// Функція для виконання видалення закладки
 function executeRemoveBookmark(animeId) {
-    allBookmarks = allBookmarks.filter(item => item.id !== animeId);
-    localStorage.setItem('animeBookmarks', JSON.stringify(allBookmarks));
+    // Завантажуємо актуальні дані
+    const data = loadProfileData();
+    let bookmarks = data.bookmarks;
+    
+    // Видаляємо закладку
+    bookmarks = bookmarks.filter(item => item.id !== animeId);
+    localStorage.setItem('animeBookmarks', JSON.stringify(bookmarks));
     
     // Закриваємо тільки модальне вікно підтвердження
     closeConfirmationModal('confirm-bookmark-remove');
@@ -517,10 +647,15 @@ function executeRemoveBookmark(animeId) {
     }
 }
 
-// Функція для виконання видалення оцінки (без закриття модального вікна)
+// Функція для виконання видалення оцінки
 function executeDeleteRating(animeId) {
-    delete allRatings[animeId];
-    localStorage.setItem('animeRatings', JSON.stringify(allRatings));
+    // Завантажуємо актуальні дані
+    const data = loadProfileData();
+    let ratings = data.ratings;
+    
+    // Видаляємо оцінку
+    delete ratings[animeId];
+    localStorage.setItem('animeRatings', JSON.stringify(ratings));
     
     // Закриваємо тільки модальне вікно підтвердження
     closeConfirmationModal('confirm-rating-delete');
@@ -536,14 +671,6 @@ function executeDeleteRating(animeId) {
         ratingsModal.remove();
         // Відкриваємо нове з оновленими даними
         showRatingsModal();
-    }
-}
-
-// Функція для закриття модального вікна підтвердження
-function closeConfirmationModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.remove();
     }
 }
 
