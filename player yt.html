@@ -23,14 +23,14 @@
 
   <div class="player-wrapper">
     <!-- Кастомний плеєр з YouTube як джерелом -->
-    <div class="custom-player-container">
+    <div class="custom-player-container" id="player-container">
       <div id="youtube-player" class="youtube-video"></div>
       
       <!-- Кастомні контроли -->
-      <div class="custom-controls">
+      <div class="custom-controls" id="custom-controls">
         <!-- Прогрес бар -->
         <div class="progress-container">
-          <div class="progress-bar">
+          <div class="progress-bar" id="progress-bar">
             <div class="progress-filled" id="progress-filled"></div>
             <div class="progress-thumb" id="progress-thumb"></div>
           </div>
@@ -42,19 +42,22 @@
         <!-- Основні контроли -->
         <div class="main-controls">
           <button id="play-pause" class="control-btn">▶</button>
-          <button id="rewind-10" class="control-btn">⏪ 10с</button>
-          <button id="forward-10" class="control-btn">⏩ 10с</button>
-          <button id="toggle-mute" class="control-btn">🔊</button>
           
           <!-- Контроль гучності -->
           <div class="volume-control">
-            <div class="volume-bar">
+            <button id="toggle-mute" class="control-btn">🔊</button>
+            <div class="volume-bar" id="volume-bar">
               <div class="volume-filled" id="volume-filled"></div>
             </div>
           </div>
           
           <button id="toggle-fullscreen" class="control-btn">⛶</button>
           <button id="open-settings" class="control-btn">⚙️</button>
+          
+          <!-- Налаштування якості YouTube -->
+          <select id="youtube-quality" class="quality-select">
+            <option value="auto">Авто якість</option>
+          </select>
         </div>
       </div>
       

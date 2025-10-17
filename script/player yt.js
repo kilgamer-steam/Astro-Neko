@@ -26,19 +26,21 @@ class YouTubeAnimePlayer {
         this.autoNextLink = document.getElementById('auto-next-link');
 
         // Кастомні елементи управління
+        this.playerContainer = document.getElementById('player-container');
+        this.customControls = document.getElementById('custom-controls');
         this.progressFilled = document.getElementById('progress-filled');
         this.progressThumb = document.getElementById('progress-thumb');
         this.currentTimeDisplay = document.getElementById('current-time');
         this.durationDisplay = document.getElementById('duration');
         this.playPauseBtn = document.getElementById('play-pause');
-        this.rewindBtn = document.getElementById('rewind-10');
-        this.forwardBtn = document.getElementById('forward-10');
         this.toggleMuteBtn = document.getElementById('toggle-mute');
         this.volumeFilled = document.getElementById('volume-filled');
         this.toggleFullscreenBtn = document.getElementById('toggle-fullscreen');
         this.videoPoster = document.getElementById('video-poster');
         this.playLargeBtn = document.getElementById('play-large-btn');
+        this.youtubeQualitySelect = document.getElementById('youtube-quality');
         this.progressBar = this.progressFilled ? this.progressFilled.parentElement : null;
+        this.volumeBar = this.volumeFilled ? this.volumeFilled.parentElement : null;
 
         // Стан плеєра
         this.currentEpisode = null;
@@ -56,8 +58,10 @@ class YouTubeAnimePlayer {
         this.isMuted = false;
         this.currentVolume = 80;
         this.isDraggingProgress = false;
-        this.isControlsVisible = true;
+        this.isDraggingVolume = false;
+        this.controlsVisible = true;
         this.controlsTimeout = null;
+        this.qualityLevels = [];
 
         // Елемент для підказки часу
         this.timeTooltip = null;
@@ -169,16 +173,6 @@ class YouTubeAnimePlayer {
             this.startPlayback();
         });
         
-        this.rewindBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.rewind(10);
-        });
-        
-        this.forwardBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.forward(10);
-        });
-        
         this.toggleMuteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             this.toggleMute();
@@ -187,6 +181,17 @@ class YouTubeAnimePlayer {
         this.toggleFullscreenBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             this.toggleFullscreen();
+        });
+
+        this.openSettingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.openSettings();
+        });
+
+        // Якість YouTube
+        this.youtubeQualitySelect.addEventListener('change', (e) => {
+            e.stopPropagation();
+            this.changeYouTubeQuality(e.target.value);
         });
 
         // Прогрес бар
@@ -223,45 +228,60 @@ class YouTubeAnimePlayer {
     }
 
     setupVolumeControl() {
-        const volumeBar = this.volumeFilled ? this.volumeFilled.parentElement : null;
-        if (!volumeBar) return;
+        if (!this.volumeBar) return;
         
-        volumeBar.addEventListener('click', (e) => {
+        this.volumeBar.addEventListener('click', (e) => {
             e.stopPropagation();
-            const rect = volumeBar.getBoundingClientRect();
+            const rect = this.volumeBar.getBoundingClientRect();
             const percent = (e.clientX - rect.left) / rect.width;
             this.setVolume(percent * 100);
+        });
+
+        // Перетягування для гучності
+        this.volumeBar.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.startVolumeDragging(e);
         });
     }
 
     setupControlsVisibility() {
-        const playerContainer = this.playerElement.parentElement;
-        
-        playerContainer.addEventListener('mousemove', () => {
+        // Показуємо контролі при русі мишкою
+        this.playerContainer.addEventListener('mousemove', () => {
             this.showControls();
             this.resetControlsTimer();
         });
         
-        playerContainer.addEventListener('mouseleave', () => {
+        this.playerContainer.addEventListener('mouseleave', () => {
             this.startControlsTimer();
+        });
+        
+        // Показуємо контролі при зупинці
+        this.playerContainer.addEventListener('click', () => {
+            this.showControls();
+            this.resetControlsTimer();
         });
     }
 
     showControls() {
-        const controls = document.querySelector('.custom-controls');
-        if (controls) {
-            controls.style.opacity = '1';
+        if (this.customControls) {
+            this.customControls.classList.remove('hidden');
         }
-        this.isControlsVisible = true;
+        this.controlsVisible = true;
+        
+        // Показуємо курсор
+        this.playerContainer.style.cursor = 'default';
     }
 
     hideControls() {
-        if (this.isPlaying) {
-            const controls = document.querySelector('.custom-controls');
-            if (controls) {
-                controls.style.opacity = '0';
+        if (this.isPlaying && this.controlsVisible) {
+            if (this.customControls) {
+                this.customControls.classList.add('hidden');
             }
-            this.isControlsVisible = false;
+            this.controlsVisible = false;
+            
+            // Ховаємо курсор у режимі відтворення
+            this.playerContainer.style.cursor = 'none';
         }
     }
 
@@ -269,6 +289,7 @@ class YouTubeAnimePlayer {
         if (this.controlsTimeout) {
             clearTimeout(this.controlsTimeout);
         }
+        // Ховаємо контролі через 3 секунди
         this.controlsTimeout = setTimeout(() => this.hideControls(), 3000);
     }
 
@@ -321,7 +342,10 @@ class YouTubeAnimePlayer {
     }
 
     setupPage(anime) {
-        document.getElementById("anime-bg").style.backgroundImage = `url('${anime.background}')`;
+        const animeBg = document.getElementById("anime-bg");
+        if (animeBg) {
+            animeBg.style.backgroundImage = `url('${anime.background}')`;
+        }
         document.title = `Дивитися — ${anime.title}`;
     }
 
@@ -476,6 +500,9 @@ class YouTubeAnimePlayer {
         this.duration = event.target.getDuration();
         this.updateDurationDisplay();
         
+        // Завантажуємо доступні якості YouTube
+        this.loadYouTubeQualityLevels();
+        
         // Відновлюємо прогрес (без автоматичного запуску)
         const progress = this.getEpisodeProgress();
         if (progress && progress.time > 0) {
@@ -494,6 +521,69 @@ class YouTubeAnimePlayer {
         resolve();
     }
 
+    loadYouTubeQualityLevels() {
+        if (!this.player || !this.player.getAvailableQualityLevels) return;
+        
+        try {
+            // Отримуємо доступні якості з YouTube API
+            const qualityLevels = this.player.getAvailableQualityLevels();
+            this.qualityLevels = qualityLevels;
+            
+            // Очищаємо список
+            if (this.youtubeQualitySelect) {
+                this.youtubeQualitySelect.innerHTML = '';
+                
+                // Додаємо опцію авто якості
+                const autoOption = document.createElement('option');
+                autoOption.value = 'auto';
+                autoOption.textContent = 'Авто якість';
+                this.youtubeQualitySelect.appendChild(autoOption);
+                
+                // Додаємо доступні якості
+                qualityLevels.forEach(quality => {
+                    const option = document.createElement('option');
+                    option.value = quality;
+                    option.textContent = this.formatQualityLabel(quality);
+                    this.youtubeQualitySelect.appendChild(option);
+                });
+                
+                // Встановлюємо поточну якість
+                const currentQuality = this.player.getPlaybackQuality();
+                this.youtubeQualitySelect.value = currentQuality;
+            }
+            
+        } catch (error) {
+            console.warn('Не вдалося завантажити якості YouTube:', error);
+        }
+    }
+
+    formatQualityLabel(quality) {
+        const qualityMap = {
+            'tiny': '144p',
+            'small': '240p',
+            'medium': '360p',
+            'large': '480p',
+            'hd720': '720p',
+            'hd1080': '1080p',
+            'hd1440': '1440p',
+            'hd2160': '4K',
+            'highres': 'Висока'
+        };
+        
+        return qualityMap[quality] || quality;
+    }
+
+    changeYouTubeQuality(quality) {
+        if (!this.playerReady || !this.player.setPlaybackQuality) return;
+        
+        try {
+            this.player.setPlaybackQuality(quality);
+            console.log('Якість змінено на:', quality);
+        } catch (error) {
+            console.error('Помилка зміни якості:', error);
+        }
+    }
+
     onPlayerStateChange(event) {
         const state = event.data;
         
@@ -501,9 +591,12 @@ class YouTubeAnimePlayer {
             case YT.PlayerState.PLAYING:
                 this.isPlaying = true;
                 this.updatePlayPauseButton();
-                this.videoPoster.classList.add('hidden');
+                if (this.videoPoster) {
+                    this.videoPoster.classList.add('hidden');
+                }
                 this.startProgressTracking();
                 this.startUIUpdate();
+                // Запускаємо таймер приховування контролів
                 this.startControlsTimer();
                 break;
                 
@@ -511,6 +604,7 @@ class YouTubeAnimePlayer {
                 this.isPlaying = false;
                 this.updatePlayPauseButton();
                 this.saveProgress();
+                // Показуємо контролі при паузі
                 this.showControls();
                 break;
                 
@@ -518,10 +612,16 @@ class YouTubeAnimePlayer {
                 this.isPlaying = false;
                 this.updatePlayPauseButton();
                 this.saveProgress();
+                // Показуємо контролі при завершенні
                 this.showControls();
                 if (this.autoNextEnabled) {
                     this.handleAutoNext();
                 }
+                break;
+                
+            case YT.PlayerState.BUFFERING:
+                // Оновлюємо якості при буферизації
+                setTimeout(() => this.loadYouTubeQualityLevels(), 1000);
                 break;
                 
             case YT.PlayerState.CUED:
@@ -603,42 +703,17 @@ class YouTubeAnimePlayer {
         } else {
             this.player.playVideo();
         }
+        this.animateButton(this.playPauseBtn);
     }
 
     startPlayback() {
         if (!this.playerReady) return;
         
-        this.videoPoster.classList.add('hidden');
+        if (this.videoPoster) {
+            this.videoPoster.classList.add('hidden');
+        }
         this.player.playVideo();
-    }
-
-    rewind(seconds) {
-        if (!this.playerReady) return;
-        
-        const currentTime = this.player.getCurrentTime();
-        const newTime = Math.max(0, currentTime - seconds);
-        this.player.seekTo(newTime, true);
-        
-        // Анімація кнопки
-        this.animateButton(this.rewindBtn);
-    }
-
-    forward(seconds) {
-        if (!this.playerReady) return;
-        
-        const currentTime = this.player.getCurrentTime();
-        const newTime = Math.min(this.duration, currentTime + seconds);
-        this.player.seekTo(newTime, true);
-        
-        // Анімація кнопки
-        this.animateButton(this.forwardBtn);
-    }
-
-    animateButton(button) {
-        button.style.transform = 'scale(0.9)';
-        setTimeout(() => {
-            button.style.transform = 'scale(1)';
-        }, 150);
+        this.animateButton(this.playLargeBtn);
     }
 
     seekToClick(e) {
@@ -687,6 +762,30 @@ class YouTubeAnimePlayer {
         }
         
         this.hideTimeTooltip();
+    }
+
+    startVolumeDragging(e) {
+        this.isDraggingVolume = true;
+        document.addEventListener('mousemove', this.handleVolumeDrag);
+        document.addEventListener('mouseup', this.stopVolumeDragging);
+        
+        this.handleVolumeDrag(e);
+    }
+
+    handleVolumeDrag = (e) => {
+        if (!this.isDraggingVolume || !this.volumeBar) return;
+        
+        const rect = this.volumeBar.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        const volume = Math.max(0, Math.min(100, percent * 100));
+        
+        this.setVolume(volume);
+    }
+
+    stopVolumeDragging = () => {
+        this.isDraggingVolume = false;
+        document.removeEventListener('mousemove', this.handleVolumeDrag);
+        document.removeEventListener('mouseup', this.stopVolumeDragging);
     }
 
     showHoverTime(e) {
@@ -759,7 +858,7 @@ class YouTubeAnimePlayer {
     }
 
     toggleFullscreen() {
-        const container = this.playerElement.parentElement;
+        const container = this.playerContainer;
         
         if (!document.fullscreenElement) {
             container.requestFullscreen().catch(err => {
@@ -771,6 +870,15 @@ class YouTubeAnimePlayer {
             container.classList.remove('fullscreen');
         }
         this.animateButton(this.toggleFullscreenBtn);
+    }
+
+    animateButton(button) {
+        if (!button) return;
+        
+        button.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            button.style.transform = 'scale(1)';
+        }, 150);
     }
 
     // Навігація між серіями
@@ -991,9 +1099,14 @@ class YouTubeAnimePlayer {
     setupAutoHideHeader() {
         let lastScrollY = window.scrollY;
         const header = document.querySelector('header');
+        if (!header) return;
+        
         const headerHeight = header.offsetHeight;
 
-        document.querySelector('.player-wrapper').style.paddingTop = headerHeight + 'px';
+        const playerWrapper = document.querySelector('.player-wrapper');
+        if (playerWrapper) {
+            playerWrapper.style.paddingTop = headerHeight + 'px';
+        }
 
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
@@ -1185,4 +1298,9 @@ window.addEventListener('beforeunload', () => {
     if (window.animePlayer) {
         window.animePlayer.destroy();
     }
+});
+
+// Обробка помилок
+window.addEventListener('error', (event) => {
+    console.error('Global error:', event.error);
 });

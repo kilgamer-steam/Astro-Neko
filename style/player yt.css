@@ -669,34 +669,43 @@ header.hidden {
   margin-bottom: 15px;
   border: 2px solid #943a67ff;
   overflow: hidden;
+  cursor: none;
 }
 
-/* YouTube відео (приховані стандартні контроли) */
+.custom-player-container:hover {
+  cursor: default;
+}
+
+/* YouTube відео */
 .youtube-video {
   width: 100%;
   height: 100%;
   border: none;
 }
 
-/* Кастомні контроли */
+/* Кастомні контроли - ВИДИМІ */
 .custom-controls {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 20px;
-  transition: opacity 0.3s ease;
-  opacity: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 1000;
 }
 
-.custom-player-container:hover .custom-controls {
-  opacity: 1;
+.custom-controls.hidden {
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
 }
 
 /* Прогрес бар */
 .progress-container {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .progress-bar {
@@ -706,6 +715,11 @@ header.hidden {
   border-radius: 3px;
   cursor: pointer;
   margin-bottom: 5px;
+  transition: height 0.2s ease;
+}
+
+.progress-bar:hover {
+  height: 8px;
 }
 
 .progress-filled {
@@ -726,11 +740,13 @@ header.hidden {
   background: #ff69b4;
   border-radius: 50%;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
 
 .progress-bar:hover .progress-thumb {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
 }
 
 .time-display {
@@ -739,30 +755,40 @@ header.hidden {
   color: #fff;
   font-size: 0.9em;
   font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 /* Основні контроли */
 .main-controls {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .control-btn {
-  background: rgba(255, 105, 180, 0.2);
+  background: rgba(255, 105, 180, 0.3);
   border: 1px solid #943a67ff;
   color: #fff;
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.9em;
   backdrop-filter: blur(10px);
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .control-btn:hover {
-  background: rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
+  background: rgba(255, 105, 180, 0.5);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+}
+
+.control-btn:active {
+  transform: scale(0.95);
 }
 
 /* Контроль гучності */
@@ -779,6 +805,11 @@ header.hidden {
   border-radius: 2px;
   cursor: pointer;
   position: relative;
+  transition: all 0.2s ease;
+}
+
+.volume-bar:hover {
+  height: 6px;
 }
 
 .volume-filled {
@@ -786,7 +817,32 @@ header.hidden {
   height: 100%;
   background: #ff69b4;
   border-radius: 2px;
-  width: 100%;
+  width: 80%;
+  transition: width 0.2s ease;
+}
+
+/* Вибір якості YouTube */
+.quality-select {
+  background: rgba(255, 105, 180, 0.2);
+  border: 1px solid #943a67ff;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8em;
+  backdrop-filter: blur(10px);
+  min-width: 120px;
+}
+
+.quality-select option {
+  background: #1d1d20;
+  color: #fff;
+}
+
+.quality-select:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
 }
 
 /* Постер відео */
@@ -802,6 +858,7 @@ header.hidden {
   align-items: center;
   cursor: pointer;
   transition: opacity 0.3s ease;
+  z-index: 100;
 }
 
 .video-poster.hidden {
@@ -832,6 +889,7 @@ header.hidden {
 .play-button-large:hover {
   background: rgba(255, 105, 180, 0.5);
   transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
 }
 
 /* Повноекранний режим */
@@ -845,75 +903,35 @@ header.hidden {
   border-radius: 0;
 }
 
-/* Анімації для контролів */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.custom-controls {
-  animation: fadeInUp 0.3s ease;
-}
-
 /* Підказка часу на прогресс барі */
 .time-tooltip {
-    position: fixed;
-    background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-    color: #ff82c1;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #943a67ff;
-    font-size: 0.8em;
-    font-weight: 500;
-    pointer-events: none;
-    z-index: 10001;
-    transform: translateX(-50%);
-    display: none;
-    white-space: nowrap;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(148, 58, 103, 0.3);
+  position: fixed;
+  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
+  color: #ff82c1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #943a67ff;
+  font-size: 0.8em;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 10001;
+  transform: translateX(-50%);
+  display: none;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(148, 58, 103, 0.3);
 }
 
 .time-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: #943a67ff;
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #943a67ff;
 }
 
-/* Покращені анімації для кнопок */
-.controls-row button {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.controls-row button:hover {
-    transform: translateY(-2px) scale(1.05) !important;
-}
-
-.controls-row button:active {
-    transform: translateY(0) scale(0.95) !important;
-}
-
-.control-btn {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.control-btn:hover {
-    transform: scale(1.1) !important;
-}
-
-.control-btn:active {
-    transform: scale(0.95) !important;
-}
 /* Адаптивність */
 @media (max-width: 768px) {
   .custom-player-container {
@@ -925,11 +943,18 @@ header.hidden {
   }
   
   .control-btn {
-    padding: 6px 10px;
+    padding: 6px 8px;
     font-size: 0.8em;
+    min-width: 35px;
   }
   
   .volume-bar {
     width: 60px;
+  }
+  
+  .quality-select {
+    min-width: 100px;
+    font-size: 0.7em;
+    padding: 4px 8px;
   }
 }
