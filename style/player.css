@@ -599,6 +599,7 @@ video.loaded {
   overflow: hidden;
 }
 
+
 .loading-progress-bar {
   height: 100%;
   background: linear-gradient(90deg, #ff69b4, #ff82c1);
