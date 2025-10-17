@@ -13,7 +13,28 @@
     opacity: 1;
     transform: translateY(0);
 }
+/* ===== ШАПКА САЙТУ ===== */
+header {
+  width: 100%;
+  background: rgba(24, 24, 27, 0.56); /* Напівпрозорий темний фон */
+  backdrop-filter: blur(2px); /* Ефект розмиття для сучасного вигляду */
+  display: flex;
+  justify-content: space-between; /* Рівномірний розподіл елементів */
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4); /* Тінь для об'ємності */
+  position: fixed; /* Фіксована позиція при скролі */
+  top: 0;
+  z-index: 100; /* Високий рівень для перекриття контенту */
+  border-bottom: 1px solid rgba(255, 105, 180, 0.3); /* Рожева рамка знизу */
+  box-sizing: border-box; /* Врахування padding у ширині */
+  transition: transform 0.3s ease-in-out; /* Плавна анімація при хованні */
+}
 
+/* Клас для ховання хедера при скролі вниз */
+header.hidden {
+  transform: translateY(-100%); /* Переміщення за межі екрану */
+}
 /* ===== ЗАГОЛОВОК ПРОФІЛЮ ===== */
 .profile-header {
     display: flex;

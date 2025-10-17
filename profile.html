@@ -163,6 +163,32 @@
         header.addEventListener('mouseleave', () => {
             lastScrollY = window.scrollY;
         });
+        // Auto-hide header
+let lastScrollY = window.scrollY;
+const header = document.querySelector('header');
+const headerHeight = header.offsetHeight;
+
+document.querySelector('main').style.paddingTop = headerHeight + 'px';
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > lastScrollY && currentScrollY > headerHeight) {
+        header.classList.add('hidden');
+    } else {
+        header.classList.remove('hidden');
+    }
+    
+    lastScrollY = currentScrollY;
+});
+
+header.addEventListener('mouseenter', () => {
+    header.classList.remove('hidden');
+});
+
+header.addEventListener('mouseleave', () => {
+    lastScrollY = window.scrollY;
+});
     </script>
 </body>
 </html>
