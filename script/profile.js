@@ -233,10 +233,10 @@ async function updateRatingsPreview() {
 }
 
 // Функція для створення елемента превью закладки
+// Функція для створення елемента превью закладки
 function createBookmarkPreviewItem(bookmark, animeInfo) {
     const previewItem = document.createElement('div');
     previewItem.classList.add('preview-item');
-    previewItem.style.position = 'relative';
     
     const metaInfo = animeInfo ? `
         <div class="preview-item-meta">
@@ -275,7 +275,6 @@ function createBookmarkPreviewItem(bookmark, animeInfo) {
 function createRatingPreviewItem(animeId, ratingData, animeInfo) {
     const previewItem = document.createElement('div');
     previewItem.classList.add('preview-item');
-    previewItem.style.position = 'relative';
     
     const title = animeInfo ? animeInfo.title : `Аніме ID: ${animeId}`;
     const imageSrc = animeInfo ? animeInfo.img : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="140" viewBox="0 0 100 140"><rect width="100" height="140" fill="%23943a67"/><text x="50" y="70" font-family="Arial" font-size="14" fill="white" text-anchor="middle">⭐</text></svg>';
@@ -283,7 +282,6 @@ function createRatingPreviewItem(animeId, ratingData, animeInfo) {
     const stars = '★'.repeat(ratingData.rating) + '☆'.repeat(10 - ratingData.rating);
     
     previewItem.innerHTML = `
-        <button class="preview-rating-remove" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">Видалити</button>
         <img src="${imageSrc}" alt="${title}" class="preview-item-image">
         <div class="preview-item-info">
             <div class="preview-item-title">${title}</div>
@@ -293,12 +291,13 @@ function createRatingPreviewItem(animeId, ratingData, animeInfo) {
             </div>
             <div class="preview-item-actions">
                 <a href="anime-info.html?id=${animeId}" class="preview-details-btn">Детальніше</a>
+                <button class="preview-remove-btn" onclick="event.stopPropagation(); confirmDeleteRating('${animeId}', '${title.replace(/'/g, "\\'")}')">Видалити</button>
             </div>
         </div>
     `;
     
     previewItem.addEventListener('click', (e) => {
-        if (!e.target.closest('.preview-rating-remove') && !e.target.closest('.preview-item-actions')) {
+        if (!e.target.closest('.preview-item-actions')) {
             window.location.href = `anime-info.html?id=${animeId}`;
         }
     });

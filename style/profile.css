@@ -312,6 +312,7 @@ main {
     font-size: 0.8em;
     color: #cc6096ff;
     line-height: 1.4;
+    margin-bottom: 10px;
 }
 
 .preview-more {
@@ -348,25 +349,20 @@ main {
     display: flex;
     gap: 8px;
     margin-top: 10px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.preview-item:hover .preview-item-actions {
-    opacity: 1;
 }
 
 .preview-details-btn, .preview-remove-btn {
-    padding: 5px 10px;
+    padding: 6px 10px;
     border: none;
     border-radius: 5px;
-    font-size: 0.8em;
+    font-size: 0.75em;
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
     text-align: center;
     flex: 1;
+    font-weight: 500;
 }
 
 .preview-details-btn {
@@ -385,32 +381,6 @@ main {
 }
 
 .preview-remove-btn:hover {
-    background: rgba(255, 105, 180, 0.1);
-    border-color: #ff69b4;
-    color: #ff69b4;
-}
-
-/* Стилі для кнопки видалення в оцінках на головній сторінці */
-.preview-rating-remove {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 5px 10px;
-    border: 1px solid #943a67ff;
-    border-radius: 5px;
-    background: rgba(29, 29, 32, 0.9);
-    color: #cc6096ff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.8em;
-    opacity: 0;
-}
-
-.preview-item:hover .preview-rating-remove {
-    opacity: 1;
-}
-
-.preview-rating-remove:hover {
     background: rgba(255, 105, 180, 0.1);
     border-color: #ff69b4;
     color: #ff69b4;
@@ -877,6 +847,10 @@ main {
     .profile-preview {
         grid-template-columns: 1fr;
     }
+    
+    .preview-item-actions {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 480px) {
@@ -916,5 +890,9 @@ main {
     
     .profile-section {
         padding: 20px;
+    }
+    
+    .preview-item-actions {
+        flex-direction: column;
     }
 }
