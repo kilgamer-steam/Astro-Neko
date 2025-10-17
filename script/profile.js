@@ -127,7 +127,7 @@ function updateBookmarksSection(bookmarks) {
     bookmarks.forEach(bookmark => {
         const bookmarkCard = document.createElement('a');
         bookmarkCard.classList.add('bookmark-card');
-        bookmarkCard.href = `anime.html?id=${bookmark.id}`;
+        bookmarkCard.href = `anime-info.html?id=${bookmark.id}`;
         
         // Тут ми б отримували додаткову інформацію про аніме з JSON файлів
         // Для демо використовуємо заглушки
@@ -141,7 +141,7 @@ function updateBookmarksSection(bookmarks) {
                     <span>★ 8.9</span>
                 </div>
                 <div class="bookmark-card-actions">
-                    <a href="anime.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
+                    <a href="anime-info.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
                     <button class="remove-btn" onclick="event.preventDefault(); removeBookmark('${bookmark.id}')">Видалити</button>
                 </div>
             </div>
@@ -210,7 +210,7 @@ function updateRatingsSection(ratings) {
         // Додаємо обробник кліку для переходу до аніме
         ratingCard.addEventListener('click', (e) => {
             if (!e.target.closest('.delete-rating-btn')) {
-                window.location.href = `anime.html?id=${animeId}`;
+                window.location.href = `anime-info.html?id=${animeId}`;
             }
         });
         
