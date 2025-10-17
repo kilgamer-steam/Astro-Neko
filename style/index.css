@@ -75,11 +75,6 @@ header.hidden {
     transform: translateY(-2px);
 }
 
-/* Активна сторінка (опціонально) */
-.header-nav a[href="index.html"] {
-    background: #ff69b4;
-    color: white;
-}
 /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 main {
   padding: 30px 40px;
