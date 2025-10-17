@@ -28,12 +28,12 @@
               "studio": "Amanogava",
               "language":"українська",
               "subtitle": "subtitleurl",
-              "opening": [0,0],
-              "ending": [0,0],
+              "opening": [0,300],
+              "ending": [300,800],
               "quality": [
                 {"value":"1080", "videoUrl":"https://www.youtube.com/watch?v=5q-dfVr15xI"},
                 {"value":"720", "videoUrl":"https://www.youtube.com/embed/5q-dfVr15xI?si=5rmatjMV5WdfUtcL"},
-                {"value":"360", "videoUrl":""}
+                {"value":"360", "videoUrl":"https://www.youtube.com/watch?v=qgxrfVL-5G8"}
               ]
             }
           ]
