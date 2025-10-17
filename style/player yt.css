@@ -861,6 +861,59 @@ header.hidden {
   animation: fadeInUp 0.3s ease;
 }
 
+/* Підказка часу на прогресс барі */
+.time-tooltip {
+    position: fixed;
+    background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
+    color: #ff82c1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #943a67ff;
+    font-size: 0.8em;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 10001;
+    transform: translateX(-50%);
+    display: none;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(148, 58, 103, 0.3);
+}
+
+.time-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #943a67ff;
+}
+
+/* Покращені анімації для кнопок */
+.controls-row button {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.controls-row button:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+}
+
+.controls-row button:active {
+    transform: translateY(0) scale(0.95) !important;
+}
+
+.control-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.control-btn:hover {
+    transform: scale(1.1) !important;
+}
+
+.control-btn:active {
+    transform: scale(0.95) !important;
+}
 /* Адаптивність */
 @media (max-width: 768px) {
   .custom-player-container {
