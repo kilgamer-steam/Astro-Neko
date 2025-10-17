@@ -50,24 +50,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.profile-avatar').addEventListener('click', function() {
         showTempMessage('🎭 Демо-режим\n\nУ повнофункціональній версії тут буде можливість змінити аватар та налаштування профілю!');
     });
-
-    // Демо-повідомлення для секцій
-    document.querySelectorAll('.profile-section').forEach(section => {
-        section.addEventListener('click', function() {
-            const title = this.querySelector('.section-title').textContent;
-            showTempMessage(`🔮 Демо-функція: ${title}\n\nЦя функція буде повністю доступна після реалізації системи користувачів!`);
-        });
-    });
 });
 
+// Глобальні змінні для зберігання даних
+let allBookmarks = [];
+let allRatings = {};
+
 // Функція для оновлення всієї статистики профілю
-function updateProfileStats() {
+async function updateProfileStats() {
     // Отримуємо дані з localStorage
-    const bookmarks = JSON.parse(localStorage.getItem('animeBookmarks') || '[]');
-    const ratings = JSON.parse(localStorage.getItem('animeRatings') || '{}');
+    allBookmarks = JSON.parse(localStorage.getItem('animeBookmarks') || '[]');
+    allRatings = JSON.parse(localStorage.getItem('animeRatings') || '{}');
     
     // Підраховуємо кількість оцінок
-    const ratingsCount = Object.keys(ratings).length;
+    const ratingsCount = Object.keys(allRatings).length;
     
     // Оновлюємо числа в статистиці
     const bookmarkCountElement = document.querySelector('.stat-item:nth-child(1) .stat-number');
@@ -75,7 +71,7 @@ function updateProfileStats() {
     const watchedCountElement = document.querySelector('.stat-item:nth-child(3) .stat-number');
     
     if (bookmarkCountElement) {
-        bookmarkCountElement.textContent = bookmarks.length;
+        bookmarkCountElement.textContent = allBookmarks.length;
     }
     
     if (ratingCountElement) {
@@ -83,34 +79,33 @@ function updateProfileStats() {
     }
     
     if (watchedCountElement) {
-        // Для переглянутих можна використати кількість оцінок як приблизний показник
         watchedCountElement.textContent = ratingsCount;
     }
     
     // Оновлюємо вміст секцій з даними
-    updateBookmarksSection(bookmarks);
-    updateRatingsSection(ratings);
+    await updateBookmarksPreview();
+    await updateRatingsPreview();
 }
 
-// Функція для оновлення секції закладок
-function updateBookmarksSection(bookmarks) {
+// Функція для оновлення превью закладок
+async function updateBookmarksPreview() {
     const bookmarksContainer = document.querySelector('.profile-section:nth-child(1)');
     const emptyState = bookmarksContainer.querySelector('.empty-state');
     
     if (!bookmarksContainer) return;
     
-    // Знаходимо або створюємо контейнер для списку
-    let bookmarksList = bookmarksContainer.querySelector('.profile-list');
-    if (!bookmarksList) {
-        bookmarksList = document.createElement('div');
-        bookmarksList.classList.add('profile-list');
-        bookmarksContainer.appendChild(bookmarksList);
+    // Знаходимо або створюємо контейнер для превью
+    let previewContainer = bookmarksContainer.querySelector('.profile-preview');
+    if (!previewContainer) {
+        previewContainer = document.createElement('div');
+        previewContainer.classList.add('profile-preview');
+        bookmarksContainer.appendChild(previewContainer);
     }
     
     // Очищаємо контейнер
-    bookmarksList.innerHTML = '';
+    previewContainer.innerHTML = '';
     
-    if (bookmarks.length === 0) {
+    if (allBookmarks.length === 0) {
         // Показуємо стан "пусто"
         if (emptyState) {
             emptyState.style.display = 'block';
@@ -123,53 +118,66 @@ function updateBookmarksSection(bookmarks) {
         emptyState.style.display = 'none';
     }
     
-    // Додаємо закладки
-    bookmarks.forEach(bookmark => {
-        const bookmarkCard = document.createElement('a');
-        bookmarkCard.classList.add('bookmark-card');
-        bookmarkCard.href = `anime-info.html?id=${bookmark.id}`;
-        
-        // Тут ми б отримували додаткову інформацію про аніме з JSON файлів
-        // Для демо використовуємо заглушки
-        bookmarkCard.innerHTML = `
-            <img src="${bookmark.img}" alt="${bookmark.title}" class="bookmark-card-image">
-            <div class="bookmark-card-info">
-                <div class="bookmark-card-title">${bookmark.title}</div>
-                <div class="bookmark-card-meta">
-                    <span>24 серії</span>
-                    <span class="bookmark-card-status">Онґоїнг</span>
-                    <span>★ 8.9</span>
-                </div>
-                <div class="bookmark-card-actions">
-                    <a href="anime-info.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
-                    <button class="remove-btn" onclick="event.preventDefault(); removeBookmark('${bookmark.id}')">Видалити</button>
-                </div>
-            </div>
+    // Беремо перші 3 закладки
+    const previewBookmarks = allBookmarks.slice(0, 3);
+    
+    // Додаємо превью закладок
+    for (const bookmark of previewBookmarks) {
+        try {
+            // Отримуємо повну інформацію про аніме
+            const animeInfo = await loadAnimeInfo(bookmark.id);
+            const previewItem = createBookmarkPreviewItem(bookmark, animeInfo);
+            previewContainer.appendChild(previewItem);
+        } catch (error) {
+            console.error('Помилка завантаження інформації про аніме:', error);
+            // Використовуємо базову інформацію з закладки
+            const previewItem = createBookmarkPreviewItem(bookmark, null);
+            previewContainer.appendChild(previewItem);
+        }
+    }
+    
+    // Додаємо кнопку "Показати всі" якщо закладок більше 3
+    if (allBookmarks.length > 3) {
+        const moreButton = document.createElement('div');
+        moreButton.classList.add('preview-more');
+        moreButton.innerHTML = `
+            <div class="preview-more-text">Показати всі закладки</div>
+            <div class="preview-more-count">+${allBookmarks.length - 3} ще</div>
         `;
-        
-        bookmarksList.appendChild(bookmarkCard);
+        moreButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showBookmarksModal();
+        });
+        previewContainer.appendChild(moreButton);
+    }
+    
+    // Додаємо обробник кліку на всю секцію
+    bookmarksContainer.addEventListener('click', (e) => {
+        if (!e.target.closest('.preview-more') && !e.target.closest('.preview-item') && allBookmarks.length > 0) {
+            showBookmarksModal();
+        }
     });
 }
 
-// Функція для оновлення секції оцінок
-function updateRatingsSection(ratings) {
+// Функція для оновлення превью оцінок
+async function updateRatingsPreview() {
     const ratingsContainer = document.querySelector('.profile-section:nth-child(2)');
     const emptyState = ratingsContainer.querySelector('.empty-state');
     
     if (!ratingsContainer) return;
     
-    // Знаходимо або створюємо контейнер для списку
-    let ratingsList = ratingsContainer.querySelector('.profile-list');
-    if (!ratingsList) {
-        ratingsList = document.createElement('div');
-        ratingsList.classList.add('profile-list');
-        ratingsContainer.appendChild(ratingsList);
+    // Знаходимо або створюємо контейнер для превью
+    let previewContainer = ratingsContainer.querySelector('.profile-preview');
+    if (!previewContainer) {
+        previewContainer = document.createElement('div');
+        previewContainer.classList.add('profile-preview');
+        ratingsContainer.appendChild(previewContainer);
     }
     
     // Очищаємо контейнер
-    ratingsList.innerHTML = '';
+    previewContainer.innerHTML = '';
     
-    if (Object.keys(ratings).length === 0) {
+    if (Object.keys(allRatings).length === 0) {
         // Показуємо стан "пусто"
         if (emptyState) {
             emptyState.style.display = 'block';
@@ -182,65 +190,292 @@ function updateRatingsSection(ratings) {
         emptyState.style.display = 'none';
     }
     
-    // Додаємо оцінки
-    Object.entries(ratings).forEach(([animeId, ratingData]) => {
-        const ratingCard = document.createElement('div');
-        ratingCard.classList.add('rating-card');
-        
-        // Форматуємо дату
-        const ratingDate = new Date(ratingData.date).toLocaleDateString('uk-UA');
-        
-        // Створюємо рядок зірочок
-        const stars = '★'.repeat(ratingData.rating) + '☆'.repeat(10 - ratingData.rating);
-        
-        ratingCard.innerHTML = `
-            <div class="rating-card-image" style="background: rgba(255, 105, 180, 0.2); display: flex; align-items: center; justify-content: center;">
-                <span style="color: #ff69b4; font-size: 1.5em;">⭐</span>
-            </div>
-            <div class="rating-card-info">
-                <div class="rating-card-title">Аніме ID: ${animeId}</div>
-                <div class="rating-card-stars">${stars}</div>
-                <div class="rating-card-date">Оцінено: ${ratingDate}</div>
-            </div>
-            <div class="rating-card-actions">
-                <button class="delete-rating-btn" onclick="deleteRating('${animeId}')">×</button>
-            </div>
+    // Беремо перші 3 оцінки
+    const previewRatings = Object.entries(allRatings).slice(0, 3);
+    
+    // Додаємо превью оцінок
+    for (const [animeId, ratingData] of previewRatings) {
+        try {
+            // Отримуємо повну інформацію про аніме
+            const animeInfo = await loadAnimeInfo(animeId);
+            const previewItem = createRatingPreviewItem(animeId, ratingData, animeInfo);
+            previewContainer.appendChild(previewItem);
+        } catch (error) {
+            console.error('Помилка завантаження інформації про аніме:', error);
+            // Використовуємо базову інформацію
+            const previewItem = createRatingPreviewItem(animeId, ratingData, null);
+            previewContainer.appendChild(previewItem);
+        }
+    }
+    
+    // Додаємо кнопку "Показати всі" якщо оцінок більше 3
+    if (Object.keys(allRatings).length > 3) {
+        const moreButton = document.createElement('div');
+        moreButton.classList.add('preview-more');
+        moreButton.innerHTML = `
+            <div class="preview-more-text">Показати всі оцінки</div>
+            <div class="preview-more-count">+${Object.keys(allRatings).length - 3} ще</div>
         `;
-        
-        // Додаємо обробник кліку для переходу до аніме
-        ratingCard.addEventListener('click', (e) => {
-            if (!e.target.closest('.delete-rating-btn')) {
-                window.location.href = `anime-info.html?id=${animeId}`;
-            }
+        moreButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showRatingsModal();
         });
-        
-        ratingsList.appendChild(ratingCard);
+        previewContainer.appendChild(moreButton);
+    }
+    
+    // Додаємо обробник кліку на всю секцію
+    ratingsContainer.addEventListener('click', (e) => {
+        if (!e.target.closest('.preview-more') && !e.target.closest('.preview-item') && Object.keys(allRatings).length > 0) {
+            showRatingsModal();
+        }
+    });
+}
+
+// Функція для створення елемента превью закладки
+function createBookmarkPreviewItem(bookmark, animeInfo) {
+    const previewItem = document.createElement('div');
+    previewItem.classList.add('preview-item');
+    
+    const metaInfo = animeInfo ? `
+        <div class="preview-item-meta">
+            <div>${animeInfo.seasons ? animeInfo.seasons[0].episodeCount || 'N/A' : 'N/A'} серій</div>
+            <div>${animeInfo.status || 'N/A'}</div>
+            <div>★ ${animeInfo.rating || 'N/A'}</div>
+        </div>
+    ` : `
+        <div class="preview-item-meta">
+            <div>Інформація завантажується...</div>
+        </div>
+    `;
+    
+    previewItem.innerHTML = `
+        <img src="${bookmark.img}" alt="${bookmark.title}" class="preview-item-image">
+        <div class="preview-item-info">
+            <div class="preview-item-title">${bookmark.title}</div>
+            ${metaInfo}
+        </div>
+    `;
+    
+    previewItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = `anime.html?id=${bookmark.id}`;
+    });
+    
+    return previewItem;
+}
+
+// Функція для створення елемента превью оцінки
+function createRatingPreviewItem(animeId, ratingData, animeInfo) {
+    const previewItem = document.createElement('div');
+    previewItem.classList.add('preview-item');
+    
+    const title = animeInfo ? animeInfo.title : `Аніме ID: ${animeId}`;
+    const imageSrc = animeInfo ? animeInfo.img : bookmark.img;
+    
+    const stars = '★'.repeat(ratingData.rating) + '☆'.repeat(10 - ratingData.rating);
+    
+    previewItem.innerHTML = `
+        <img src="${imageSrc}" alt="${title}" class="preview-item-image">
+        <div class="preview-item-info">
+            <div class="preview-item-title">${title}</div>
+            <div class="preview-item-meta">
+                <div style="color: #ffd700;">${stars}</div>
+                <div>${ratingData.rating}/10</div>
+            </div>
+        </div>
+    `;
+    
+    previewItem.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.location.href = `anime.html?id=${animeId}`;
+    });
+    
+    return previewItem;
+}
+
+// Функція для завантаження інформації про аніме
+async function loadAnimeInfo(animeId) {
+    try {
+        const response = await fetch(`anime/${encodeURIComponent(animeId)}.json`);
+        if (!response.ok) {
+            throw new Error('Аніме не знайдено');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Помилка завантаження аніме:', error);
+        return null;
+    }
+}
+
+// Функція для показу модального вікна з усіма закладками
+async function showBookmarksModal() {
+    const modalHTML = `
+        <div class="profile-modal" id="bookmarks-modal">
+            <div class="profile-modal-content">
+                <div class="profile-modal-header">
+                    <h3 class="profile-modal-title">Мої закладки (${allBookmarks.length})</h3>
+                    <button class="profile-modal-close">&times;</button>
+                </div>
+                <div class="profile-modal-list" id="bookmarks-modal-list">
+                    <!-- Тут будуть всі закладки -->
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const modal = document.getElementById('bookmarks-modal');
+    const closeBtn = modal.querySelector('.profile-modal-close');
+    const listContainer = document.getElementById('bookmarks-modal-list');
+    
+    // Заповнюємо список закладок
+    for (const bookmark of allBookmarks) {
+        try {
+            const animeInfo = await loadAnimeInfo(bookmark.id);
+            const bookmarkCard = document.createElement('a');
+            bookmarkCard.classList.add('bookmark-card');
+            bookmarkCard.href = `anime.html?id=${bookmark.id}`;
+            
+            const metaInfo = animeInfo ? `
+                <div class="bookmark-card-meta">
+                    <span>${animeInfo.seasons ? animeInfo.seasons[0].episodeCount || 'N/A' : 'N/A'} серій</span>
+                    <span class="bookmark-card-status">${animeInfo.status || 'N/A'}</span>
+                    <span>★ ${animeInfo.rating || 'N/A'}</span>
+                </div>
+            ` : `
+                <div class="bookmark-card-meta">
+                    <span>Інформація завантажується...</span>
+                </div>
+            `;
+            
+            bookmarkCard.innerHTML = `
+                <img src="${bookmark.img}" alt="${bookmark.title}" class="bookmark-card-image">
+                <div class="bookmark-card-info">
+                    <div class="bookmark-card-title">${bookmark.title}</div>
+                    ${metaInfo}
+                    <div class="bookmark-card-actions">
+                        <a href="anime.html?id=${bookmark.id}" class="details-btn">Детальніше</a>
+                        <button class="remove-btn" onclick="event.preventDefault(); removeBookmark('${bookmark.id}')">Видалити</button>
+                    </div>
+                </div>
+            `;
+            listContainer.appendChild(bookmarkCard);
+        } catch (error) {
+            console.error('Помилка завантаження інформації про аніме:', error);
+        }
+    }
+    
+    // Показуємо модальне вікно
+    modal.style.display = 'flex';
+    
+    // Обробники закриття
+    closeBtn.addEventListener('click', () => modal.remove());
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// Функція для показу модального вікна з усіма оцінками
+async function showRatingsModal() {
+    const modalHTML = `
+        <div class="profile-modal" id="ratings-modal">
+            <div class="profile-modal-content">
+                <div class="profile-modal-header">
+                    <h3 class="profile-modal-title">Мої оцінки (${Object.keys(allRatings).length})</h3>
+                    <button class="profile-modal-close">&times;</button>
+                </div>
+                <div class="profile-modal-list" id="ratings-modal-list">
+                    <!-- Тут будуть всі оцінки -->
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    const modal = document.getElementById('ratings-modal');
+    const closeBtn = modal.querySelector('.profile-modal-close');
+    const listContainer = document.getElementById('ratings-modal-list');
+    
+    // Заповнюємо список оцінок
+    for (const [animeId, ratingData] of Object.entries(allRatings)) {
+        try {
+            const animeInfo = await loadAnimeInfo(animeId);
+            const title = animeInfo ? animeInfo.title : `Аніме ID: ${animeId}`;
+            const imageSrc = animeInfo ? animeInfo.img : 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="140" viewBox="0 0 100 140"><rect width="100" height="140" fill="%23943a67"/><text x="50" y="70" font-family="Arial" font-size="14" fill="white" text-anchor="middle">⭐</text></svg>';
+            
+            const ratingCard = document.createElement('div');
+            ratingCard.classList.add('rating-card');
+            ratingCard.innerHTML = `
+                <img src="${imageSrc}" alt="${title}" class="rating-card-image">
+                <div class="rating-card-info">
+                    <div class="rating-card-title">${title}</div>
+                    <div class="rating-card-stars">${'★'.repeat(ratingData.rating)}${'☆'.repeat(10 - ratingData.rating)}</div>
+                    <div class="rating-card-date">Оцінено: ${new Date(ratingData.date).toLocaleDateString('uk-UA')}</div>
+                </div>
+                <div class="rating-card-actions">
+                    <button class="delete-rating-btn" onclick="deleteRating('${animeId}')">×</button>
+                </div>
+            `;
+            
+            ratingCard.addEventListener('click', (e) => {
+                if (!e.target.closest('.delete-rating-btn')) {
+                    window.location.href = `anime.html?id=${animeId}`;
+                }
+            });
+            
+            listContainer.appendChild(ratingCard);
+        } catch (error) {
+            console.error('Помилка завантаження інформації про аніме:', error);
+        }
+    }
+    
+    // Показуємо модальне вікно
+    modal.style.display = 'flex';
+    
+    // Обробники закриття
+    closeBtn.addEventListener('click', () => modal.remove());
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
     });
 }
 
 // Функція для видалення закладки
 function removeBookmark(animeId) {
     if (confirm('Видалити цю закладку?')) {
-        let bookmarks = JSON.parse(localStorage.getItem('animeBookmarks') || '[]');
-        bookmarks = bookmarks.filter(item => item.id !== animeId);
-        localStorage.setItem('animeBookmarks', JSON.stringify(bookmarks));
+        allBookmarks = allBookmarks.filter(item => item.id !== animeId);
+        localStorage.setItem('animeBookmarks', JSON.stringify(allBookmarks));
         
         // Оновлюємо інтерфейс
         updateProfileStats();
         showTempMessage('Закладку видалено 📕');
+        
+        // Закриваємо модальне вікно якщо воно відкрите
+        const modal = document.getElementById('bookmarks-modal');
+        if (modal) {
+            modal.remove();
+        }
     }
 }
 
 // Функція для видалення оцінки
 function deleteRating(animeId) {
     if (confirm('Видалити цю оцінку?')) {
-        let ratings = JSON.parse(localStorage.getItem('animeRatings') || '{}');
-        delete ratings[animeId];
-        localStorage.setItem('animeRatings', JSON.stringify(ratings));
+        delete allRatings[animeId];
+        localStorage.setItem('animeRatings', JSON.stringify(allRatings));
         
         // Оновлюємо інтерфейс
         updateProfileStats();
         showTempMessage('Оцінку видалено ⭐');
+        
+        // Закриваємо модальне вікно якщо воно відкрите
+        const modal = document.getElementById('ratings-modal');
+        if (modal) {
+            modal.remove();
+        }
     }
 }
 
