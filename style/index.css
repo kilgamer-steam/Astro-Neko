@@ -49,7 +49,37 @@ header {
 header.hidden {
   transform: translateY(-100%); /* Переміщення за межі екрану */
 }
+/* Стилі для навігації в хедері */
+.header-nav {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
 
+.header-nav a {
+    padding: 10px 20px;
+    border: 2px solid #943a67ff;
+    border-radius: 8px;
+    background: rgba(255, 105, 180, 0.1);
+    color: #cc6096ff;
+    font-size: 1em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.header-nav a:hover {
+    background: #ff69b4;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Активна сторінка (опціонально) */
+.header-nav a[href="index.html"] {
+    background: #ff69b4;
+    color: white;
+}
 /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 main {
   padding: 30px 40px;
