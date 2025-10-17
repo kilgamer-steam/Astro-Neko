@@ -241,20 +241,86 @@
       });
       
       // Обробник для кнопки поділитися
-      shareBtn.addEventListener('click', () => {
-        if (navigator.share) {
-          navigator.share({
-            title: anime.title,
-            text: anime.description.substring(0, 100) + '...',
-            url: window.location.href
-          });
-        } else {
-          // Копіювання посилання в буфер обміну для старих браузерів
-          navigator.clipboard.writeText(window.location.href).then(() => {
-            alert('Посилання скопійовано в буфер обміну!');
-          });
-        }
-      });
+      // Обробник для кнопки поділитися
+shareBtn.addEventListener('click', () => {
+  // Обрізаємо назву аніме якщо вона довша за 4 слова
+  let titleToShare = anime.title;
+  const words = anime.title.split(' ');
+  if (words.length > 4) {
+    titleToShare = words.slice(0, 4).join(' ') + '...';
+  }
+  
+  // Формуємо текст для копіювання
+  const shareText = `Приєднуйся до Astro перегляду аніме "${titleToShare}" разом зі мною!\n${window.location.href}`;
+  
+  // Копіюємо в буфер обміну
+  navigator.clipboard.writeText(shareText).then(() => {
+    // Показуємо повідомлення про успіх
+    showTempMessage('Посилання скопійовано в буфер обміну! 📋');
+  }).catch(err => {
+    // Резервний спосіб для старих браузерів
+    console.error('Помилка копіювання: ', err);
+    fallbackCopyToClipboard(shareText);
+  });
+});
+
+// Функція для показу тимчасового повідомлення
+function showTempMessage(message) {
+  // Створюємо елемент повідомлення
+  const messageEl = document.createElement('div');
+  messageEl.textContent = message;
+  messageEl.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(148, 58, 103, 0.9);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    z-index: 10000;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+    border: 2px solid #ff69b4;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+  `;
+  
+  document.body.appendChild(messageEl);
+  
+  // Автоматично видаляємо через 2 секунди
+  setTimeout(() => {
+    document.body.removeChild(messageEl);
+  }, 2000);
+}
+
+// Резервна функція копіювання для старих браузерів
+function fallbackCopyToClipboard(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.cssText = `
+    position: fixed;
+    left: -9999px;
+    opacity: 0;
+  `;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  
+  try {
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    if (successful) {
+      showTempMessage('Посилання скопійовано в буфер обміну! 📋');
+    } else {
+      showTempMessage('Не вдалося скопіювати. Спробуйте ще раз.');
+    }
+  } catch (err) {
+    document.body.removeChild(textArea);
+    showTempMessage('Помилка копіювання. Скопіюйте посилання вручну.');
+  }
+}
     }
 
     // Auto-hide header functionality
