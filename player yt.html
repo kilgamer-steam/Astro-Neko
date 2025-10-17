@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroNeko — Плеєр</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="style/player yt.css">
+</head>
+<body>
+  <div class="anime-bg" id="anime-bg"></div>
+  <header>
+    <a href="https://kilgamer-steam.github.io/Astro-Neko" class="logo">
+      <img src="images/favicon1.png" alt="Logo">
+      <h1>AstroNeko</h1>
+    </a>
+    <nav class="header-nav">
+      <button id="backToInfo">Повернутися</button>
+      <a href="https://kilgamer-steam.github.io/Astro-Neko">Головна</a>
+      <a href="profile.html">Профіль</a>
+    </nav>
+  </header>
+
+  <div class="player-wrapper">
+    <video id="anime-player" controls></video>
+
+    <div class="controls-row">
+      <span id="season-or-movie">?</span>
+      <span id="episode-number">?</span>
+      <span id="episode-title">?</span>
+      
+      <button id="open-settings" class="settings-btn">⚙️ Налаштування</button>
+
+      <button id="prev-episode">Попередня серія</button>
+      <button id="next-episode">Наступна серія</button>
+    </div>
+  </div>
+
+  <!-- Спливаюче вікно налаштувань -->
+  <div id="settings-modal" class="settings-modal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h3>Налаштування плеєра</h3>
+        <button id="close-settings" class="close-btn">&times;</button>
+      </div>
+      
+      <div class="settings-body">
+        <!-- Озвучка -->
+        <div class="setting-group">
+          <label for="settings-audio">Озвучка:</label>
+          <select id="settings-audio" class="settings-select">
+            <option value="">Завантаження...</option>
+          </select>
+        </div>
+        
+        <!-- Якість -->
+        <div class="setting-group">
+          <label for="settings-quality">Якість:</label>
+          <select id="settings-quality" class="settings-select">
+            <option value="">Спочатку оберіть озвучку</option>
+          </select>
+        </div>
+        
+        <!-- Авто-скіп -->
+        <div class="setting-group">
+          <label>Авто-скіп:</label>
+          <a href="#" class="toggle-link" id="auto-skip-link">
+            <span class="toggle-icon">☐</span>
+            <span class="toggle-text">Автоматично пропускати опенінг/ендінг</span>
+          </a>
+        </div>
+        
+        <!-- Авто-продовження -->
+        <div class="setting-group">
+          <label>Авто-продовження:</label>
+          <a href="#" class="toggle-link" id="auto-next-link">
+            <span class="toggle-icon">☐</span>
+            <span class="toggle-text">Автоматично переходити на наступну серію</span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="settings-footer">
+        <button id="close-modal" class="apply-btn">Закрити</button>
+      </div>
+    </div>
+  </div>
+<script src="script/player yt.js"></script>
+</body>
+</html>
