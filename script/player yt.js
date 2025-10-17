@@ -376,10 +376,6 @@ class YouTubeAnimePlayer {
     console.error('YouTube помилка:', event.data);
     this.updateLoadingProgress(0, 'Помилка завантаження відео');
     
-    setTimeout(() => {
-      alert("Помилка завантаження відео. Спробуйте іншу озвучку або якість.");
-      this.hideLoading();
-    }, 1000);
   }
 
   startProgressTracking() {
@@ -434,12 +430,12 @@ class YouTubeAnimePlayer {
   goToPreviousEpisode() {
     this.saveProgress();
     if (this.episodeNumber > 1) {
-      window.location.href = `player.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber}&episode=${this.episodeNumber-1}`;
+      window.location.href = `player yt.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber}&episode=${this.episodeNumber-1}`;
     } else if (this.seasonNumber > 1) {
       const prevSeason = this.currentAnime.seasons.find(s => s.seasonNumber === this.seasonNumber - 1);
       if (prevSeason && prevSeason.episodes.length > 0) {
         const lastEpisodeInPrevSeason = prevSeason.episodes.length;
-        window.location.href = `player.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber-1}&episode=${lastEpisodeInPrevSeason}`;
+        window.location.href = `player yt.html?id=${encodeURIComponent(this.animeId)}&season=${this.seasonNumber-1}&episode=${lastEpisodeInPrevSeason}`;
       }
     }
   }
