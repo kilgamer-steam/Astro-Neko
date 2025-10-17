@@ -22,46 +22,34 @@
   </header>
 
   <div class="player-wrapper">
-    <!-- Кастомний плеєр з YouTube як джерелом -->
-    <div class="custom-player-container" id="player-container">
-      <div id="youtube-player" class="youtube-video"></div>
+    <!-- Простий плеєр -->
+    <div class="simple-player-container" id="player-container">
+      <div id="youtube-player"></div>
       
-      <!-- Кастомні контроли -->
-      <div class="custom-controls" id="custom-controls">
+      <!-- Прості контроли -->
+      <div class="simple-controls" id="simple-controls">
         <!-- Прогрес бар -->
         <div class="progress-container">
           <div class="progress-bar" id="progress-bar">
             <div class="progress-filled" id="progress-filled"></div>
-            <div class="progress-thumb" id="progress-thumb"></div>
           </div>
           <div class="time-display">
             <span id="current-time">0:00</span> / <span id="duration">0:00</span>
           </div>
         </div>
         
-        <!-- Основні контроли -->
-        <div class="main-controls">
+        <!-- Основні кнопки -->
+        <div class="basic-controls">
           <button id="play-pause" class="control-btn">▶</button>
-          
-          <!-- Контроль гучності -->
-          <div class="volume-control">
-            <button id="toggle-mute" class="control-btn">🔊</button>
-            <div class="volume-bar" id="volume-bar">
-              <div class="volume-filled" id="volume-filled"></div>
-            </div>
-          </div>
-          
-          <button id="toggle-fullscreen" class="control-btn">⛶</button>
-          <button id="open-settings" class="control-btn">⚙️</button>
-          
-          <!-- Налаштування якості YouTube -->
+          <button id="toggle-mute" class="control-btn">🔊</button>
           <select id="youtube-quality" class="quality-select">
             <option value="auto">Авто якість</option>
           </select>
+          <button id="toggle-fullscreen" class="control-btn">⛶</button>
         </div>
       </div>
       
-      <!-- Постер при завантаженні -->
+      <!-- Постер -->
       <div class="video-poster" id="video-poster">
         <div class="poster-content">
           <div class="play-button-large" id="play-large-btn">▶</div>
@@ -70,63 +58,14 @@
       </div>
     </div>
 
-    <div class="controls-row">
-      <span id="season-or-movie">?</span>
-      <span id="episode-number">?</span>
-      <span id="episode-title">?</span>
+    <!-- Навігація серіями -->
+    <div class="episode-navigation">
+      <span id="season-or-movie">Сезон 1</span>
+      <span id="episode-number">Серія 1</span>
+      <span id="episode-title">Назва серії</span>
       
-      <button id="prev-episode">Попередня серія</button>
-      <button id="next-episode">Наступна серія</button>
-    </div>
-  </div>
-
-  <!-- Спливаюче вікно налаштувань -->
-  <div id="settings-modal" class="settings-modal">
-    <div class="settings-content">
-      <div class="settings-header">
-        <h3>Налаштування плеєра</h3>
-        <button id="close-settings" class="close-btn">&times;</button>
-      </div>
-      
-      <div class="settings-body">
-        <!-- Озвучка -->
-        <div class="setting-group">
-          <label for="settings-audio">Озвучка:</label>
-          <select id="settings-audio" class="settings-select">
-            <option value="">Завантаження...</option>
-          </select>
-        </div>
-        
-        <!-- Якість -->
-        <div class="setting-group">
-          <label for="settings-quality">Якість:</label>
-          <select id="settings-quality" class="settings-select">
-            <option value="">Спочатку оберіть озвучку</option>
-          </select>
-        </div>
-        
-        <!-- Авто-скіп -->
-        <div class="setting-group">
-          <label>Авто-скіп:</label>
-          <a href="#" class="toggle-link" id="auto-skip-link">
-            <span class="toggle-icon">☐</span>
-            <span class="toggle-text">Автоматично пропускати опенінг/ендінг</span>
-          </a>
-        </div>
-        
-        <!-- Авто-продовження -->
-        <div class="setting-group">
-          <label>Авто-продовження:</label>
-          <a href="#" class="toggle-link" id="auto-next-link">
-            <span class="toggle-icon">☐</span>
-            <span class="toggle-text">Автоматично переходити на наступну серію</span>
-          </a>
-        </div>
-      </div>
-      
-      <div class="settings-footer">
-        <button id="close-modal" class="apply-btn">Закрити</button>
-      </div>
+      <button id="prev-episode">← Попередня</button>
+      <button id="next-episode">Наступна →</button>
     </div>
   </div>
 

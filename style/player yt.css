@@ -1,3 +1,4 @@
+/* Базові стилі */
 body {
   margin: 0;
   font-family: "Poppins", "Segoe UI", sans-serif;
@@ -23,6 +24,23 @@ body {
   z-index: -1;
 }
 
+/* Хедер */
+header {
+  width: 100%;
+  background: rgba(24, 24, 27, 0.56);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+  box-sizing: border-box;
+}
+
 header .logo {
   display: flex;
   align-items: center;
@@ -41,34 +59,13 @@ header .logo h1 {
   font-size: 1.8em;
 }
 
-header {
-  width: 100%;
-  background: rgba(24, 24, 27, 0.56);
-  backdrop-filter: blur(2px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
-  box-sizing: border-box;
-  transition: transform 0.3s ease-in-out;
-}
-
-header.hidden {
-  transform: translateY(-100%);
-}
-
 .header-nav {
   display: flex;
   gap: 15px;
   align-items: center;
 }
 
-#backToInfo {
+#backToInfo, .header-nav a {
   padding: 10px 20px;
   border: 2px solid #943a67ff;
   border-radius: 8px;
@@ -77,30 +74,17 @@ header.hidden {
   font-size: 1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-}
-
-.header-nav a {
-  padding: 10px 20px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #cc6096ff;
-  font-size: 1em;
   text-decoration: none;
-  transition: all 0.3s ease;
   font-family: "Poppins", "Segoe UI", sans-serif;
-  order: 1;
 }
 
-#backToInfo:hover,
-.header-nav a:hover {
+#backToInfo:hover, .header-nav a:hover {
   background: #ff69b4;
   color: #fff;
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
 }
 
+/* Основний контейнер */
 .player-wrapper {
   position: relative;
   display: flex;
@@ -108,7 +92,7 @@ header.hidden {
   align-items: center;
   max-width: 900px;
   width: 90%;
-  margin-top: 70px;
+  margin-top: 100px;
   background: rgba(29, 29, 32, 0.2);
   padding: 20px;
   border-radius: 12px;
@@ -118,549 +102,8 @@ header.hidden {
   border: 1px solid rgba(255, 105, 180, 0.2);
 }
 
-/* YouTube плеєр */
-#youtube-player {
-  width: 100%;
-  height: 500px;
-  border-radius: 10px;
-  background: #000;
-  margin-bottom: 15px;
-  border: 2px solid #943a67ff;
-  position: relative;
-  z-index: 1;
-}
-
-#episode-title {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  flex-shrink: 1;
-  cursor: help;
-  position: relative;
-}
-
-.controls-row {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  white-space: nowrap;
-  padding: 10px 0;
-}
-
-.controls-row button,
-.controls-row span {
-  color: #cc6096ff;
-}
-
-.controls-row span {
-  font-weight: bold;
-  color: #cc6096ff;
-  font-size: 1em;
-  flex-shrink: 0;
-}
-
-/* Кнопка налаштувань у рядку контролів */
-.controls-row .settings-btn {
-  padding: 10px 20px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #cc6096ff;
-  font-size: 1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  white-space: nowrap;
-  flex-shrink: 0;
-  position: static;
-  top: auto;
-  right: auto;
-  backdrop-filter: blur(2px);
-}
-
-.controls-row .settings-btn:hover {
-  background: #ff69b4;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
-}
-
-.controls-row button {
-  padding: 10px 20px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(255, 105, 180, 0.1);
-  color: #cc6096ff;
-  font-size: 1em;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.controls-row button:hover {
-  background: #ff69b4;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  transform: translateY(-2px);
-}
-
-/* Спливаюче вікно налаштувань */
-.settings-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 15, 16, 0.13);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.settings-content {
-  background: rgba(29, 29, 32, 0.95);
-  border: 2px solid #943a67ff;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 30px rgba(148, 58, 103, 0.4);
-  animation: modalAppear 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-@keyframes modalAppear {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.settings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 25px;
-  border-bottom: 1px solid rgba(255, 105, 180, 0.3);
-  background: linear-gradient(135deg, rgba(148, 58, 103, 0.1) 0%, rgba(255, 105, 180, 0.05) 100%);
-}
-
-.settings-header h3 {
-  margin: 0;
-  color: #cc6096ff;
-  font-size: 1.4em;
-  font-weight: 600;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  color: #cc6096ff;
-  font-size: 2em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-}
-
-.close-btn:hover {
-  color: #ff69b4;
-  background: rgba(255, 105, 180, 0.1);
-  transform: scale(1.1);
-}
-
-.settings-body {
-  padding: 25px;
-}
-
-.setting-group {
-  margin-bottom: 20px;
-}
-
-.setting-group label {
-  display: block;
-  margin-bottom: 8px;
-  color: #cc6096ff;
-  font-weight: 500;
-  font-size: 0.95em;
-}
-
-.settings-select {
-  width: 100%;
-  padding: 10px 15px;
-  border: 2px solid #943a67ff;
-  border-radius: 8px;
-  background: rgba(24, 24, 27, 0.8);
-  color: #cc6096ff;
-  font-size: 1em;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  backdrop-filter: blur(2px);
-}
-
-.settings-select:focus {
-  outline: none;
-  border-color: #ff69b4;
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
-  background: rgba(29, 29, 32, 0.9);
-}
-
-/* Стилі для клікабельних посилань замість чекбоксів */
-.toggle-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #cc6096ff;
-  padding: 10px 0;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin: 5px 0;
-}
-
-.toggle-link:hover {
-  background: rgba(255, 105, 180, 0.1);
-  color: #ff69b4;
-  transform: translateX(5px);
-}
-
-.toggle-icon {
-  font-size: 1.3em;
-  margin-right: 12px;
-  transition: all 0.3s ease;
-  width: 20px;
-  text-align: center;
-}
-
-.toggle-link.active {
-  background: rgba(255, 105, 180, 0.15);
-  color: #ff69b4;
-  border-left: 3px solid #ff69b4;
-}
-
-.toggle-link.active .toggle-icon {
-  color: #ff69b4;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-}
-
-.toggle-text {
-  font-size: 0.95em;
-  font-weight: 500;
-}
-
-.settings-footer {
-  padding: 20px 25px;
-  border-top: 1px solid rgba(255, 105, 180, 0.3);
-  text-align: right;
-  background: linear-gradient(135deg, rgba(148, 58, 103, 0.05) 0%, rgba(255, 105, 180, 0.02) 100%);
-}
-
-.apply-btn {
-  background: linear-gradient(135deg, #943a67ff 0%, #ff69b4 100%);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-  backdrop-filter: blur(2px);
-}
-
-.apply-btn:hover {
-  background: linear-gradient(135deg, #ff69b4 0%, #ff82c1 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 105, 180, 0.5);
-}
-
-.apply-btn:active {
-  transform: translateY(0);
-}
-
-/* Стилі для кастомної підказки */
-.custom-tooltip {
-  position: fixed;
-  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-  color: #ff82c1;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 2px solid #943a67ff;
-  white-space: nowrap;
-  z-index: 10000;
-  font-size: 0.9em;
-  font-weight: 500;
-  box-shadow: 0 8px 25px rgba(148, 58, 103, 0.4);
-  backdrop-filter: blur(15px);
-  pointer-events: none;
-  display: none;
-  font-family: "Poppins", "Segoe UI", sans-serif;
-}
-
-.custom-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-bottom-color: #943a67ff;
-}
-
-/* Індикатор завантаження */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(15, 15, 16, 0.9);
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  opacity: 1;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.loading-overlay.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.loading-text {
-  color: #ff69b4;
-  font-size: 1.2em;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.loading-subtext {
-  color: #cc6096ff;
-  font-size: 0.9em;
-  text-align: center;
-  opacity: 0.8;
-}
-
-/* Плавні анімації для контенту */
-.player-wrapper {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.player-wrapper.loaded {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Анімація для кнопок */
-.controls-row button {
-  transform: translateY(0);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.controls-row button:hover {
-  transform: translateY(-3px);
-}
-
-.controls-row button:active {
-  transform: translateY(1px);
-}
-
-/* Анімація для YouTube плеєра */
-#youtube-player {
-  transform: scale(0.98);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-}
-
-#youtube-player.loaded {
-  transform: scale(1);
-  box-shadow: 0 10px 40px rgba(148, 58, 103, 0.3);
-}
-
-/* Пульсуюча анімація для кнопки налаштувань */
-.settings-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-.settings-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
-.settings-btn:hover::before {
-  left: 100%;
-}
-
-/* Анімація для модального вікна */
-.settings-content {
-  transform: scale(0.8) translateY(-50px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.settings-content.show {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-}
-
-/* Анімація для інформації про епізод */
-.episode-info span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: all 0.5s ease;
-}
-
-.episode-info span.loaded {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Затримки для послідовної анімації */
-#season-or-movie.loaded { transition-delay: 0.1s; }
-#episode-number.loaded { transition-delay: 0.2s; }
-#episode-title.loaded { transition-delay: 0.3s; }
-.settings-btn.loaded { transition-delay: 0.4s; }
-#prev-episode.loaded { transition-delay: 0.5s; }
-#next-episode.loaded { transition-delay: 0.6s; }
-
-/* Стилі для скролбара */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: #4b2853ff;
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #943a67ff;
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #ff69b4;
-}
-
-/* Для Firefox */
-.filter-group {
-    scrollbar-width: thin;
-    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
-}
-
-/* Прогрес бар завантаження */
-.loading-progress {
-  width: 200px;
-  height: 4px;
-  background: rgba(255, 105, 180, 0.2);
-  border-radius: 2px;
-  margin: 15px 0;
-  overflow: hidden;
-}
-
-.loading-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #ff69b4, #ff82c1);
-  border-radius: 2px;
-  width: 0%;
-  transition: width 0.3s ease;
-  position: relative;
-}
-
-.loading-progress-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* Хвиляста анімація */
-.wave-loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin: 15px 0;
-}
-
-.wave-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ff69b4;
-  animation: wave 1.2s ease-in-out infinite;
-}
-
-.wave-dot:nth-child(2) { animation-delay: -0.2s; }
-.wave-dot:nth-child(3) { animation-delay: -0.4s; }
-.wave-dot:nth-child(4) { animation-delay: -0.6s; }
-.wave-dot:nth-child(5) { animation-delay: -0.8s; }
-
-@keyframes wave {
-  0%, 60%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  30% {
-    transform: scale(1.5);
-    opacity: 1;
-  }
-}
-
-/* Анімація появи елементів при скролі */
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.fade-in-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Кастомний контейнер плеєра */
-.custom-player-container {
+/* Простий плеєр */
+.simple-player-container {
   position: relative;
   width: 100%;
   height: 500px;
@@ -669,37 +112,28 @@ header.hidden {
   margin-bottom: 15px;
   border: 2px solid #943a67ff;
   overflow: hidden;
-  cursor: none;
 }
 
-.custom-player-container:hover {
-  cursor: default;
-}
-
-/* YouTube відео */
-.youtube-video {
+#youtube-player {
   width: 100%;
   height: 100%;
   border: none;
 }
 
-/* Кастомні контроли - ВИДИМІ */
-.custom-controls {
+/* Прості контроли */
+.simple-controls {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
   padding: 15px 20px;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
   opacity: 1;
-  transform: translateY(0);
-  z-index: 1000;
 }
 
-.custom-controls.hidden {
+.simple-controls.hidden {
   opacity: 0;
-  transform: translateY(100%);
   pointer-events: none;
 }
 
@@ -715,11 +149,6 @@ header.hidden {
   border-radius: 3px;
   cursor: pointer;
   margin-bottom: 5px;
-  transition: height 0.2s ease;
-}
-
-.progress-bar:hover {
-  height: 8px;
 }
 
 .progress-filled {
@@ -731,38 +160,19 @@ header.hidden {
   transition: width 0.1s ease;
 }
 
-.progress-thumb {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  background: #ff69b4;
-  border-radius: 50%;
-  opacity: 0;
-  transition: all 0.2s ease;
-  box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
-}
-
-.progress-bar:hover .progress-thumb {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.2);
-}
-
 .time-display {
   display: flex;
   justify-content: space-between;
   color: #fff;
   font-size: 0.9em;
   font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-/* Основні контроли */
-.main-controls {
+/* Основні кнопки */
+.basic-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
 }
 
 .control-btn {
@@ -772,56 +182,17 @@ header.hidden {
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   font-size: 0.9em;
-  backdrop-filter: blur(10px);
   min-width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .control-btn:hover {
   background: rgba(255, 105, 180, 0.5);
-  transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: scale(1.05);
 }
 
-.control-btn:active {
-  transform: scale(0.95);
-}
-
-/* Контроль гучності */
-.volume-control {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.volume-bar {
-  width: 80px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.volume-bar:hover {
-  height: 6px;
-}
-
-.volume-filled {
-  position: absolute;
-  height: 100%;
-  background: #ff69b4;
-  border-radius: 2px;
-  width: 80%;
-  transition: width 0.2s ease;
-}
-
-/* Вибір якості YouTube */
+/* Вибір якості */
 .quality-select {
   background: rgba(255, 105, 180, 0.2);
   border: 1px solid #943a67ff;
@@ -830,7 +201,6 @@ header.hidden {
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.8em;
-  backdrop-filter: blur(10px);
   min-width: 120px;
 }
 
@@ -839,13 +209,7 @@ header.hidden {
   color: #fff;
 }
 
-.quality-select:focus {
-  outline: none;
-  border-color: #ff69b4;
-  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
-}
-
-/* Постер відео */
+/* Постер */
 .video-poster {
   position: absolute;
   top: 0;
@@ -858,7 +222,6 @@ header.hidden {
   align-items: center;
   cursor: pointer;
   transition: opacity 0.3s ease;
-  z-index: 100;
 }
 
 .video-poster.hidden {
@@ -889,11 +252,55 @@ header.hidden {
 .play-button-large:hover {
   background: rgba(255, 105, 180, 0.5);
   transform: scale(1.1);
-  box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+}
+
+/* Навігація серіями */
+.episode-navigation {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 15px 0;
+  flex-wrap: wrap;
+}
+
+.episode-navigation span {
+  font-weight: bold;
+  color: #cc6096ff;
+  font-size: 1em;
+}
+
+#episode-title {
+  flex: 1;
+  min-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.episode-navigation button {
+  padding: 8px 15px;
+  border: 2px solid #943a67ff;
+  border-radius: 6px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.episode-navigation button:hover:not(:disabled) {
+  background: #ff69b4;
+  color: #fff;
+}
+
+.episode-navigation button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Повноекранний режим */
-.custom-player-container.fullscreen {
+.simple-player-container.fullscreen {
   position: fixed;
   top: 0;
   left: 0;
@@ -903,58 +310,28 @@ header.hidden {
   border-radius: 0;
 }
 
-/* Підказка часу на прогресс барі */
-.time-tooltip {
-  position: fixed;
-  background: linear-gradient(135deg, #1d1d20 0%, #2a1a24 100%);
-  color: #ff82c1;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #943a67ff;
-  font-size: 0.8em;
-  font-weight: 500;
-  pointer-events: none;
-  z-index: 10001;
-  transform: translateX(-50%);
-  display: none;
-  white-space: nowrap;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgba(148, 58, 103, 0.3);
-}
-
-.time-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: #943a67ff;
-}
-
 /* Адаптивність */
 @media (max-width: 768px) {
-  .custom-player-container {
+  .player-wrapper {
+    margin-top: 80px;
+    width: 95%;
+    padding: 10px;
+  }
+  
+  .simple-player-container {
     height: 300px;
   }
   
-  .main-controls {
-    gap: 8px;
+  .episode-navigation {
+    gap: 10px;
+    font-size: 0.9em;
   }
   
-  .control-btn {
-    padding: 6px 8px;
-    font-size: 0.8em;
-    min-width: 35px;
-  }
-  
-  .volume-bar {
-    width: 60px;
+  .basic-controls {
+    gap: 10px;
   }
   
   .quality-select {
     min-width: 100px;
-    font-size: 0.7em;
-    padding: 4px 8px;
   }
 }
