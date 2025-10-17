@@ -1,18 +1,32 @@
-/* ===== ОСНОВНІ СТИЛІ ДЛЯ СТОРІНКИ ПРОФІЛЮ ===== */
+/* ===== ОСНОВНІ СТИЛІ ДЛЯ ВСЬОГО ДОКУМЕНТУ ===== */
 
-.profile-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+/* Скидання стандартних відступів браузера та налаштування основного шрифту */
+body {
+  margin: 0; /* Видаляє зовнішні відступи */
+  font-family: "Poppins", "Segoe UI", sans-serif; /* Встановлює пріоритетні шрифти */
+  color: #964e72ff; /* Основний колір тексту (рожево-фіолетовий) */
+  min-height: 100vh; /* Мінімальна висота - весь екран */
+  position: relative; /* Для позиціонування псевдоелемента */
+  overflow-x: hidden; /* Заборона горизонтального скролу */
+  background: #4b2853ff;
 }
 
-.profile-container.loaded {
-    opacity: 1;
-    transform: translateY(0);
+/* ===== ФОН САЙТУ ЧЕРЕЗ ПСЕВДОЕЛЕМЕНТ ===== */
+body::before {
+  content: ''; /* Обов'язково для псевдоелемента */
+  position: fixed; /* Фіксоване позиціювання для створення фону */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Фонове зображення з затемненням */
+  background: 
+    url('https://kilgamer-steam.github.io/Astro-Neko/images/background.JPEG') no-repeat center center;
+  filter: brightness(0.4); /* Затемнення зображення на 60% */
+  background-size: cover; /* Заповнення всього простору */
+  z-index: -1; /* Розміщення під основним контентом */
 }
+
 /* ===== ШАПКА САЙТУ ===== */
 header {
   width: 100%;
@@ -35,19 +49,7 @@ header {
 header.hidden {
   transform: translateY(-100%); /* Переміщення за межі екрану */
 }
-/* ===== ЗАГОЛОВОК ПРОФІЛЮ ===== */
-.profile-header {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    background: rgba(24, 24, 27, 0.36);
-    backdrop-filter: blur(2px);
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 30px;
-    border: 1px solid rgba(255, 105, 180, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
+
 /* ===== ЛІВА ЧАСТИНА ХЕДЕРА ===== */
 .header-left {
   display: flex;
@@ -67,6 +69,79 @@ header.hidden {
   font-size: 2em;
   text-shadow: 0 0 10px rgba(255, 105, 180, 0.3); /* Світіння */
 }
+
+/* ===== НАВІГАЦІЯ В ХЕДЕРІ ===== */
+.header-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.header-nav a {
+  padding: 10px 20px;
+  border: 2px solid #943a67ff;
+  border-radius: 8px;
+  background: rgba(255, 105, 180, 0.1);
+  color: #cc6096ff;
+  font-size: 1em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.header-nav a:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Виділення активної сторінки в навігації */
+.header-nav a[href*="profile.html"] {
+  background: #ff69b4;
+  color: white;
+}
+
+/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+main {
+  padding: 30px 40px;
+  max-width: 1400px; /* Максимальна ширина контенту */
+  margin: 0 auto; /* Центрування по горизонталі */
+  padding-top: 80px; /* Відступ для фіксованого хедера */
+  position: relative;
+  z-index: 1; /* Вище за фон */
+}
+
+/* ===== СТИЛІ ДЛЯ СТОРІНКИ ПРОФІЛЮ ===== */
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.profile-container.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== ЗАГОЛОВОК ПРОФІЛЮ ===== */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background: rgba(24, 24, 27, 0.36);
+    backdrop-filter: blur(2px);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
 .profile-avatar {
     width: 120px;
     height: 120px;
@@ -367,6 +442,24 @@ header.hidden {
     .profile-section {
         padding: 20px;
     }
+
+    main {
+        padding: 20px;
+        padding-top: 70px;
+    }
+
+    header {
+        padding: 10px 20px;
+    }
+
+    .header-nav {
+        gap: 10px;
+    }
+
+    .header-nav a {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
 }
 
 /* Для екранів до 480px */
@@ -420,6 +513,15 @@ header.hidden {
     .demo-info ul {
         text-align: center;
     }
+
+    .header-left h1 {
+        font-size: 1.6em;
+    }
+
+    .header-nav a {
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
 }
 
 /* Для дуже малих екранів */
@@ -438,6 +540,11 @@ header.hidden {
 
     .section-title {
         font-size: 1.1em;
+    }
+
+    .header-nav {
+        flex-direction: column;
+        gap: 5px;
     }
 }
 
