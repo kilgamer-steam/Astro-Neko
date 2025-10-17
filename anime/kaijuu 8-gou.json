@@ -31,9 +31,7 @@
               "opening": [0, 0],
               "ending": [1282, 1372],
               "quality": [
-                {"value":"1080", "videoUrl":""},
-                {"value":"720", "videoUrl":""},
-                {"value":"360", "videoUrl":""}
+                {"value":"1080", "videoUrl":"https://youtu.be/Guk0xnR4LKA"}
               ]
             }
           ]
@@ -49,9 +47,7 @@
               "opening": [63, 150],
               "ending": [1350, 1456],
               "quality": [
-                {"value":"1080", "videoUrl":""},
-                {"value":"720", "videoUrl":""},
-                {"value":"360", "videoUrl":""}
+                {"value":"1080", "videoUrl":"https://youtu.be/ttHpaYOSogI"}
               ]
             }
           ]
