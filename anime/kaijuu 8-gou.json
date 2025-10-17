@@ -16,7 +16,7 @@
   "seasons": [
     {
       "seasonNumber": 1,
-      "title": "N/A",
+      "title": "",
       "year": "2024",
       "episodeCount": "12",
       "episodes": [
@@ -240,7 +240,7 @@
     },
     {
       "seasonNumber": 2,
-      "title": "N/A",
+      "title": "",
       "year": "2025",
       "episodeCount": "12",
       "episodes": [
