@@ -50,27 +50,25 @@ header.hidden {
   transform: translateY(-100%); /* Переміщення за межі екрану */
 }
 
-/* ===== ЛІВА ЧАСТИНА ХЕДЕРА ===== */
-.header-left {
+header .logo {
   display: flex;
   align-items: center;
-  gap: 15px; /* Відступ між логотипом і заголовком */
+  gap: 10px;
+  text-decoration: none;
+  margin-left: 20px;
 }
 
-.header-left img {
-  height: 50px;
-  width: 50px;
-  border-radius: 10px; /* Закруглені кути */
+header .logo img {
+  height: 45px;
+  width: 45px;
 }
 
-.header-left h1 {
-  color: #cc6096ff; /* Рожевий колір */
+header .logo h1 {
+  color: #cc6096ff;
   margin: 0;
-  font-size: 2em;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.3); /* Світіння */
+  font-size: 1.8em;
 }
 
-/* ===== НАВІГАЦІЯ В ХЕДЕРІ ===== */
 .header-nav {
   display: flex;
   gap: 15px;
@@ -96,11 +94,31 @@ header.hidden {
   transform: translateY(-2px);
 }
 
-/* Виділення активної сторінки в навігації */
-.header-nav a[href*="profile.html"] {
-  background: #ff69b4;
-  color: white;
+/* Стилі для скролбара */
+::-webkit-scrollbar {
+    width: 6px;
 }
+
+::-webkit-scrollbar-track {
+    background: #4b2853ff;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #943a67ff;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff69b4;
+}
+
+/* Для Firefox */
+.filter-group {
+    scrollbar-width: thin;
+    scrollbar-color: #943a67ff rgba(255, 105, 180, 0.1);
+}
+
 
 /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 main {
